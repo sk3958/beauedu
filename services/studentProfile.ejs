@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Student Profile</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/studentProfile.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleLeft.css?after" type="text/css" />
+
+<script>
+<%
+if (null === session.user_id || undefined === session.user_id) {
+%>
+	location.href = "./login.ejs";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function()
+{
+	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "studentProfile.ejs");
+	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "studentProfile.ejs");
+	return true;
+};
+<%
+}
+%>
+</script>
+
+</head>
+
+<body onload="BeauEdu.bodyOnLoad()">
+	<section class="container">
+		<header id="top" class="top">
+		    <%- include('./top.ejs') %>
+		</header>
+		<aside  id="left_menu" class="left-nav">
+		    <%- include('./left.ejs') %>
+		</aside>
+		<article class="content">
+			<div class="title">
+				<h1>Student Profile</h1>
+				Once you have registered with us, we will work to find a teacher for you based on your preferences and their specialties.<br><br>
+			</div>
+			<div style="width:100%;">		
+<% 
+var profile = student_profile;
+%>
+				<form class="profile-form" id="student_profile" action="#">
+					<table class="profiles">
+						<tr>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+						</tr>
+						<tr><td class="attr-title" colspan="4">Name*</td></tr>
+						<tr>
+							<td colspan="2"><input class="full-width" id="middle_name" type="text" value="<%= profile.getMiddle_name() %>" hidden>
+											<input class="full-width" id="first_name" type="text" value="<%= profile.getFirst_name() %>" required><br><span class="attr-title-detail">First Name</span></td>
+							<td colspan="2"><input class="full-width" id="last_name" type="text" value="<%= profile.getLast_name() %>" required><br><span class="attr-title-detail">Last Name</span></td>
+						</tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Location*<br><span class="attr-title-detail">Street, City, Country</span></td></tr>
+						<tr><td colspan="4"><input class="full-width" id="location" type="text" value="<%= profile.getLocation() %>" required></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Education*<br><span class="attr-title-detail">Current Level of Education</span></td></tr>
+						<tr>
+							<td>
+								<select id="education_level" value="<%= profile.getEducation_level() %>" required>
+									<option value="">--Select One--</option>
+<% 
+var levelOfEducation = level_of_education;
+if (undefined === levelOfEducation || null === levelOfEducation) {
+	levelOfEducation = {};
+}
+
+var commCdDtlBean
+for (i in levelOfEducation) {
+    commCdDtlBean = levelOfEducation[i]
+%>
+									<option value="<%= commCdDtlBean.getComm_cd_val() %>" 
+<%		
+        if (profile.getEducation_level() == commCdDtlBean.getComm_cd_val()) {
+%>										
+									selected
+<%
+		}
+%>
+											><%= commCdDtlBean.getComm_cd_val_nm() %></option>
+<%
+	}
+%>
+								</select>
+							</td>
+							<td colspan="3"></td>
+						</tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Email*</td></tr>
+						<tr><td colspan="4"><input class="full-width" id="email" type="text" value="<%= profile.getEmail() %>" required></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Goals*<br><span class="attr-title-detail">What do you want to do in life?</span></td></tr>
+						<tr><td colspan="4"><textarea class="full-width" id="goals" rows="10" required><%= profile.getGoals() %></textarea></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Teacher Preferences*</td></tr>
+						<tr>
+							<td colspan="4">
+<% 
+var teacherSpeciality = teacher_specialities;
+if (undefined === teacherSpeciality || null == teacherSpeciality) {
+	teacherSpeciality = {};
+}
+
+var registeredPreferences = registered_teacher_preferences;
+	
+for (i in teacherSpeciality) {
+    commCdDtlBean = teacherSpeciality[i]
+%>
+								<input type="checkbox" name="teacher_preferences" id="<%= commCdDtlBean.getComm_cd_val() %>" value="<%= commCdDtlBean.getComm_cd_val() %>"
+<%
+	if (undefined !== registeredPreferences && null !== registeredPreferences) {
+        var userMultiAttrBean
+		for (i in registeredPreferences) {
+            userMultiAttrBean = registeredPreferences[i]
+			if (commCdDtlBean.getComm_cd_val() == userMultiAttrBean.getComm_cd_val()) {
+%> 
+									checked="checked"
+<%
+			    break;
+			}
+		}
+	}
+%>
+								>
+									<%= commCdDtlBean.getComm_cd_val_nm() %><br>
+<%
+}
+%>
+							</td>
+						</tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.registerStudentProfile('student_profile')" style="width:150px;">Submit</button></td></tr>
+					</table>
+				</form>
+			</div>
+		</article>
+	</section>
+</body>
+</html>

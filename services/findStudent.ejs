@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Find Student</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/userRequest.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleLeft.css?after" type="text/css" />
+
+<script>
+<%
+if (null === session.user_id || undefined === session.user_id) {
+%>
+	location.href = "./login.jsp";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function()
+{
+	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "findStudent.ejs");
+	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "findStudent.ejs");
+	return true;
+};
+<%
+}
+%>
+</script>
+
+</head>
+
+<body onload="BeauEdu.bodyOnLoad()">
+<div class="background">
+<div class="container">
+	<header id="top" class="top">
+	  <%- include('./top.ejs') %>
+	</header>
+	<section class="layout">
+		<aside id="left_menu" class="left-nav">
+			<%- include('./left.ejs') %>
+		</aside>
+		<article class="content">
+			<div class="title">
+				<h1>Find Teacher</h1><br>
+				If you would like to take on additional students, please let me know.<br><br>
+				We will try to get back to you in a timely manner.<br><br>
+			</div>
+			<div style="width:100%;">		
+				<form class="profile-form" id="find_teacher" action="#">
+					<table class="profiles">
+						<tr>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+						</tr>
+						<tr><td class="attr-title" colspan="4">Name*</td></tr>
+						<tr>
+							<td colspan="2"><input class="full-width" id="first_name" type="text" value="<%= session.first_name %>" required><br><span class="attr-title-detail">First Name</span></td>
+							<td colspan="2"><input class="full-width" id="last_name" type="text" value="<%= session.last_name %>" required><br><span class="attr-title-detail">Last Name</span></td>
+						</tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Email*</td></tr>
+						<tr><td colspan="4"><input class="full-width" id="email" type="text" value="<%= session.email %>" required></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">ID Number*</td></tr>
+						<tr><td colspan="4"><input class="full-width" id="user_id" type="text" value="<%= session.user_id %>"  onkeydown="javascript:BeauEdu.readOnlyInputKeyDown(event)" readonly ></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.registerUserRequest('find_teacher')" style="width:150px;">Submit</button></td></tr>
+					</table>
+				</form>
+			</div>
+		</article>
+	</section>
+</div>
+</div>
+</body>
+</html>

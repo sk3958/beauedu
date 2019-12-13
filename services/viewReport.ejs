@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>View report</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/jquery-ui.js?after"></script>
+<script type="text/javascript" src="./javascript/colResizable-1.6.min.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/viewReport.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle_2.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/jquery-ui.css?after" type="text/css" />
+
+<script>
+<%
+var searchedStatus = searched_status
+var searchedName = searched_name
+var searchedStartDt = searched_start_dt
+var searchedEndDt = searched_end_dt
+
+if (undefined === session || null === session) {
+%>
+	location.href = "./login.jsp";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function() {
+		BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
+	
+	$.datepicker.setDefaults({
+           dateFormat: 'yymmdd'
+          ,showOtherMonths: true
+          ,showMonthAfterYear:true
+          ,changeYear: true
+          ,changeMonth: true         
+          //,showOn: "both"
+          //,buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif"
+          ,buttonImageOnly: true           
+	});
+	
+	$(".start_dt, .end_dt").datepicker();
+	
+	BeauEdu.setEvent();
+};
+<%
+}
+%>
+
+</script>
+
+</head>
+
+<body  onload="javascript:BeauEdu.bodyOnLoad();">
+	<header id="top" class="top">
+		<%- include('./top.ejs') %>
+	</header>
+    <article class="">
+	<div class="search_area">
+		<form method="post" id="search_form" action="selectReport">
+		<span class="title">Search Start</span>
+		<input type="text" class="start_dt" name = "searched_start_dt" format="yyyymmdd" value="<%= searchedStartDt %>" />
+		<span class="title">Search End</span>
+		<input type="text" class="end_dt" name = "searched_end_dt" format="yyyymmdd" value="<%= searchedEndDt %>" />
+		<span class="title">Search Name</span>
+		<input type="text" id="search_name" name="searched_name" value="<%= searchedName %>" onkeypress="javascript:BeauEdu.onNameKeyPreaa(event);" />
+		<button type="submit" id="run_search">Search</button>
+		</form>
+	</div>
+	<div id="reportList">
+		<table id="table_reports">
+			<!-- <caption>View Report</caption> -->
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>ID</th>
+					<th>Title</th>
+					<th>report</th>
+					<th>File Name</th>
+					<th>Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+<%
+var reportBean
+for (i in reportBeanList) {
+    reportBean = reportBeanList[i]
+%>
+				<tr class="row">
+				    <td class="reporter_name"><%= reportBean.getUser_name() %></td>
+					<td class="reporter_id"><%= reportBean.getUser_id() %></td>
+					<td class="report_title"><%= reportBean.getReport_title() %></td>
+					<td class="report_text">
+<%
+  if ('' != reportBean.getReport_text()) {
+%>
+          	<a class="a_report_text" href=""><%= reportBean.getReport_text().substring(0, 30) %></a>
+<%
+  }
+%>
+            <input type="hidden" class="report_text" value="<%= reportBean.getReport_text() %>" />
+          </td>
+          <td class="file_name">
+<%
+  if ('' != reportBean.getFile_name()) {
+%>
+            <a class="a_file_name" href="javascript:BeauEdu.downloadFile('<%= reportBean.getReport_num() %>', '<%= reportBean.getFile_num() %>', '<%= reportBean.getFile_name() %>')">
+							<%= reportBean.getFile_name() %>
+						</a>
+<%
+  }
+%>
+          </td>
+					<td class="comment"><input type="text" value="<%= reportBean.getComment() %>"></td>
+				</tr>
+<%
+}
+%>
+			</tbody>
+		</table>
+	</div>
+	<div id="report_text_popup" class="">
+		<div id="popup_header" class="popup-header">
+			<div>
+			<button type="button" onclick="javascript:BeauEdu.closeReportTextPopup();">X</button>
+			</div>
+		</div>
+		<div id="div_report_text" class="div-report-text">
+        </div>
+	</div>
+</article>
+</body>
+</html>

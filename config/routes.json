@@ -1,0 +1,21 @@
+{
+	"/": "./welcome",
+	"/checkUserId": "./check-user-id",
+	"/registerUser": "./register-user",
+	"/login": "./login",
+	"/registerStudentProfile": "./register-student-profile",
+	"/selectStudentProfile": "./select-student-profile",
+	"/registerTeacherProfile": "./register-teacher-profile",
+	"/selectTeacherProfile": "./select-teacher-profile",
+	"/findTeacher": "./find-teacher",
+	"/findStudent": "./find-student",
+	"/registerUserRequest": "./register-user-request",
+	"/selectContract": "./select-contract",
+	"/selectTeacherList": "./select-teacher-list",
+	"/saveContract": "./save-contract",
+	"/registerReport": "./register-report",
+	"/selectReport": "./select-report",
+	"/reportPage": "./report-page",
+	"/updateReport": "./update-report",
+	"/downloadReportFile": "./download-report-file"
+}

@@ -1,0 +1,229 @@
+html
+{
+	min-height: 100%;
+}
+
+body
+{
+	font-family: sans-serif, Helvetica Neue, Helvetica;
+	font-size: 100%;
+	min-height: 100%;
+	overflow-y: scroll; 
+	-ms-text-size-adjust: 100%; 
+	-webkit-text-size-adjust: 100%; 
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale; 
+	text-rendering: optimizeLegibility;
+	color: #373737;
+	background-color: #f4f4f4;
+	background-image: linear-gradient(to bottom, #c0b283, #dcd0c0);
+	background-image: linear-gradient(to bottom, #77c9d4, #57bc90);
+	background-image: linear-gradient(to bottom, #dcd0c0, #bab0a0);
+	background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);
+}
+
+.full-width
+{
+	min-width: 100%;
+}
+
+article button
+{
+	background-color: #373737;
+	color: #f1f1f1;
+	border: none;
+	cursor: pointer;
+	font-weight: 600;
+	height: 24px;
+}
+article button:active
+{
+	transform: scale(0.9);
+}
+article button:hover
+{
+	background-color: #575757;
+}
+
+.search_area
+{
+	background: #e1e1e1;
+  	border: none;
+  	color: #373737;
+	padding: 10px;
+	border: 1px solid #333;
+	border-bottom: none;
+}
+.search_area .title
+{
+	padding-left: 10px;
+	font-weight: 600;
+}
+.search_area #run_search
+{
+	width: 150px;
+	margin-left: 10px;
+}
+
+table
+{
+	width: 100%;
+	border-collapse: collapse;
+	/*table-layout: auto;*/
+}
+
+thead
+{
+	display: table-header-group;
+	border: 1px solid #333;
+}
+
+tbody
+{
+  	display: table-row-group;
+}
+
+tr {
+  	display: table-row;
+}
+
+tbody tr:nth-child(odd)
+{
+ 	 background-color: #fefefe;
+}
+
+tbody tr:nth-child(even)
+{
+  	background-color: #f1f1f1;
+}
+tbody tr.changed
+{
+	background-color: #f1d1d1;
+}
+tbody tr:hover
+{
+	background-color: #f1d1d1;
+}
+
+th
+{
+	display: table-cell;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
+	background: #e1e1e1;
+  	border: none;
+  	color: #373737;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+td
+{
+	display: table-cell;
+	padding-left: 5px;
+	padding-right: 5px;
+	vertical-align: middle;
+	border: 1px solid #333;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+table input, table select
+{
+	width: 100%;
+	border: none;
+	outline: none;
+	background-color: transparent;
+}
+
+table .start_dt, .end_dt, .requester_name, .requester_id, .teacher_name, .teacher_id
+{
+	text-align: center;
+}
+
+table .class_times, .pay_times, .pay_amount
+{
+	text-align: right;
+}
+
+table .teacher_name, table .teacher_id
+{
+	width: 80%;
+}
+table .teacher_lov, table .clear_teacher
+{
+	width: 15%;
+	background-color: #373737;
+	color: #f1f1f1;
+}
+
+table .save_button, .accept_teacher
+{
+	width: 100%;
+}
+
+#teacher_list_popup
+{
+	display: none;
+	z-index: 100;
+	position: absolute;
+	width: 25%;
+	max-height: 50%;
+	left: 5%;
+	top: 20%;
+	background-color: #ffffff;
+}
+#popup_header
+{
+	background-color: #373737;
+	height: 30px;
+}
+#popup_header div
+{
+	float: right;
+	padding-right: 5px;
+}
+#teacher_list_table
+{
+	margin-top: none;
+}
+#popup_footer
+{
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding-top: 20px;
+  	padding-bottom: 10px;
+  	border: 1px solid #333;
+  	border-top: none;
+}
+#cancel_popup
+{
+	width: 200px;
+	height: 30px;
+	font-size: 17px;
+}
+
+#progress-container
+{
+	z-index: 100;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 40%;
+	display: none;
+	background-color: grey;
+}
+#progress
+{
+	height: 100%;
+	whidth: 1%;
+	background-color: green;
+}

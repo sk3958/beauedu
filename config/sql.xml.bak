@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BeauEdu">
+
+	<select id="getUserList">
+
+		select *
+		from   public."BeauUser"
+		
+	</select>
+	
+	<select id="checkUserId">
+
+		select user_id
+		from   public."BeauUser"
+		where  user_id = #{user_id}
+		
+	</select>
+	
+	<select id="selectBeauUser">
+
+		select user_id, user_name, user_kind
+		from   public."BeauUser"
+		where  user_id = #{user_id}
+		and    user_passwd = crypt(#{user_passwd}, user_passwd)
+		
+	</select>
+	
+	<insert id="insertBeauUser">
+
+		insert into public."BeauUser" (user_id, user_name, user_kind, user_passwd, create_time, audit_time)
+		values (#{user_id}, #{user_name}, #{user_kind}, #{user_passwd}, now(), now())
+		
+	</insert>
+	
+	<select id="selectTeacherList">
+	
+		select tprofile.user_id
+		      ,tprofile.first_name || ' ' || tprofile.last_name as user_name
+		from   public."UserRequestMst" request
+		      ,public."TeacherProfile" tprofile
+		where  request.request_type = '02'
+		and    request.request_status = '01'
+		and    tprofile.user_id = request.user_id
+		union all
+		select tprofile.user_id
+		      ,tprofile.first_name || ' ' || tprofile.last_name as user_name
+		from   public."TeacherProfile" tprofile
+		where  not exists(select 1
+		                  from   public."UserRequestMst"
+		                  where  user_id = tprofile.user_id
+		                  and    request_status = '01')
+		                  
+	</select>
+	
+	<update id="updatePassword">
+
+		update public."BeauUser"
+		set    user_passwd = crypt(user_passwd, gen_salt('md5'))
+		where  user_id = #{user_id}
+		
+	</update>
+	
+	<insert id="insertStudentProfile">
+
+		insert into public."StudentProfile" (user_id, first_name, middle_name, last_name, location, education_level,
+											 email, goals, audit_time, create_time)
+		values (#{user_id}, #{first_name}, #{middle_name}, #{last_name}, #{location}, #{education_level},
+				#{email}, #{goals}, now(), now())
+		
+	</insert>
+	
+	<update id="updateStudentProfile">
+
+		update public."StudentProfile"
+		set    first_name = #{first_name}
+		      ,middle_name = #{middle_name}
+		      ,last_name = #{last_name}
+		      ,location = #{location}
+		      ,education_level = #{education_level}
+			  ,email = #{email}
+			  ,goals = #{goals}
+			  ,audit_time = now()
+	    where  user_id = #{user_id}
+		
+	</update>
+	
+	<update id="updateStudentProfile_2">
+
+		update public."StudentProfile"
+		set    first_name = #{first_name}
+		      ,middle_name = #{middle_name}
+		      ,last_name = #{last_name}
+			  ,email = #{email}
+			  ,audit_time = now()
+	    where  user_id = #{user_id}
+		
+	</update>
+	
+	<insert id="insertUserMultiAttr">
+
+		insert into public."UserMultiAttr" (user_id, comm_cd_id, comm_cd_val, create_time)
+		values (#{user_id}, #{comm_cd_id}, #{comm_cd_val}, now())
+		
+	</insert>
+	
+	<delete id="deleteUserMultiAttr">
+
+		delete from public."UserMultiAttr"
+		where  user_id = #{user_id}
+		and    comm_cd_id = #{comm_cd_id}
+		
+	</delete>
+	
+	<select id="selectStudentProfile">
+
+		select first_name, middle_name, last_name, location, education_level, email, goals
+		from   public."StudentProfile"
+		where  user_id = #{user_id}
+		
+	</select>
+	
+	<insert id="insertTeacherProfile">
+
+		insert into public."TeacherProfile" (user_id, first_name, middle_name, last_name, email, location, qualifications,
+											 primary_language, secondary_language, bio, inet_connection, audit_time, create_time)
+		values (#{user_id}, #{first_name}, #{middle_name}, #{last_name}, #{email}, #{location}, #{qualifications},
+				#{primary_language}, #{secondary_language}, #{bio}, #{inet_connection}, now(), now())
+		
+	</insert>
+	
+	<update id="updateTeacherProfile">
+
+		update public."TeacherProfile"
+		set    first_name = #{first_name}
+		      ,middle_name = #{middle_name}
+		      ,last_name = #{last_name}
+		      ,email = #{email}
+		      ,location = #{location}
+		      ,qualifications = #{qualifications}
+			  ,primary_language = #{primary_language}
+			  ,secondary_language = #{secondary_language}
+			  ,bio = #{bio}
+			  ,inet_connection = #{inet_connection}
+			  ,audit_time = now()
+	    where  user_id = #{user_id}
+		
+	</update>
+	
+	<update id="updateTeacherProfile_2">
+
+		update public."TeacherProfile"
+		set    first_name = #{first_name}
+		      ,middle_name = #{middle_name}
+		      ,last_name = #{last_name}
+		      ,email = #{email}
+			  ,audit_time = now()
+	    where  user_id = #{user_id}
+		
+	</update>
+	
+	<select id="selectTeacherProfile">
+
+		select first_name, middle_name, last_name, email, location, qualifications,
+		       primary_language, secondary_language, bio, inet_connection
+		from   public."TeacherProfile"
+		where  user_id = #{user_id}
+		
+	</select>
+	
+	<select id="selectCommCdDtl">
+
+		select comm_cd_id, comm_cd_val, comm_cd_val_nm, select_order
+		from   public."CommCdDtl"
+		where  comm_cd_id = #{comm_cd_id}
+		and    is_for_ui = #{is_for_ui}
+		order by select_order
+		
+	</select>
+	
+	<select id="selectUserMultiAttr">
+
+		select comm_cd_id, comm_cd_val
+		from   public."UserMultiAttr"
+		where  user_id = #{user_id}
+		and    comm_cd_id = #{comm_cd_id}
+		
+	</select>
+	
+	<insert id="insertUserRequestMst">
+
+		insert into public."UserRequestMst" (request_num, request_type, user_id, request_status, create_time, audit_time)
+		values (DEFAULT, #{request_type}, #{user_id}, #{request_status}, now(), now())
+		
+	</insert>
+	
+	<update id="updateUserRequestMst">
+
+		update public."UserRequestMst"
+		set    request_status = #{request_status}
+		      ,audit_time = now()
+		      ,audit_id = #{audit_id}
+		where  request_num = #{request_num}
+		
+	</update>
+	
+	<select id="selectUserRequestMstForContract">
+		select request_num, request_type, user_id, request_status
+		from   public."UserRequestMst"
+		where  user_id = #{user_id}
+		and    request_type = #{request_type}
+		order by request_num desc
+		limit 1
+	</select>
+	
+	<select id="selectContract">
+select distinct contract_num, request_num, requester_id, requester_name, teacher_id, teacher_name,
+       status, start_dt, end_dt, period_unit_class, class_times, period_unit_pay, pay_times, pay_amount, audit_time
+from
+(
+select cntrct.contract_num
+      ,request.request_num
+      ,request.user_id as requester_id
+      ,sprofile.first_name || ' ' || sprofile.last_name as requester_name
+      ,cntrct.teacher_id
+      ,tprofile.first_name || ' ' || tprofile.last_name as teacher_name
+      ,cntrct.status
+      ,cntrct.start_dt
+      ,cntrct.end_dt
+      ,cntrct.period_unit_class
+      ,cntrct.class_times
+      ,cntrct.period_unit_pay
+      ,cntrct.pay_times
+      ,cntrct.pay_amount
+      ,to_char(cntrct.audit_time,'YYYYMMDDHH24MISS') as audit_time
+from   public."Contract" cntrct
+       left join public."UserRequestMst" request on request.request_num = cntrct.request_num
+       left outer join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
+       left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
+where  COALESCE(#{requester_name},'') = ''
+and    cntrct.status = #{status}
+union all
+select COALESCE(cntrct.contract_num,0) as contract_num
+      ,request.request_num
+      ,request.user_id as requester_id
+      ,sprofile.first_name || ' ' || sprofile.last_name as requester_name
+      ,COALESCE(cntrct.teacher_id,'') as teacher_id
+      ,tprofile.first_name || ' ' || tprofile.last_name as teacher_name
+      ,COALESCE(cntrct.status,'') as status
+      ,COALESCE(cntrct.start_dt,'') as start_dt
+      ,COALESCE(cntrct.end_dt,'') as end_dt
+      ,COALESCE(cntrct.period_unit_class,'') as period_unit_class
+      ,COALESCE(cntrct.class_times,0) as class_times
+      ,COALESCE(cntrct.period_unit_pay,'') as period_unit_pay
+      ,COALESCE(cntrct.pay_times,0) as pay_times
+      ,COALESCE(cntrct.pay_amount,0) as pay_amount
+      ,to_char(COALESCE(cntrct.audit_time,now()),'YYYYMMDDHH24MISS') as audit_time
+from   public."StudentProfile" sprofile
+       left join public."UserRequestMst" request on request.user_id = sprofile.user_id
+       left join public."Contract" cntrct on cntrct.request_num = request.request_num
+       left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
+where  COALESCE(#{requester_name},'') != ''
+and    upper(sprofile.first_name) like upper(#{requester_name}) || '%'
+and    cntrct.status = #{status}
+union all
+select COALESCE(cntrct.contract_num,0) as contract_num
+      ,request.request_num
+      ,request.user_id as requester_id
+      ,sprofile.first_name || ' ' || sprofile.last_name as requester_name
+      ,COALESCE(cntrct.teacher_id,'') as teacher_id
+      ,tprofile.first_name || ' ' || tprofile.last_name as teacher_name
+      ,COALESCE(cntrct.status,'') as status
+      ,COALESCE(cntrct.start_dt,'') as start_dt
+      ,COALESCE(cntrct.end_dt,'') as end_dt
+      ,COALESCE(cntrct.period_unit_class,'') as period_unit_class
+      ,COALESCE(cntrct.class_times,0) as class_times
+      ,COALESCE(cntrct.period_unit_pay,'') as period_unit_pay
+      ,COALESCE(cntrct.pay_times,0) as pay_times
+      ,COALESCE(cntrct.pay_amount,0) as pay_amount
+      ,to_char(COALESCE(cntrct.audit_time,now()),'YYYYMMDDHH24MISS') as audit_time
+from   public."StudentProfile" sprofile
+       left join public."UserRequestMst" request on request.user_id = sprofile.user_id
+       left join public."Contract" cntrct on cntrct.request_num = request.request_num
+       left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
+where  COALESCE(#{requester_name},'') != ''
+and    upper(sprofile.last_name) like upper(#{requester_name}) || '%'
+and    cntrct.status = #{status}
+union all
+select cntrct.contract_num
+      ,request.request_num
+      ,request.user_id as requester_id
+      ,sprofile.first_name || ' ' || sprofile.last_name as requester_name
+      ,cntrct.teacher_id
+      ,tprofile.first_name || ' ' || tprofile.last_name as teacher_name
+      ,cntrct.status
+      ,cntrct.start_dt
+      ,cntrct.end_dt
+      ,cntrct.period_unit_class
+      ,cntrct.class_times
+      ,cntrct.period_unit_pay
+      ,cntrct.pay_times
+      ,cntrct.pay_amount
+      ,to_char(cntrct.audit_time,'YYYYMMDDHH24MISS') as audit_time
+from   public."TeacherProfile" tprofile
+       left join public."Contract" cntrct on cntrct.teacher_id = tprofile.user_id
+       left join public."UserRequestMst" request on request.request_num = cntrct.request_num
+       left join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
+where  COALESCE(#{requester_name},'') != ''
+and    upper(tprofile.first_name) like upper(#{requester_name}) || '%'
+and    cntrct.status = #{status}
+union all
+select cntrct.contract_num
+      ,request.request_num
+      ,request.user_id as requester_id
+      ,sprofile.first_name || ' ' || sprofile.last_name as requester_name
+      ,cntrct.teacher_id
+      ,tprofile.first_name || ' ' || tprofile.last_name as teacher_name
+      ,cntrct.status
+      ,cntrct.start_dt
+      ,cntrct.end_dt
+      ,cntrct.period_unit_class
+      ,cntrct.class_times
+      ,cntrct.period_unit_pay
+      ,cntrct.pay_times
+      ,cntrct.pay_amount
+      ,to_char(cntrct.audit_time,'YYYYMMDDHH24MISS') as audit_time
+from   public."TeacherProfile" tprofile
+       left join public."Contract" cntrct on cntrct.teacher_id = tprofile.user_id
+       left join public."UserRequestMst" request on request.request_num = cntrct.request_num
+       left join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
+where  COALESCE(#{requester_name},'') != ''
+and    upper(tprofile.last_name) like upper(#{requester_name}) || '%'
+and    cntrct.status = #{status}
+) v
+
+	</select>
+	
+	<insert id="insertContract">
+
+		insert into public."Contract" (contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
+		                               period_unit_pay, pay_times, pay_amount, create_time, audit_time, audit_id)
+		values (DEFAULT, #{request_num}, #{teacher_id}, #{status}, #{start_dt}, #{end_dt}, #{period_unit_class}, #{class_times}, 
+		        #{period_unit_pay}, #{pay_times}, #{pay_amount}, now(), now(), #{audit_id})
+		
+	</insert>
+	
+	<update id="updateContract">
+
+		update public."Contract"
+		set    status = #{status}
+		      ,audit_time = now()
+		      ,audit_id = #{audit_id}
+		      ,teacher_id = #{teacher_id}
+		      ,start_dt = #{start_dt}
+		      ,end_dt = #{end_dt}
+		      ,period_unit_class = #{period_unit_class}
+		      ,class_times = #{class_times}
+		      ,period_unit_pay = #{period_unit_pay}
+		      ,pay_times = #{pay_times}
+		      ,pay_amount = #{pay_amount}
+		where  contract_num = #{contract_num}
+		
+	</update>
+	
+	<insert id="insertContractHst">
+
+		insert into public."ContractHst" (contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
+		                                  period_unit_pay, pay_times, pay_amount, create_time, audit_id)
+		select contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
+		       period_unit_pay, pay_times, pay_amount, now(), #{audit_id}
+		from   public."Contract"
+		where  contract_num = #{contract_num}
+		
+	</insert>
+	
+	<insert id="insertReport">
+
+		insert into public."Report" (user_id, create_time, report_type, report_title, report_text, file_name, file_data, audit_time, audit_id)
+		values(#{user_id}, now(), #{report_type}, #{report_title}, #{report_text}, #{file_name}, #{file_data}, now(), #{audit_id})
+		
+	</insert>
+
+</mapper>
+	

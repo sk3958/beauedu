@@ -1,0 +1,133 @@
+body {
+	font-family: sans-serif, Arial, Helvetica;
+	color: #373737;
+}
+
+input[type=text], input[type=password], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  background-color: #FF7F00;
+   background-color: #c0b283;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.05em;
+  font-weight: 600;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancel-button {
+  width: auto;
+  font-weight: 600;
+  padding: 10px 18px;
+  background-color: #f44336;
+  background-color: #FF7F00;
+  background-color: #c0b283;
+}
+
+.image-container {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.contents {
+  padding: 16px;
+}
+
+span.link-to {
+  float: right;
+  padding-top: 16px;
+  padding-left: 16px;
+}
+
+.container {
+  /*display: none;*/
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  /*background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);*/
+  padding-top: 60px;
+  background-image: linear-gradient(to bottom, #77c9d4, #57bc90);
+  background-image: linear-gradient(to bottom, #c0b283, #dcd0c0);
+  background-image: linear-gradient(to bottom, #dcd0c0, #bab0a0);
+  background-image: linear-gradient(to bottom, #FF7F00, #f1f1f1);
+  background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);
+}
+
+.login-form, .register-form {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto;
+  border: 1px solid #888;
+  width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+			0 10px 10px rgba(0,0,0,0.22);
+}
+
+/*.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}*/
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens
+@media screen and (max-width: 300px) {
+  span.link-to {
+     display: block;
+     float: none;
+  }
+  .cancel-button {
+     width: 100%;
+  }
+}*/

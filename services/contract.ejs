@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Contract</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/jquery-ui.js?after"></script>
+<script type="text/javascript" src="./javascript/colResizable-1.6.min.js?after"></script>
+<script type="text/javascript" src="./javascript/moment.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/contract.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle_2.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/jquery-ui.css?after" type="text/css" />
+
+<script>
+<%
+if (undefined === contractBeanList || null === contractBeanList) contractBeanList = {}
+if (undefined === periodList || null === periodList) periodList = {}
+if (undefined === statusList || null === statusList) statusList = {}
+if (undefined === session || null === session) {
+%>
+	location.href = "login";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function()
+{
+	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "contratc.ejs");
+
+	$.datepicker.setDefaults({
+          dateFormat: 'yymmdd',
+					showOtherMonths: true,
+          showMonthAfterYear:true,
+          changeYear: true,
+          changeMonth: true,
+          buttonImageOnly: true           
+	});
+	
+	$(".start_dt, .end_dt").datepicker();
+	
+	BeauEdu.setEvent();
+	
+<%
+  var contractBean
+	var commCdDtlBean
+
+  for (i in contractBeanList) {
+		contractBean = contractBeanList[i]
+%>
+
+		BeauEdu.Contracts["<%= contractBean.getContract_num() %>"] = {
+			changed: false,
+			row_id:"<%= contractBean.getContract_num() %>",
+			contract_num:"<%= contractBean.getContract_num() %>",
+			request_num:"<%= contractBean.getRequest_num() %>",
+			requester_id:"<%= contractBean.getRequester_id() %>",
+			requester_name:"<%= contractBean.getRequester_name() %>",
+			teacher_id:"<%= contractBean.getTeacher_id() %>",
+			teacher_name:"<%= contractBean.getTeacher_name() %>",
+			status:"<%= contractBean.getStatus() %>",
+			start_dt:"<%= contractBean.getStart_dt() %>",
+			end_dt:"<%= contractBean.getEnd_dt() %>",
+			period_unit_class:"<%= contractBean.getPeriod_unit_class() %>",
+			class_times:"<%= contractBean.getClass_times() %>",
+			period_unit_pay:"<%= contractBean.getPeriod_unit_pay() %>",
+			pay_times:"<%= contractBean.getPay_times() %>",
+			pay_amount:"<%= contractBean.getPay_amount() %>"
+		};
+	
+		BeauEdu.OriginContracts["<%= contractBean.getContract_num() %>"] = {
+			changed: false,
+			row_id:"<%= contractBean.getContract_num() %>",
+			contract_num:"<%= contractBean.getContract_num() %>",
+			request_num:"<%= contractBean.getRequest_num() %>",
+			requester_id:"<%= contractBean.getRequester_id() %>",
+			requester_name:"<%= contractBean.getRequester_name() %>",
+			teacher_id:"<%= contractBean.getTeacher_id() %>",
+			teacher_name:"<%= contractBean.getTeacher_name() %>",
+			status:"<%= contractBean.getStatus() %>",
+			start_dt:"<%= contractBean.getStart_dt() %>",
+			end_dt:"<%= contractBean.getEnd_dt() %>",
+			period_unit_class:"<%= contractBean.getPeriod_unit_class() %>",
+			class_times:"<%= contractBean.getClass_times() %>",
+			period_unit_pay:"<%= contractBean.getPeriod_unit_pay() %>",
+			pay_times:"<%= contractBean.getPay_times() %>",
+			pay_amount:"<%= contractBean.getPay_amount() %>"
+		};
+<%
+  }
+%>
+	
+	return true;
+  };
+<%
+}
+%>
+
+</script>
+
+</head>
+
+<body  onload="javascript:BeauEdu.bodyOnLoad();">
+	<header id="top" class="top">
+	  <%- include('./top.ejs') %>
+	</header>
+<article class="full_width">
+	<div class="search_area">
+		<form method="post" id="search_form" action="selectContract">
+		<span class="title">Status</span>
+		<select id="search_status" name="status" value="<%= searchedStatus %>">
+<%
+for (i in statusList) {
+	commCdDtlBean = statusList[i]
+%>
+			<option value="<%= commCdDtlBean.getComm_cd_val() %>"
+<%
+	if (searchedStatus == commCdDtlBean.getComm_cd_val()) {
+%>
+			selected
+<%
+	}
+%>
+			><%= commCdDtlBean.getComm_cd_val_nm() %></option>
+<%
+}
+%>
+		</select>
+		<span class="title">Search Name</span>
+		<input type="text" id="search_name" name="name" value="<%= searchedName %>" onkeypress="javascript:BeauEdu.onNameKeyPreaa(event);" />
+		<button type="submit" id="run_search">Search</button>
+		</form>
+	</div>
+	<div id="contractList">
+		<table id="table_contracts">
+			<!-- <caption>Contract Management</caption> -->
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>ID</th>
+					<th>Teacher Name</th>
+					<th>Teacher ID</th>
+					<th>Status</th>
+					<th>Start Date</th>
+					<th>End Date</th>
+					<th>Period Class</th>
+					<th>Times Per</th>
+					<th>Period Pay</th>
+					<th>Times Per</th>
+					<th>Pay Amount</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+<%
+for (i in contractBeanList) {
+	contractBean = contractBeanList[i]
+%>
+				<tr class="row" id="<%= contractBean.getContract_num() %>">
+					<td class="requester_name"><input type="hidden" class="row_id" data-group="row_id" value="<%= contractBean.getContract_num() %>" readonly/><%= contractBean.getRequester_name() %></td>
+					<td class="requester_id"><%= contractBean.getRequester_id() %></td>
+					<td><input type="text" class="teacher_name" data-group="teacher_name" value="<%= contractBean.getTeacher_name() %>" readonly />
+						<button type="button" class="teacher_lov">...</button>
+					</td>
+					<td><input type="text" class="teacher_id" data-group="teacher_id" value="<%= contractBean.getTeacher_id() %>" readonly />
+						<button type="button" class="clear_teacher">X</button>
+					</td>
+					<td><select class="status" data-group="status" value="<%= contractBean.getStatus() %>">
+							<option value="">--Select One--</option>
+<%
+	for (i in statusList) {
+		commCdDtlBean = statusList[i]
+%>
+							<option value="<%= commCdDtlBean.getComm_cd_val() %>" 
+<%  
+		if (contractBean.getStatus() == commCdDtlBean.getComm_cd_val()) {
+%>										
+								selected
+<%
+		}
+%>
+										><%= commCdDtlBean.getComm_cd_val_nm() %></option>
+<%
+	}
+%>
+						</select>
+					</td>
+					<td><input type="text" class="start_dt" data-group="start_dt" format="yyyymmdd" value="<%= contractBean.getStart_dt() %>" /></td>
+					<td><input type="text" class="end_dt" data-group="end_dt" format="yyyymmdd" value="<%= contractBean.getEnd_dt() %>" /></td>
+					<td><select class="period_unit_class" data-group="period_unit_class" value="<%= contractBean.getPeriod_unit_class() %>">
+						<option value="">--Select One--</option>
+<%
+	for (i in periodList) {
+		commCdDtlBean = periodList[i]
+%>
+							<option value="<%= commCdDtlBean.getComm_cd_val() %>" 
+<%	if (contractBean.getPeriod_unit_class() == commCdDtlBean.getComm_cd_val()) {
+%>										
+								selected
+<%
+		}
+%>
+										><%= commCdDtlBean.getComm_cd_val_nm() %></option>
+<%
+	}
+%>
+						</select>
+					</td>
+					<td><input type="number" class="class_times" data-group="class_times" value="<%= contractBean.getClass_times() %>" /></td>
+					<td><select class="period_unit_pay" data-group="period_unit_pay" value="<%= contractBean.getPeriod_unit_pay() %>">
+						<option value="">--Select One--</option>
+<%
+	for (i in periodList) {
+		commCdDtlBean = periodList[i]
+%>
+							<option value="<%= commCdDtlBean.getComm_cd_val() %>" 
+<%	if (contractBean.getPeriod_unit_pay() == commCdDtlBean.getComm_cd_val()) {
+%>										
+								selected
+<%
+		}
+%>
+										><%= commCdDtlBean.getComm_cd_val_nm() %></option>
+<%
+	}
+%>
+						</select>
+					</td>
+					<td><input type="number" class="pay_times" data-group="pay_times" value="<%= contractBean.getPay_times() %>" /></td>
+					<td><input type="number" class="pay_amount" data-group="pay_amount" value="<%= contractBean.getPay_amount() %>" /></td>
+					<td><button type="button" class="save_button">Save</button>
+				</tr>
+<%
+}
+%>
+			</tbody>
+		</table>
+	</div>
+	<div id="teacher_list_popup" class="list-popup">
+		<div id="popup_header" class="list-popup-header">
+			<div>
+			<button type="button" onclick="javascript:BeauEdu.closeTeacherListPopup();">X</button>
+			</div>
+		</div>
+		<table id="teacher_list_table" class="popup-list-table">
+		</table>
+		<div id="popup_footer" class="list-popup-footer">
+			<button type="button" id="cancel_popup" onclick="javascript:BeauEdu.closeTeacherListPopup();">Close</button>
+		</div>
+	</div>
+</article>
+</body>
+</html>

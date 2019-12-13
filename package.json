@@ -1,0 +1,9 @@
+{
+	"name": "beauedu",
+	"version": "1.0.0",
+	"description": "",
+	"main": "",
+	"dependencies": {
+		"stream-to-blob": "^2.0.0"
+	}
+}

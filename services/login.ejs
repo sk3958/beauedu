@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>BEAU-EDU Login</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/login.js?after"></script>
+
+<link rel="stylesheet" href="./css/register-form.css?after" type="text/css" />
+
+</head>
+<body onload="javascript:BeauEdu.bodyOnLoad();">
+	<div class="container">
+		<form class="login-form animate" id="login_form">
+			<div class="image-container">
+				<!--  <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
+			</div>
+	
+			<div class="contents">
+				<label for="uname"><b>User ID</b></label>
+				<input type="text" id="user_id" placeholder="Enter User ID" name="uname" onkeypress="javascript:BeauEdu.onUserIdKeyPress(event);" required>
+	
+				<label for="psw"><b>Password</b></label>
+				<input type="password" id="user_passwd" placeholder="Enter Password" name="psw" onkeypress="javascript:BeauEdu.onUserPasswdKeyPress(event);" required>
+	        
+				<button type="button" onclick="javascript:BeauEdu.login('login_form')">Login</button>
+				<label>
+				<input type="checkbox" name="remember"> Remember me
+				</label>
+			</div>
+	
+			<div class="contents">
+				<button type="button" class="cancel-button">Cancel</button>
+				<span class="link-to"><a href="registerUser.ejs">Sign Up</a></span>
+				<span class="link-to"><a href="#">Forgot password?</a></span>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

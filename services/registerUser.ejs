@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register User</title>
+
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/registerUser.js?after"></script>
+
+<link rel="stylesheet" href="./css/register-form.css?after" type="text/css" />
+
+</head>
+<body>
+	<div class="container">
+		<form class="register-form animate" id="register_form">
+			<div class="image-container">
+				<!--  <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
+			</div>
+	
+			<div class="contents">
+				<label for="uid"><b>User ID</b></label>
+				<input type="text" id="user_id" class="new-id" name="uid" placeholder="Enter User ID" required />
+				<button type="button" class="check-id" onclick="javascript:BeauEdu.checkIdDup('user_id')">Check ID</button>
+				<label for="uname"><b>User Name</b></label>
+				<input type="text" id="user_name" name="uname" placeholder="Enter User Name" required />
+				<label for="ukind"><b>User Type</b></label>
+				<select id="user_kind" name="ukind" required>
+					<option value="">--Select One--</option>
+					<option value="01">Student</option>
+					<option value="02">Teacher</option>
+					<option value="03">Partner</option>
+				</select>
+				<label for="upasswd"><b>Password</b></label>
+				<input id="user_passwd" type="password" name="upasswd" placeholder="Enter Password" required />
+				<label for="upasswd2"><b>Check Password</b></label>
+				<input id="check_passwd" type="password" name="upasswd2" placeholder="Retype Password" required />
+				<button type="button" onclick="javascript:BeauEdu.registerUser('register_form')">Register</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

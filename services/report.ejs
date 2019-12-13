@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="EUC-KR">
+<title>Report</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/report.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleLeft.css?after" type="text/css" />
+
+<script>
+<%
+if (null === session.user_id || undefined === session.user_id) {
+%>
+	location.href = "./login.jsp";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function()
+{
+	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "report.ejs");
+	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "report.ejs");
+	return true;
+};
+<%
+}
+%>
+</script>
+
+</head>
+
+<body onload="BeauEdu.bodyOnLoad()">
+<div class="background">
+<div class="container">
+	<header id="top" class="top">
+		<%- include('./top.ejs') %>
+	</header>
+	<section class="layout">
+		<aside id="left_menu" class="left-nav">
+			<%- include('./left.ejs') %>
+		</aside>
+		<article class="content">
+			<div class="title">
+				<h1>Report</h1><br>
+			</div>
+			<div style="width:100%;">		
+				<form class="report-form" id="report_form" action="#">
+					<table class="report">
+						<tr>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+							<td class="dummy-column"></td>
+						</tr>
+						<tr><td class="attr-title" colspan="4">Report Title</td></tr>
+						<tr><td colspan="4"><input class="full-width" id="report_title" name="report_title" type="text" required></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td class="attr-title" colspan="4">Free Report</td></tr>
+						<tr><td colspan="4"><textarea class="full-width" id="report_text" name="report_text" rows="20"></textarea></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td colspan="4">
+							<div class="filebox">
+								<label for="upfile">Attach File</label>&nbsp;&nbsp;<label onclick="javascript:BeauEdu.cancelFileSelect();">Cancel</label>
+								<input type="file" id="upfile" name="upfile" onchange="javascript:BeauEdu.onFileSelect();">
+							</div>
+						</td></tr>
+						<tr><td colspan="4"><input class="full-width" id="file_name" name="file_name" type="text" onkeydown="javascript:BeauEdu.readOnlyInputKeyDown(event);" readonly></td></tr>
+						<tr class="space"><td colspan="4">hidden</td></tr>
+						<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.saveReport();" style="width:150px;">Submit</button></td></tr>
+					</table>
+				</form>
+			</div>
+		</article>
+	</section>
+</div>
+</div>
+</body>
+</html>

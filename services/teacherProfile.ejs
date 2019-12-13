@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>Teacher Profile</title>
+
+<script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/teacherProfile.js?after"></script>
+
+<link rel="stylesheet" href="./css/BeauEduStyle.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/BeauEduStyleLeft.css?after" type="text/css" />
+
+<script>
+<%
+if (null === session.user_id || undefined === session.user_id) {
+%>
+	location.href = "./login.ejs";
+<%
+} else {
+%>
+BeauEdu.bodyOnLoad = function()
+{
+	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "teacherProfile.ejs");
+	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "teacherProfile.ejs");
+	return true;
+};
+<%
+}
+%>
+</script>
+
+</head>
+
+<body onload="BeauEdu.bodyOnLoad()">
+<section class="container">
+	<header id="top" class="top">
+		<%- include('./top.ejs') %>
+	</header>
+	<aside id="left_menu" class="left-nav">
+		<%- include('./left.ejs') %>
+	</aside>
+	<article class="content">
+		<div class="title">
+			<h1>Teacher Profile</h1>
+			Upon completion of this form, we will contact you to see if your internet connection is suitable.<br>
+			Once everything is taken care of, we will work to assign a student to you based on your specialties and their needs.<br><br>
+		</div>
+	<div style="width:100%;">		
+<% 
+var profile = teacherProfile;
+%>
+		<form class="profile-form" id="teacher_profile" action="#">
+			<table class="profiles">
+				<tr>
+					<td class="dummy-column"></td>
+					<td class="dummy-column"></td>
+					<td class="dummy-column"></td>
+					<td class="dummy-column"></td>
+				</tr>
+				<tr><td class="attr-title" colspan="4">Name*</td></tr>
+				<tr>
+					<td colspan="2"><input class="full-width" id="middle_name" type="text" value="<%= profile.getMiddle_name() %>" hidden>
+									<input class="full-width" id="first_name" type="text" value="<%= teacherProfile.getFirst_name() %>" required><br><span class="attr-title-detail">First Name</span></td>
+					<td colspan="2"><input class="full-width" id="last_name" type="text" value="<%= teacherProfile.getLast_name() %>" required><br><span class="attr-title-detail">Last Name</span></td>
+				</tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Email*</td></tr>
+				<tr><td colspan="4"><input class="full-width" id="email" type="text" value="<%= teacherProfile.getEmail() %>" required></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Location*<br><span class="attr-title-detail">(Street, City, Country)</span></td></tr>
+				<tr><td colspan="4"><input class="full-width" id="location" type="text" value="<%= teacherProfile.getLocation() %>" required></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Qualifications*<br><span class="attr-title-detail">(eg. education, certifications)</span></td></tr>
+				<tr><td colspan="4"><input class="full-width" id="qualifications" type="text" value="<%= teacherProfile.getQualifications() %>" required></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Primary Language*</td></tr>
+				<tr><td colspan="4"><input class="full-width" id="primary_language" type="text" value="<%= teacherProfile.getPrimary_language() %>" required></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Secondary Language*</td></tr>
+				<tr><td colspan="4"><input class="full-width" id="secondary_language" type="text" value="<%= teacherProfile.getSecondary_language() %>" required></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Bio*</td></tr>
+				<tr><td colspan="4"><textarea class="full-width" id="bio" rows="10" required><%= teacherProfile.getBio() %></textarea></td></tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Speciality*<br><span class="attr-title-detail">What best describes you as teacher?</span></td></tr>
+				<tr>
+					<td colspan="4">
+<% 
+var teacherSpecialities = teacher_specialities
+if (undefined === teacherSpecialities || null == teacherSpecialities) {
+	teacherSpecialities = {};
+}
+
+var registered_teacher_specialities = registered_teacher_specialities
+	
+for (i in teacherSpecialities) {
+	commCdDtlBean = teacherSpecialities[i]
+%>
+						<input type="checkbox" name="teacher_specialities" id="<%= commCdDtlBean.getComm_cd_val() %>" value="<%= commCdDtlBean.getComm_cd_val() %>"
+<%
+	if (undefined !== registered_teacher_specialities && null !== registered_teacher_specialities) {
+		var userMultiAttrBean
+		for (i in registered_teacher_specialities) {
+			userMultiAttrBean = registered_teacher_specialities[i]
+			if (commCdDtlBean.getComm_cd_val() == userMultiAttrBean.getComm_cd_val()) {
+%> 
+							checked="checked"
+<%
+			    break;
+			}
+		}
+	}
+%>
+						> <%= commCdDtlBean.getComm_cd_val_nm() %><br>
+<%
+}
+%>
+					</td>
+				</tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+				<tr><td class="attr-title" colspan="4">Connection*<br><span class="attr-title-detail">Is your internet connection good enough for video messaging? (Skype, etc.)</span></td></tr>
+				<tr>
+					<td colspan="4">
+<% 
+var inetConnections = inet_connections
+	
+for (i in inetConnections) {
+	commCdDtlBean = inetConnections[i]
+%>
+						<input type="radio" name="inet_connection" value="<%= commCdDtlBean.getComm_cd_val() %>"
+<%
+	if (commCdDtlBean.getComm_cd_val() == teacherProfile.getInet_connection()) {
+%>
+							checked="checked"
+<%
+	}
+%>
+						>	<%= commCdDtlBean.getComm_cd_val_nm() %><br>
+<%
+}
+%>
+					</td>
+				</tr>
+				<tr class="space"><td colspan="4">hidden</td></tr>
+					<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.registerTeacherProfile('teacher_profile')" style="width:150px;">Submit</button></td></tr>
+			</table>
+		</form>
+	</div>
+	</article>
+</section>
+</body>
+</html>
