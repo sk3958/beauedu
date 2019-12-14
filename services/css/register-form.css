@@ -15,7 +15,8 @@ input[type=text], input[type=password], select {
 button {
   background-color: #4CAF50;
   background-color: #FF7F00;
-   background-color: #c0b283;
+  background-color: #c0b283;
+	background-color: #ff8389;
   color: white;
   border-radius: 5px;
   font-size: 1.05em;
@@ -38,6 +39,7 @@ button:hover {
   background-color: #f44336;
   background-color: #FF7F00;
   background-color: #c0b283;
+	background-color: #ff8389;
 }
 
 .image-container {
@@ -73,15 +75,17 @@ span.link-to {
   /*background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);*/
   padding-top: 60px;
-  background-image: linear-gradient(to bottom, #77c9d4, #57bc90);
+  /*background-image: linear-gradient(to bottom, #77c9d4, #57bc90);
   background-image: linear-gradient(to bottom, #c0b283, #dcd0c0);
   background-image: linear-gradient(to bottom, #dcd0c0, #bab0a0);
   background-image: linear-gradient(to bottom, #FF7F00, #f1f1f1);
-  background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);
+  background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);*/
+	background-color: #ffd3d9;
 }
 
 .login-form, .register-form {
   background-color: #fefefe;
+  background-color: #fff0f2;
   margin: 5% auto 15% auto;
   border: 1px solid #888;
   width: 400px;
@@ -124,10 +128,10 @@ span.link-to {
 /* Change styles for span and cancel button on extra small screens
 @media screen and (max-width: 300px) {
   span.link-to {
-     display: block;
-     float: none;
+    display: block;
+    float: none;
   }
   .cancel-button {
-     width: 100%;
+    width: 100%;
   }
 }*/

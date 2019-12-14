@@ -5,7 +5,7 @@ html
 
 body
 {
-	font-family: sans-serif, Helvetica Neue, Helvetica;
+	font-family: Verdana, sans-serif, Helvetica Neue, Helvetica;
 	font-size: 100%;
 	min-height: 100%;
 	overflow-y: scroll; 
@@ -18,10 +18,11 @@ body
 	text-rendering: optimizeLegibility;
 	color: #373737;
 	background-color: #f4f4f4;
-	background-image: linear-gradient(to bottom, #c0b283, #dcd0c0);
+	background-color: #ffd3d9;
+	/*background-image: linear-gradient(to bottom, #c0b283, #dcd0c0);
 	background-image: linear-gradient(to bottom, #77c9d4, #57bc90);
 	background-image: linear-gradient(to bottom, #dcd0c0, #bab0a0);
-	background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);
+	background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);*/
 }
 
 .full-width
@@ -50,8 +51,8 @@ article button:hover
 .search_area
 {
 	background: #e1e1e1;
-  	border: none;
-  	color: #373737;
+	border: none;
+	color: #373737;
 	padding: 10px;
 	border: 1px solid #333;
 	border-bottom: none;
@@ -197,12 +198,12 @@ table .save_button, .accept_teacher
 #popup_footer
 {
 	display: flex;
-  	align-items: center;
-  	justify-content: center;
-  	padding-top: 20px;
-  	padding-bottom: 10px;
-  	border: 1px solid #333;
-  	border-top: none;
+	align-items: center;
+	justify-content: center;
+	padding-top: 20px;
+	padding-bottom: 10px;
+	border: 1px solid #333;
+	border-top: none;
 }
 #cancel_popup
 {
@@ -224,6 +225,6 @@ table .save_button, .accept_teacher
 #progress
 {
 	height: 100%;
-	whidth: 1%;
+	width: 1%;
 	background-color: green;
 }
