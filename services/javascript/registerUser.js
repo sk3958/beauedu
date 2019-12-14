@@ -41,7 +41,7 @@ BeauEdu.registerUser = function(form_id) {
 	}
 	
 	if (checked_id != document.getElementById('user_id').value) {
-		alert('Press Check ID button.')
+		BeauEdu.alert('Press Check ID button.')
 		return false
 	}
 	
@@ -67,18 +67,18 @@ BeauEdu.success = function(responseText) {
 	
 	if ('checkIdDup' == request_type) {
 		if (json.available == 'true') {
-			alert(json.user_id + ' is available.')
+			BeauEdu.alert(json.user_id + ' is available.')
 			checked_id = json.user_id
 		} else {
-			alert(json.user_id + ' is not available.')
+			BeauEdu.alert(json.user_id + ' is not available.')
 		}
 	} else if ('registerUser' == request_type) {
 		if (json.result == 'success') {
-			alert(json.user_id + ' is successfully registered.')
+			BeauEdu.alert(json.user_id + ' is successfully registered.', 'SUCCESS', 'success')
 			
 			location.href = json.url
 		} else {
-			alert('Error occured.')
+			BeauEdu.alert('Error occured.', 'ERROR', 'error')
 		}
 	}
 	
@@ -86,7 +86,7 @@ BeauEdu.success = function(responseText) {
 }
 
 BeauEdu.error = function() {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	
 	return true
 }

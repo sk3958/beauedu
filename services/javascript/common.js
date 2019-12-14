@@ -48,6 +48,12 @@ const pageMenu = {
 	'error.ejs': ''
 }
 
+const alertColor = {
+	success: '#00ff00',
+	error: '#ff0000',
+	notify: '#ff7777'
+}
+
 BeauEdu.arrangeTopMenu = function(userKind, fileName) {
 }
 
@@ -118,7 +124,7 @@ BeauEdu.checkRequiredField = function(form_id)
 			continue
 		}
 		if (true == form[i].required && ('' == form[i].value || null == form[i].value || undefined == form[i].value)) {
-			alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
+			BeauEdu.alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
 			form[i].focus()
 			
 			return false
@@ -157,14 +163,14 @@ BeauEdu.replaceNullString = function(form_id) {
 
 BeauEdu.checkID = function(user_id) {
 	if (4 > user_id.trim().length) {
-		alert('User ID must be over 4 characters.')
+		BeauEdu.alert('User ID must be over 4 characters.')
 		return false
 	}
 	
 	var str_match = user_id.trim().match(/[^a-zA-Z0-9]/)
 	
 	if (null != str_match) {
-		alert('User ID must be consisted of alphabet and number.')
+		BeauEdu.alert('User ID must be consisted of alphabet and number.')
 		return false
 	}
 	
@@ -173,19 +179,19 @@ BeauEdu.checkID = function(user_id) {
 
 BeauEdu.checkPassword = function(passwd, passwd2) {
 	if (passwd != passwd2) {
-		alert('Check password is different.')
+		BeauEdu.alert('Check password is different.')
 		return 1
 	}
 	
 	if (6 > passwd.length) {
-		alert('Password must be over 6 characters.')
+		BeauEdu.alert('Password must be over 6 characters.')
 		return 2
 	}
 	
 	var str_match = passwd.match(/[^a-zA-Z0-9\{\}\[\]\/?.,:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\']/)
 	
 	if (null != str_match) {
-		alert('There is an invaild password character.(' + str_match[0] + ').')
+		BeauEdu.alert('There is an invaild password character.(' + str_match[0] + ').')
 		return 3
 	}
 	
@@ -212,4 +218,21 @@ BeauEdu.copyObject = function(obj) {
 	}
 	
 	return copy
+}
+
+BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
+	var container = document.querySelector('#alert_container')
+	var formElement = document.querySelector('#alert_form')
+	var titleElement = document.querySelector('#alert_title')
+	var messageElement = document.querySelector('#alert_content')
+
+	container.style.display = 'block'
+	formElement.style.backgroudColor = alertColor[type]
+	titleElement.innerText = title
+	messageElement.innerText = message
+}
+
+BeauEdu.closeAlert = function() {
+	var container = document.querySelector('#alert_container')
+	container.style.display = 'none'
 }

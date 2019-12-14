@@ -19,11 +19,11 @@ BeauEdu.saveReport = function() {
 	var formData = new FormData(document.querySelector('#report_form'))
 	
 	if ('' == document.querySelector('#report_title').value.trim()) {
-		alert('Report title must be filled.')
+		BeauEdu.alert('Report title must be filled.')
 		document.querySelector('#report_title').focus()
 		return false
 	} else if ('' == document.querySelector('#report_text').value.trim() && '' == document.querySelector('#file_name').value.trim()) {
-		alert('Attach file or write report.')
+		BeauEdu.alert('Attach file or write report.')
 		document.querySelector('#report_text').focus()
 		return false
 	}
@@ -35,17 +35,17 @@ BeauEdu.onReportSaveSuccess = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		alert('Your request is successfully registered.')
+		BeauEdu.alert('Your report is successfully registered.')
 
 	} else {
-		alert('Error occured.')
+		BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	}
 	
 	return true
 }
 
 BeauEdu.onReportSaveFail = function() {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	
 	return true
 }

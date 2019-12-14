@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>BEAU-EDU Login</title>
 
 <script type="text/javascript" src="./javascript/jquery3.4.1.js?after"></script>
@@ -10,6 +10,7 @@
 <script type="text/javascript" src="./javascript/login.js?after"></script>
 
 <link rel="stylesheet" href="./css/register-form.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/alert.css?after" type="text/css" />
 
 </head>
 <body onload="javascript:BeauEdu.bodyOnLoad();">
@@ -39,5 +40,6 @@
 			</div>
 		</form>
 	</div>
+	<%- include('./alert.ejs') %>
 </body>
 </html>

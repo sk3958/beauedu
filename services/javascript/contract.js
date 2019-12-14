@@ -99,7 +99,7 @@ BeauEdu.saveContract = function($target) {
 	var row_id = $tr.find('.row_id').val()
 	
 	if (false == BeauEdu.Contracts[row_id]['changed']) {
-		alert('Nothing is changed.')
+		BeauEdu.alert('Nothing is changed.')
 		return
 	}
 	
@@ -110,15 +110,15 @@ BeauEdu.saveContract = function($target) {
 
 BeauEdu.isValidData = function($tr, data) {
 	if (isNaN(data['class_times']) || 0 <= ('0' + data['class_times']).indexOf('.')) {
-		alert('This field must be a integer.')
+		BeauEdu.alert('This field must be a integer.')
 		$tr.find('.class_times').focus()
 		return false
 	} else if (isNaN(data['pay_times']) || 0 <= ('0' + data['pay_times']).indexOf('.')) {
-		alert('This field must be a integer.')
+		BeauEdu.alert('This field must be a integer.')
 		$tr.find('.pay_times').focus()
 		return false
 	} else if (isNaN(data['pay_amount'])) {
-		alert('This field must be a number.')
+		BeauEdu.alert('This field must be a number.')
 		$tr.find('.pay_amount').focus()
 		return false
 	}
@@ -126,26 +126,26 @@ BeauEdu.isValidData = function($tr, data) {
 	if (CONTRACT_STATUS_REQUESTED == data['status']) return true
 	
 	if (null == data['teacher_id'] || '' == data['teacher_id'].trim()) {
-		alert('Teacher must be selected.')
+		BeauEdu.alert('Teacher must be selected.')
 		return false
 	} else if (false == moment(data['start_dt'], 'YYYYMMDD', true).isValid()) {
-		alert('Date format must be YYYYMMDD.')
+		BeauEdu.alert('Date format must be YYYYMMDD.')
 		$tr.find('.start_dt').focus()
 		return false
 	} else if (false == moment(data['end_dt'], 'YYYYMMDD', true).isValid()) {
-		alert('Date format must be YYYYMMDD.')
+		BeauEdu.alert('Date format must be YYYYMMDD.')
 		$tr.find('.end_dt').focus()
 		return false
 	} else if (data['start_dt'] > data['end_dt']) {
-		alert('Check sart and end date.')
+		BeauEdu.alert('Check sart and end date.')
 		$tr.find('.end_dt').focus()
 		return false
 	} else if (null == data['period_unit_class'] || '' == data['period_unit_class']) {
-		alert('This field must be selected.')
+		BeauEdu.alert('This field must be selected.')
 		$tr.find('.period_unit_class').focus()
 		return false
 	} else if (null == data['period_unit_pay'] || '' == data['period_unit_pay']) {
-		alert('This field must be selected.')
+		BeauEdu.alert('This field must be selected.')
 		$tr.find('.period_unit_pay').focus()
 		return false
 	}
@@ -157,11 +157,11 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 	var row_id = ''
 	
 	if (json.result != 'success') {
-		alert('Error occured.')
+		BeauEdu.alert('Error occured.', 'ERROR', 'error')
 		return
 	}
 	
-	alert('Saved.')
+	BeauEdu.alert('Saved.', 'SUCCESS', 'success')
 	
 	row_id = json.row_id
 	var $tr = $('#' + row_id)
@@ -182,7 +182,7 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 }
 
 BeauEdu.onContractChangeFail = function() {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 }
 
 BeauEdu.onGetTeacherListSuccess = function(responseText) {
@@ -191,14 +191,14 @@ BeauEdu.onGetTeacherListSuccess = function(responseText) {
 	if (json.result == 'success') {
 		BeauEdu.showTeacherListPopup(json)
 	} else {
-		alert('Error occured.')
+		BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	}
 	
 	return true
 }
 
 BeauEdu.onGetTeacherListFail = function() {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	
 	return true
 }

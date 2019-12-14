@@ -17,11 +17,11 @@ BeauEdu.registerTeacherProfile = function(form_id) {
 	}
 	
 	if (false == BeauEdu.checkRequiredCheckbox('teacher_specialities')) {
-		alert('Teacher Specialties are requird.')
+		BeauEdu.alert('Teacher Specialties are requird.')
 		return false
 	}
 	if (false == BeauEdu.checkRequiredCheckbox('inet_connection')) {
-		alert('Internet Connection is requird.')
+		BeauEdu.alert('Internet Connection is requird.')
 		return false
 	}
 	
@@ -34,17 +34,17 @@ BeauEdu.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		alert('Teacher Profile is successfully registered.')
+		BeauEdu.alert('Teacher Profile is successfully registered.', 'SUCCESS', 'success')
 		location.href = 'selectTeacherProfile'
 	} else {
-		alert('Error occured.')
+		BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	}
 	
 	return true
 }
 
 BeauEdu.error = function() {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	
 	return true
 }

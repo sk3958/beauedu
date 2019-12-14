@@ -24,16 +24,16 @@ BeauEdu.success = function (responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		alert('Your request is successfully registered.')
+		BeauEdu.alert('Your request is successfully registered.', 'SUCCESS', 'success')
 	} else {
-		alert('Error occured.')
+		BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	}
 	
 	return true
 }
 
 BeauEdu.error = function () {
-	alert('Error occured.')
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	
 	return true
 }

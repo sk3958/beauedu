@@ -51,7 +51,7 @@ BeauEdu.success = function(responseText) {
 	if (json.result == 'success') {
 		location.href = json.url
 	} else {
-		alert('Invalid ID or password.')
+		BeauEdu.alert('Invalid ID or password.', 'ERROR', 'error')
 		$(':focus').select()
 	}
 	
@@ -59,7 +59,6 @@ BeauEdu.success = function(responseText) {
 }
 
 BeauEdu.error = function() {
-	alert('Error occured.')
-	
+	BeauEdu.alert('Error occured.', 'ERROR', 'error')
 	return true
 }
