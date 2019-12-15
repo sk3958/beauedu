@@ -6,15 +6,13 @@ const ejs = require('ejs')
 const pg = require('pg')
 const pgSession = require('express-pg-session')(session)
 
-/* TODO: Connection info need to be secure */
 const config = {
   host: 'localhost',
-  user: 'leesk',     
-  password: 'leesk?239',
-  database: 'BEAU-EDU',
+  user: process.env['DB_USER'],     
+  password: process.env['DB_PASSWD'],
+  database: process.env['DB_NAME'],
   port: 5432
 };
-/* */
 
 const pool = new pg.Pool(config)
 const mybatis = require('mybatis-mapper')
@@ -31,7 +29,7 @@ beauedu.use(session({
     pool: pgPool,
     tableName: 'session'
   }),
-  secret: '@#@#@#$BEAUEDU#@#@#@',
+  secret: process.env['SESSION_SECRET'],
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   saveUninitialized: true
@@ -42,4 +40,3 @@ var router = require('./routes/route-main')(beauedu, fs, pool, mybatis, ejs)
 const server = beauedu.listen(3000, function() {
   console.log('Express server has started on port 3000')
 })
-
