@@ -157,11 +157,11 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 	var row_id = ''
 	
 	if (json.result != 'success') {
-		BeauEdu.alert('Error occured.', 'ERROR', 'error')
+		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 		return
 	}
 	
-	BeauEdu.alert('Saved.', 'SUCCESS', 'success')
+	BeauEdu.alert('Saved.', 'SUCCESS', ALERT_SUCCESS)
 	
 	row_id = json.row_id
 	var $tr = $('#' + row_id)
@@ -182,7 +182,7 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 }
 
 BeauEdu.onContractChangeFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', 'error')
+	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 }
 
 BeauEdu.onGetTeacherListSuccess = function(responseText) {
@@ -191,14 +191,14 @@ BeauEdu.onGetTeacherListSuccess = function(responseText) {
 	if (json.result == 'success') {
 		BeauEdu.showTeacherListPopup(json)
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', 'error')
+		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	}
 	
 	return true
 }
 
 BeauEdu.onGetTeacherListFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', 'error')
+	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	
 	return true
 }

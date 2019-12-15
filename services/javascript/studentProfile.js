@@ -31,17 +31,17 @@ BeauEdu.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.alert('Student Profile is successfully registered.', 'SUCCESS', 'success')
-		location.href = 'selectStudentProfile'
+		BeauEdu.alert('Student Profile is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+		//location.href = 'selectStudentProfile'
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', 'error')
+		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	}
 	
 	return true
 }
 
 BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', 'error')
+	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	
 	return true
 }

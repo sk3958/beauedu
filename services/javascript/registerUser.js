@@ -74,11 +74,11 @@ BeauEdu.success = function(responseText) {
 		}
 	} else if ('registerUser' == request_type) {
 		if (json.result == 'success') {
-			BeauEdu.alert(json.user_id + ' is successfully registered.', 'SUCCESS', 'success')
+			//BeauEdu.alert(json.user_id + ' is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
 			
 			location.href = json.url
 		} else {
-			BeauEdu.alert('Error occured.', 'ERROR', 'error')
+			BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 		}
 	}
 	
@@ -86,7 +86,7 @@ BeauEdu.success = function(responseText) {
 }
 
 BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', 'error')
+	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	
 	return true
 }

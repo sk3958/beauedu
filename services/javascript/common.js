@@ -48,10 +48,13 @@ const pageMenu = {
 	'error.ejs': ''
 }
 
-const alertColor = {
-	success: '#00ff00',
-	error: '#ff0000',
-	notify: '#ff7777'
+const ALERT_SUCCESS = 'success'
+const ALERT_ERROR = 'error'
+const ALERT_NOTIFY = 'notify'
+const alertClass = {
+	error: 'alert-error',
+	success: 'alert-success',
+	notify: 'alert-notify'
 }
 
 BeauEdu.arrangeTopMenu = function(userKind, fileName) {
@@ -226,10 +229,13 @@ BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
 	var titleElement = document.querySelector('#alert_title')
 	var messageElement = document.querySelector('#alert_content')
 
-	container.style.display = 'block'
-	formElement.style.backgroudColor = alertColor[type]
+	formElement.classList.remove(Object.values(alertClass))
+	var className = alertClass[type]
+	formElement.classList.add([className])
+	formElement.classList.toggle('alert')
 	titleElement.innerText = title
 	messageElement.innerText = message
+	container.style.display = 'block'
 }
 
 BeauEdu.closeAlert = function() {

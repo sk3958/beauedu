@@ -25,13 +25,52 @@
   min-width: 400px;
   /*transition: all 5s ease-in-out;*/
 }
+.alert-error {
+  /*position: relative;*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  padding: 20px;
+  background-color: #cc0000;
+  border-radius: 5px;
+  width: 25%;
+  min-width: 400px;
+  /*transition: all 5s ease-in-out;*/
+}
+.alert-success {
+  /*position: relative;*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  padding: 20px;
+  background-color: #008000;
+  border-radius: 5px;
+  width: 25%;
+  min-width: 400px;
+  /*transition: all 5s ease-in-out;*/
+}
+.alert-notify {
+  /*position: relative;*/
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  padding: 20px;
+  background-color: #ff7777;
+  border-radius: 5px;
+  width: 25%;
+  min-width: 400px;
+  /*transition: all 5s ease-in-out;*/
+}
 
-.alert h2 {
+.alert-container h2 {
   margin-top: 0;
   color: #ffffff;
   font-family: Tahoma, Arial, sans-serif;
 }
-.alert .alert-close {
+.alert-container .alert-close {
   position: absolute;
   top: 20px;
   right: 30px;
@@ -41,10 +80,10 @@
   text-decoration: none;
   color: #ffffff;
 }
-.alert .alert-close:hover {
+.alert-container .alert-close:hover {
   color: #333;
 }
-.alert .alert-content {
+.alert-container .alert-content {
   max-height: 30%;
   overflow: auto;
   color: #ffffff;

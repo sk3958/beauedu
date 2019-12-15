@@ -38,14 +38,14 @@ BeauEdu.onReportSaveSuccess = function(responseText) {
 		BeauEdu.alert('Your report is successfully registered.')
 
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', 'error')
+		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	}
 	
 	return true
 }
 
 BeauEdu.onReportSaveFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', 'error')
+	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
 	
 	return true
 }
