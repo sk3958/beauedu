@@ -70,8 +70,7 @@ BeauEdu.success = function(responseText) {
 		BeauEdu.rememberMe()
 		location.href = json.url
 	} else {
-		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR)
-		$(':focus').select()
+		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR, $(':focus'))
 	}
 	
 	return true

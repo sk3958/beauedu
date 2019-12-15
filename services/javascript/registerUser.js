@@ -67,7 +67,7 @@ BeauEdu.success = function(responseText) {
 	
 	if ('checkIdDup' == request_type) {
 		if (json.available == 'true') {
-			BeauEdu.alert(json.user_id + ' is available.')
+			BeauEdu.alert(json.user_id + ' is available.', 'SUCCESS', ALERT_SUCCESS)
 			checked_id = json.user_id
 		} else {
 			BeauEdu.alert(json.user_id + ' is not available.')

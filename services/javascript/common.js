@@ -54,8 +54,11 @@ const ALERT_NOTIFY = 'notify'
 const alertClass = {
 	error: 'alert-error',
 	success: 'alert-success',
-	notify: 'alert-notify'
+	notify: 'alert-notify',
 }
+
+BeauEdu.bodyOnKeyPress = undefined
+BeauEdu.$elementToFocus = undefined
 
 BeauEdu.arrangeTopMenu = function(userKind, fileName) {
 }
@@ -223,22 +226,45 @@ BeauEdu.copyObject = function(obj) {
 	return copy
 }
 
-BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
+BeauEdu.alertOnKeyPress = function(e) {
+	if (13 == e.keyCode) BeauEdu.closeAlert()
+}
+
+BeauEdu.alert = async function(message, title = 'Notify', type = 'notify', $elementToFocus = undefined) {
 	var container = document.querySelector('#alert_container')
 	var formElement = document.querySelector('#alert_form')
 	var titleElement = document.querySelector('#alert_title')
 	var messageElement = document.querySelector('#alert_content')
+	var closeElement = document.querySelector('#alert_close')
 
-	formElement.classList.remove(Object.values(alertClass))
+	BeauEdu.bodyOnKeyPress = document.body.onkeypress;
+	document.body.onkeypress = BeauEdu.alertOnKeyPress;
+
+	for (var attr in alertClass) {
+		formElement.classList.remove(alertClass[attr])
+	}
 	var className = alertClass[type]
 	formElement.classList.add([className])
 	formElement.classList.toggle('alert')
 	titleElement.innerText = title
 	messageElement.innerText = message
 	container.style.display = 'block'
+	
+	if ($elementToFocus) BeauEdu.$elementToFocus = $elementToFocus
+
+	closeElement.focus()
+
+	return true
 }
 
 BeauEdu.closeAlert = function() {
 	var container = document.querySelector('#alert_container')
 	container.style.display = 'none'
+	document.body.onkeypress = BeauEdu.bodyOnKeyPress;
+	BeauEdu.bodyOnKeyPress = undefined
+	if (BeauEdu.$elementToFocus) {
+		BeauEdu.$elementToFocus.focus()
+		BeauEdu.$elementToFocus.select()
+	}
+	BeauEdu.$elementToFocus = undefined
 }
