@@ -41,7 +41,25 @@ BeauEdu.onUserIdKeyPress = function(e) {
 }
 
 BeauEdu.bodyOnLoad = function() {
+	var storage = window.localStorage
+	var user_id = document.getElementById('user_id')
+	var remember_me = document.getElementById('remember_me')
+	if (storage.user_id) {
+		user_id.value = storage.user_id
+		remember_me.checked = true
+	}
 	document.getElementById('user_id').focus()
+}
+
+BeauEdu.rememberMe = function() {
+	var remember_me = document.getElementById('remember_me')
+	var storage = window.localStorage
+	var user_id = document.getElementById('user_id')
+  if (remember_me.checked) {
+		storage.setItem('user_id', user_id.value)
+	} else {
+		storage.removeItem('user_id')
+	}
 }
 
 BeauEdu.success = function(responseText) {
@@ -49,6 +67,7 @@ BeauEdu.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
+		BeauEdu.rememberMe()
 		location.href = json.url
 	} else {
 		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR)
