@@ -25,8 +25,16 @@ BeauEdu.success = function (responseText) {
 	
 	if (json.result == 'success') {
 		BeauEdu.alert('Your request is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+			.then(res => {
+			})
+			.catch(err => {
+			})
 	} else {
 		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+			.then(res => {
+			})
+			.catch(err => {
+			})
 	}
 	
 	return true
@@ -34,6 +42,10 @@ BeauEdu.success = function (responseText) {
 
 BeauEdu.error = function () {
 	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		.then(res => {
+		})
+		.catch(err => {
+		})
 	
 	return true
 }

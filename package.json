@@ -5,5 +5,8 @@
 	"main": "",
 	"dependencies": {
 		"stream-to-blob": "^2.0.0"
+	},
+	"devDependencies": {
+		"eslint": "^6.7.2"
 	}
 }

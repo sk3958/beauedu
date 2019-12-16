@@ -54,11 +54,10 @@ const ALERT_NOTIFY = 'notify'
 const alertClass = {
 	error: 'alert-error',
 	success: 'alert-success',
-	notify: 'alert-notify',
+	notify: 'alert-notify'
 }
 
 BeauEdu.bodyOnKeyPress = undefined
-BeauEdu.$elementToFocus = undefined
 
 BeauEdu.arrangeTopMenu = function(userKind, fileName) {
 }
@@ -131,7 +130,11 @@ BeauEdu.checkRequiredField = function(form_id)
 		}
 		if (true == form[i].required && ('' == form[i].value || null == form[i].value || undefined == form[i].value)) {
 			BeauEdu.alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
-			form[i].focus()
+				.then(res => {
+					form[i].focus()
+				})
+				.catch(err => {
+				})
 			
 			return false
 		}
@@ -169,39 +172,43 @@ BeauEdu.replaceNullString = function(form_id) {
 
 BeauEdu.checkID = function(user_id) {
 	if (4 > user_id.trim().length) {
-		BeauEdu.alert('User ID must be over 4 characters.')
-		return false
+		return 'User ID must be over 4 characters.'
 	}
 	
 	var str_match = user_id.trim().match(/[^a-zA-Z0-9]/)
 	
 	if (null != str_match) {
-		BeauEdu.alert('User ID must be consisted of alphabet and number.')
-		return false
+		return 'User ID must be consisted of alphabet and number.'
 	}
 	
-	return true
+	return null
 }
 
 BeauEdu.checkPassword = function(passwd, passwd2) {
 	if (passwd != passwd2) {
-		BeauEdu.alert('Check password is different.')
-		return 1
+		return {
+			message: 'Check password is different.',
+			code: 1
+		}
 	}
 	
 	if (6 > passwd.length) {
-		BeauEdu.alert('Password must be over 6 characters.')
-		return 2
+		return {
+			message: 'Password must be over 6 characters.',
+			code: 2
+		}
 	}
 	
-	var str_match = passwd.match(/[^a-zA-Z0-9\{\}\[\]\/?.,:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\']/)
+	var str_match = passwd.match(/[^a-zA-Z0-9\{\}\[\]\/?.,:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\']/); //`
 	
 	if (null != str_match) {
-		BeauEdu.alert('There is an invaild password character.(' + str_match[0] + ').')
-		return 3
+		return {
+			message: 'There is an invaild password character.(' + str_match[0] + ').',
+			code: 3
+		}
 	}
 	
-	return 0
+	return null
 }
 
 BeauEdu.readOnlyInputKeyDown = function (e) {
@@ -227,44 +234,43 @@ BeauEdu.copyObject = function(obj) {
 }
 
 BeauEdu.alertOnKeyPress = function(e) {
-	if (13 == e.keyCode) BeauEdu.closeAlert()
+	var closeElement = document.querySelector('#alert_close')
+	if (13 == e.keyCode) closeElement.click()
 }
 
-BeauEdu.alert = async function(message, title = 'Notify', type = 'notify', $elementToFocus = undefined) {
+BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
 	var container = document.querySelector('#alert_container')
 	var formElement = document.querySelector('#alert_form')
 	var titleElement = document.querySelector('#alert_title')
 	var messageElement = document.querySelector('#alert_content')
 	var closeElement = document.querySelector('#alert_close')
 
-	BeauEdu.bodyOnKeyPress = document.body.onkeypress;
-	document.body.onkeypress = BeauEdu.alertOnKeyPress;
+	BeauEdu.bodyOnKeyPress = document.body.onkeypress
+	document.body.onkeypress = BeauEdu.alertOnKeyPress
 
 	for (var attr in alertClass) {
 		formElement.classList.remove(alertClass[attr])
 	}
 	var className = alertClass[type]
-	formElement.classList.add([className])
+	formElement.classList.add(className)
 	formElement.classList.toggle('alert')
 	titleElement.innerText = title
 	messageElement.innerText = message
 	container.style.display = 'block'
 	
-	if ($elementToFocus) BeauEdu.$elementToFocus = $elementToFocus
-
-	closeElement.focus()
-
-	return true
+	return new Promise(function(resolve, reject) {
+		closeElement.onclick = function() {
+			try {
+				var container = document.querySelector('#alert_container')
+				container.style.display = 'none'
+				document.body.onkeypress = BeauEdu.bodyOnKeyPress
+				BeauEdu.bodyOnKeyPress = undefined
+				resolve(true)
+			} catch(e) {
+				reject(false)
+			}
+		}
+		closeElement.focus()
+	})
 }
 
-BeauEdu.closeAlert = function() {
-	var container = document.querySelector('#alert_container')
-	container.style.display = 'none'
-	document.body.onkeypress = BeauEdu.bodyOnKeyPress;
-	BeauEdu.bodyOnKeyPress = undefined
-	if (BeauEdu.$elementToFocus) {
-		BeauEdu.$elementToFocus.focus()
-		BeauEdu.$elementToFocus.select()
-	}
-	BeauEdu.$elementToFocus = undefined
-}

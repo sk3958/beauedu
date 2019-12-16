@@ -37,6 +37,6 @@ beauedu.use(session({
 
 var router = require('./routes/route-main')(beauedu, fs, pool, mybatis, ejs)
 
-const server = beauedu.listen(3000, function() {
-  console.log('Express server has started on port 3000')
+const server = beauedu.listen(5000, function() {
+  console.log('Express server has started on port 5000')
 })

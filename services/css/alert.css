@@ -1,5 +1,5 @@
 .alert-container {
-  z-index:3;
+  z-index:999;
   display:none;
   padding-top:100px;
   position:fixed;

@@ -18,6 +18,10 @@ BeauEdu.registerStudentProfile = function(form_id) {
 	
 	if (false == BeauEdu.checkRequiredCheckbox('teacher_preferences')) {
 		alert('Teacher Preferences are requird.')
+			.then(res => {
+			})
+			.catch(err => {
+			})
 		return false
 	}
 	
@@ -32,9 +36,17 @@ BeauEdu.success = function(responseText) {
 	
 	if (json.result == 'success') {
 		BeauEdu.alert('Student Profile is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
-		//location.href = 'selectStudentProfile'
+			.then(res => {
+				location.href = 'selectStudentProfile'
+			})
+			.catch(err => {
+			})
 	} else {
 		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+			.then(res => {
+			})
+			.catch(err => {
+			})
 	}
 	
 	return true
@@ -42,6 +54,10 @@ BeauEdu.success = function(responseText) {
 
 BeauEdu.error = function() {
 	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		.then(res => {
+		})
+		.catch(err => {
+		})
 	
 	return true
 }

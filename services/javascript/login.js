@@ -70,7 +70,11 @@ BeauEdu.success = function(responseText) {
 		BeauEdu.rememberMe()
 		location.href = json.url
 	} else {
-		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR, $(':focus'))
+		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR)
+		.then(res => {
+		})
+		.catch(err => {
+		})
 	}
 	
 	return true
@@ -78,5 +82,9 @@ BeauEdu.success = function(responseText) {
 
 BeauEdu.error = function() {
 	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		.then(res => {
+		})
+		.catch(err => {
+		})
 	return true
 }

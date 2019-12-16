@@ -173,7 +173,7 @@ table .save_button, .accept_teacher
 #teacher_list_popup
 {
 	display: none;
-	z-index: 100;
+	z-index: 9;
 	position: absolute;
 	width: 25%;
 	max-height: 50%;
@@ -214,7 +214,7 @@ table .save_button, .accept_teacher
 
 #progress-container
 {
-	z-index: 100;
+	z-index: 10;
 	position: absolute;
 	top: 0px;
 	left: 0px;

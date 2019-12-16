@@ -10,7 +10,7 @@ class SelectStudentProfileRouter extends BeauEduRouter {
   async processRequest () {
 
     var result = false;
-    if (true !== this.req.session.logined) {
+    if (!this.req.session.user_id) {
       this.res.render('login.ejs')
       return result
     }
@@ -56,35 +56,6 @@ class SelectStudentProfileRouter extends BeauEduRouter {
       this.res.render('studentProfile.ejs', data)
       
       result = true
-
-      /*var conn2 = await this.pool.connect()
-      var conn3 = await this.pool.connect()
-      var conn4 = await this.pool.connect()*/
-
-      /*var studentProfileDAO = new StudentProfileDAO(this.conn, this.sqlMapper, this.inputParam)
-      var commCdDtlDAO = new CommCdDtlDAO(conn2, this.sqlMapper, this.inputParam)
-      var commCdDtlDAO2 = new CommCdDtlDAO(conn3, this.sqlMapper, this.inputParam)
-      var userMultiAttrDAO = new UserMultiAttrDAO(conn4, this.sqlMapper, this.inputParam)
-
-      var promise = studentProfileDAO.selectStudentProfile(this.req.session.user_id)
-      var promise2 = commCdDtlDAO.selectCommCdDtlList('level_of_education', 'Y')
-      var promise3 = commCdDtlDAO.selectCommCdDtlList('teacher_speciality', 'Y')
-      var promise4 = userMultiAttrDAO.selectUserMultiAttr(this.req.session.user_id, 'teacher_speciality')
-      Promise.all([promise, promise2, promise3, promise4])
-        .then(res => {
-          data.studentProfile = res[0]
-          data.level_of_education = res[1]
-          data.teacher_specialities = res[2]
-          data.tegistered_teacher_preferences = res[3]
-          
-          this.res.render('studentProfile.ejs', data)
-          
-        })
-        .catch(err => {
-          this.res.render('error.ejs')
-          this.log(err)
-          return false
-        })*/
     } catch (e) {
       this.error(e.stack)
       this.res.render('error.ejs')
@@ -92,9 +63,6 @@ class SelectStudentProfileRouter extends BeauEduRouter {
     } finally {
       if (null !== this.conn) this.conn.release()
       return result
-      /*if (null !== conn2) conn2.release()
-      if (null !== conn3) conn3.release()
-      if (null !== conn4) conn4.release()*/
     }
   }  
 }
