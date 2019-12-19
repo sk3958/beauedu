@@ -1,7 +1,9 @@
-BeauEdu.AjaxObjects = []
+var ajax = {}
+
+ajax.AjaxObjects = []
 const TIME_FOR_REVOKE_OBJECT = 180 * 1000
 
-BeauEdu.ajaxRequest = function(method, url, data, success, fail, showProgress = false, isFileDownload = false, fileName = '') {
+ajax.ajaxRequest = function(method, url, data, success, fail, showProgress = false, isFileDownload = false, fileName = '') {
 	var xhr = new XMLHttpRequest()
 	
 	xhr.open(method, url)
@@ -21,21 +23,21 @@ BeauEdu.ajaxRequest = function(method, url, data, success, fail, showProgress = 
 	obj['fail'] = fail
 	obj['isFileDownload'] = isFileDownload
 	obj['fileName'] = fileName
-	BeauEdu.AjaxObjects.push(obj)
+	ajax.AjaxObjects.push(obj)
 	
-	xhr.onreadystatechange = BeauEdu.onAjaxReadyStatusChange
+	xhr.onreadystatechange = ajax.onAjaxReadyStatusChange
 	
 	if (showProgress)
 	{
-		BeauEdu.setProgressbar()
+		ajax.setProgressbar()
 		
-		xhr.upload.onprogress = BeauEdu.ajaxProgress
+		xhr.upload.onprogress = ajax.ajaxProgress
 	}
 	
 	return true
 }
 
-BeauEdu.setProgressbar = function() {
+ajax.setProgressbar = function() {
 	var progress = document.querySelector('#progress')
 	var progress_container
 		
@@ -64,13 +66,12 @@ BeauEdu.setProgressbar = function() {
 	progress.style.width = '1%'
 }
 
-BeauEdu.ajaxProgress = function(e) {
-	debugger
+ajax.ajaxProgress = function(e) {
 	var progress = document.querySelector('#progress')
 	progress.style.width = '' + ((e.loaded / e.total) * 100) + '%'
 }
 
-BeauEdu.onAjaxReadyStatusChange = function(e) {
+ajax.onAjaxReadyStatusChange = function(e) {
 	var xhr = e.currentTarget
 	
 	if (xhr.readyState !== XMLHttpRequest.DONE) return
@@ -78,9 +79,9 @@ BeauEdu.onAjaxReadyStatusChange = function(e) {
 	var index = -1
 	var callback = null
 	
-	for (let i = 0; i < BeauEdu.AjaxObjects.length; i++) {
-		if (BeauEdu.AjaxObjects[i]['xhr'] == xhr) {
-			callback = BeauEdu.AjaxObjects[i]
+	for (let i = 0; i < ajax.AjaxObjects.length; i++) {
+		if (ajax.AjaxObjects[i]['xhr'] == xhr) {
+			callback = ajax.AjaxObjects[i]
 			index = i
 			break
 		}
@@ -89,7 +90,7 @@ BeauEdu.onAjaxReadyStatusChange = function(e) {
 	if (0 <= index) {
 		if (xhr.status === 200) {
 			if (callback['isFileDownload']) {
-				BeauEdu.setBrowserFileDownload(xhr.response, callback['fileName'])
+				ajax.setBrowserFileDownload(xhr.response, callback['fileName'])
 			} else {
 				callback['success'](xhr.responseText)
 			}
@@ -97,7 +98,7 @@ BeauEdu.onAjaxReadyStatusChange = function(e) {
 			callback['fail']()
 		}
 		
-		BeauEdu.AjaxObjects.splice(index, 1)
+		ajax.AjaxObjects.splice(index, 1)
 		
 		var progress_container = document.querySelector('#progress_container')
 		if (undefined != progress_container && null != progress_container) {
@@ -106,7 +107,7 @@ BeauEdu.onAjaxReadyStatusChange = function(e) {
 	}
 }
 
-BeauEdu.setBrowserFileDownload = function(blob, fileName) {
+ajax.setBrowserFileDownload = function(blob, fileName) {
 	var downUrl = window.URL.createObjectURL(blob)
 	var downLink = document.createElement('a')
 	downLink.style.left = -1
@@ -121,3 +122,4 @@ BeauEdu.setBrowserFileDownload = function(blob, fileName) {
 		document.body.removeChild(linkObjcet)
 	}, TIME_FOR_REVOKE_OBJECT)
 }
+

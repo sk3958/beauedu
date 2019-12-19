@@ -23,10 +23,10 @@ if (undefined === session.user_id || null === session.user_id) {
 <%
 } else {
 %>
-BeauEdu.bodyOnLoad = function()
+myself.bodyOnLoad = function()
 {
-	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "findTeacher.ejs");
-	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "findTeacher.ejs");
+	utils.arrangeTopMenu("<%= session.user_kind %>", "findTeacher.ejs");
+	utils.arrangeLeftMenu("<%= session.user_kind %>", "findTeacher.ejs");
 	return true;
 };
 <%
@@ -36,7 +36,7 @@ BeauEdu.bodyOnLoad = function()
 
 </head>
 
-<body onload="BeauEdu.bodyOnLoad()">
+<body onload="myself.bodyOnLoad()">
 <div class="background">
 <div class="container">
 	<header id="top" class="top">
@@ -71,9 +71,9 @@ BeauEdu.bodyOnLoad = function()
 						<tr><td colspan="4"><input class="full-width" id="email" type="text" value="<%= session.email %>" required></td></tr>
 						<tr class="space"><td colspan="4">hidden</td></tr>
 						<tr><td class="attr-title" colspan="4">ID Number*</td></tr>
-						<tr><td colspan="4"><input class="full-width" id="user_id" type="text" value="<%= session.user_id %>"  onkeydown="javascript:BeauEdu.readOnlyInputKeyDown(event)" readonly></td></tr>
+						<tr><td colspan="4"><input class="full-width" id="user_id" type="text" value="<%= session.user_id %>"  onkeydown="javascript:myself.readOnlyInputKeyDown(event)" readonly></td></tr>
 						<tr class="space"><td colspan="4">hidden</td></tr>
-						<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.registerUserRequest('find_teacher')" style="width:150px;">Submit</button></td></tr>
+						<tr><td colspan="4"><button type="button" onclick="javascript:myself.registerUserRequest('find_teacher')" style="width:150px;">Submit</button></td></tr>
 					</table>
 				</form>
 			</div>

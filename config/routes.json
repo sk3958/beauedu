@@ -4,6 +4,7 @@
 	"/registerUser": "./register-user",
 	"/login": "./log-in",
 	"/signup": "./sign-up",
+	"/verifyAuthKey": "./verify-auth-key",
 	"/registerStudentProfile": "./register-student-profile",
 	"/selectStudentProfile": "./select-student-profile",
 	"/registerTeacherProfile": "./register-teacher-profile",

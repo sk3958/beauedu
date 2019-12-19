@@ -1,7 +1,6 @@
 var BeauEduRouter = require('./beauedu-router')
 var ReportDAO = require('../db/report-dao')
 var formidable = require('formidable')
-var fs = require('fs')
 
 class RegisterReportRouter extends BeauEduRouter {
   async processRequest () {
@@ -58,31 +57,27 @@ class RegisterReportRouter extends BeauEduRouter {
   }
 
   async registerReport () {
-    var result = false
     try {
       this.conn = await this.pool.connect()
 
       var reportDAO = new ReportDAO(this.conn, this.sqlMapper, this.inputParam);
       await this.beginTransaction()
       var returnVal = await reportDAO.insertReport()
-      returnVal = await reportDAO.selectReportNum(this.req.session.user_id)
       this.inputParam.report_num = returnVal.rows[0].report_num
       returnVal = await reportDAO.insertReportFile()
 
       await this.commit()
       this.json({ result: 'success' })
-      result = true
+      return true
 
     } catch (e) {
       await this.rollback()
       this.json({ result: 'fail' });
       this.error(e.stack || e)
       this.res.render('error.ejs')
-      result = false
+      return false
     } finally {
       if (null !== this.conn) await this.conn.release()
-
-      return result
     }
   }  
 }

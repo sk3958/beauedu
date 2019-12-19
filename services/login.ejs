@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="./css/alert.css?after" type="text/css" />
 
 </head>
-<body onload="javascript:BeauEdu.bodyOnLoad();">
+<body onload="javascript:myself.bodyOnLoad();">
 	<div class="container">
 		<form class="login-form animate" id="login_form">
 			<div class="image-container">
@@ -22,12 +22,12 @@
 	
 			<div class="contents">
 				<label for="uname"><b>User ID</b></label>
-				<input type="text" id="user_id" placeholder="Enter User ID" name="uname" onkeypress="javascript:BeauEdu.onUserIdKeyPress(event);" required>
+				<input type="text" id="user_id" placeholder="Enter User ID" name="uname" onkeypress="javascript:myself.onUserIdKeyPress(event);" required>
 	
 				<label for="psw"><b>Password</b></label>
-				<input type="password" id="user_passwd" placeholder="Enter Password" name="psw" onkeypress="javascript:BeauEdu.onUserPasswdKeyPress(event);" required>
+				<input type="password" id="user_passwd" placeholder="Enter Password" name="psw" onkeypress="javascript:myself.onUserPasswdKeyPress(event);" required>
 	        
-				<button type="button" onclick="javascript:BeauEdu.login('login_form')">Login</button>
+				<button type="button" onclick="javascript:myself.login('login_form')">Login</button>
 				<label>
 				<input type="checkbox"  id="remember_me" name="remember"> Remember me
 				</label>

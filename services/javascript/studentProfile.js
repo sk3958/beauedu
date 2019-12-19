@@ -1,5 +1,6 @@
-BeauEdu.registerStudentProfile = function(form_id) {
-	debugger
+var myself = {}
+
+myself.registerStudentProfile = function(form_id) {
   var form = document.getElementById(form_id)
 	
 	if (null == form || undefined == form) return false
@@ -10,13 +11,13 @@ BeauEdu.registerStudentProfile = function(form_id) {
 		try {
 			form.reportValidity()
 		} catch (e) {
-			BeauEdu.checkRequiredField(form_id)
+			utils.checkRequiredField(form_id)
 		}
 		
 		return false
 	}
 	
-	if (false == BeauEdu.checkRequiredCheckbox('teacher_preferences')) {
+	if (false == utils.checkRequiredCheckbox('teacher_preferences')) {
 		alert('Teacher Preferences are requird.')
 			.then(res => {
 			})
@@ -25,24 +26,24 @@ BeauEdu.registerStudentProfile = function(form_id) {
 		return false
 	}
 	
-	BeauEdu.ajaxRequest('POST', 'registerStudentProfile', BeauEdu.getJsonStringByFormData(form_id), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'registerStudentProfile', utils.getJsonStringByFormData(form_id), myself.success, myself.error)
 	
 	return true
 }
 
-BeauEdu.success = function(responseText) {
+myself.success = function(responseText) {
 	debugger
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.alert('Student Profile is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+		utils.alert('Student Profile is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
 			.then(res => {
 				location.href = 'selectStudentProfile'
 			})
 			.catch(err => {
 			})
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -52,8 +53,8 @@ BeauEdu.success = function(responseText) {
 	return true
 }
 
-BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.error = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {

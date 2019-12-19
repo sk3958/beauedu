@@ -1,16 +1,19 @@
+var myself = {}
+
 var request_type = ''
 var checked_id = ''
 
-BeauEdu.checkIdDup = function(element_id) {
+myself.checkIdDup = function(element_id) {
 	request_type = 'checkIdDup'
 	
 	var element = document.getElementById(element_id)
 	
-	var message = BeauEdu.checkID(element.value)
+	var message = utils.checkID(element.value)
 	if (null !== message) {
-		BeauEdu.alert(message)
+		utils.alert(message)
 			.then(res => {
 				element.focus()
+				element.select()
 			})
 			.catch(err => {
 			})
@@ -22,13 +25,12 @@ BeauEdu.checkIdDup = function(element_id) {
 	element.value = element.value.trim()
 	obj.user_id = element.value
 	
-	BeauEdu.ajaxRequest('POST', 'checkUserId', JSON.stringify(obj), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'checkUserId', JSON.stringify(obj), myself.success, myself.error)
 	
 	return true
 }
 	
-BeauEdu.registerUser = function(form_id) {
-	debugger
+myself.registerUser = function(form_id) {
 	request_type = 'registerUser'
 	
 	var form = document.getElementById(form_id)
@@ -41,14 +43,14 @@ BeauEdu.registerUser = function(form_id) {
 		try {
 			form.reportValidity()
 		} catch (e) {
-			BeauEdu.checkRequiredField(form_id)
+			utils.checkRequiredField(form_id)
 		}
 		
 		return false
 	}
 	
 	if (checked_id != document.getElementById('user_id').value) {
-		BeauEdu.alert('Press Check ID button.')
+		utils.alert('Press Check ID button.')
 			.then(res => {
 			})
 			.catch(err => {
@@ -58,41 +60,46 @@ BeauEdu.registerUser = function(form_id) {
 	
 	var user_passwd = document.getElementById('user_passwd').value
 	var check_passwd = document.getElementById('check_passwd').value
-	var rtn = BeauEdu.checkPassword(user_passwd, check_passwd)
+	var rtn = myself.checkPassword(user_passwd, check_passwd)
 	
 	if (null !== rtn) {
-		BeauEdu.alert(rtn.message)
+		var elem
+		if (1 === rtn.code) {
+			elem = document.getElementById('check_passwd')
+		}
+		else {
+			elem = document.getElementById('user_passwd')
+		}
+		utils.alert(rtn.message)
 			.then(res => {
-				if (1 === rtn.code) {
-					document.getElementById('check_password').focus()
-				}
-				else {
-					document.getElementById('user_password').focus()
-				}
+				elem.focus()
+				elem.select()
 			})
 			.catch(err => {
+				elem.focus()
+				elem.select()
 			})
 		return false
 	}
 	
-	BeauEdu.ajaxRequest('POST', 'registerUser', BeauEdu.getJsonStringByFormData(form_id), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'registerUser', utils.getJsonStringByFormData(form_id), myself.success, myself.error)
 	
 	return true
 }
 
-BeauEdu.success = function(responseText) {
+myself.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if ('checkIdDup' == request_type) {
 		if (json.available == 'true') {
-			BeauEdu.alert(json.user_id + ' is available.', 'SUCCESS', ALERT_SUCCESS)
+			utils.alert(json.user_id + ' is available.', 'SUCCESS', utils.ALERT_SUCCESS)
 				.then(res => {
 				})
 				.catch(err => {
 				})
 			checked_id = json.user_id
 		} else {
-			BeauEdu.alert(json.user_id + ' is not available.')
+			utils.alert(json.user_id + ' is not available.')
 				.then(res => {
 				})
 				.catch(err => {
@@ -100,7 +107,7 @@ BeauEdu.success = function(responseText) {
 		}
 	} else if ('registerUser' == request_type) {
 		if (json.result == 'success') {
-			BeauEdu.alert(json.user_id + ' is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+			utils.alert(json.user_id + ' is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
 				.then(res => {
 					location.href = json.url
 				})
@@ -108,7 +115,7 @@ BeauEdu.success = function(responseText) {
 				})
 			
 		} else {
-			BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+			utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
 				})
 				.catch(err => {
@@ -119,8 +126,8 @@ BeauEdu.success = function(responseText) {
 	return true
 }
 
-BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.error = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {

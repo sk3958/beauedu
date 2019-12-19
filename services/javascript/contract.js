@@ -1,11 +1,13 @@
-BeauEdu.Contracts = {}
+var myself = {}
 
-BeauEdu.OriginContracts = {}
+myself.Contracts = {}
+
+myself.OriginContracts = {}
 
 var $targetTeacherID = null
 var $targetTeacherName = null
 
-BeauEdu.setEvent = function() {
+myself.setEvent = function() {
 	$('.teacher_lov').on('click', function(event) {
 		$('#teacher_list_popup').css('display', 'none')
 		var $tr = $(event.target).closest('tr')
@@ -15,7 +17,7 @@ BeauEdu.setEvent = function() {
 		$('#teacher_list_popup').css('display', 'block')
 		/*$('#teacher_list_popup').css('left', event.pageX)
 		$('#teacher_list_popup').css('top', event.pageY)*/
-		BeauEdu.ajaxRequest('POST', 'selectTeacherList', '', BeauEdu.onGetTeacherListSuccess, BeauEdu.onGetTeacherListFail)
+		ajax.ajaxRequest('POST', 'selectTeacherList', '', myself.onGetTeacherListSuccess, myself.onGetTeacherListFail)
 	})
 	
 	$('.clear_teacher').on('click', function(event) {
@@ -26,17 +28,17 @@ BeauEdu.setEvent = function() {
 		$teacherId.val('')
 		$teacherName.val('')
 		
-		BeauEdu.onChange($teacherId)
-		BeauEdu.onChange($teacherName)
+		myself.onChange($teacherId)
+		myself.onChange($teacherName)
 	})
 	
 	$('.teacher_id,.teacher_name, .status, .start_dt, .end_dt, .period_unit_class, .class_times, .period_unit_pay, .pay_times, .pay_amount')
 		.on('change', function() {
-			BeauEdu.onChange($(this))
+			myself.onChange($(this))
 	})
 	
 	$('.save_button').on('click', function(event) {
-		BeauEdu.saveContract($(event.target))
+		myself.saveContract($(event.target))
 	})
 	
 	$(':input[type=text][readonly="readonly"]').on('keydown', function(event) {
@@ -53,7 +55,7 @@ BeauEdu.setEvent = function() {
 	$('#table_contracts').colResizable({liveDrag:true, disabledColumns:[12], postbackSafe:true})
 }
 
-BeauEdu.onChange = function($target) {
+myself.onChange = function($target) {
 	var $tr = $target.closest('tr')
 	var $row_id = $tr.find('.row_id')
 	
@@ -66,20 +68,20 @@ BeauEdu.onChange = function($target) {
 		$target.val('0.0')
 	}
 	
-	BeauEdu.Contracts[$row_id.val()][dataGroup] = $target.val()
+	myself.Contracts[$row_id.val()][dataGroup] = $target.val()
 	
-	if (true == BeauEdu.isDataChanged($row_id.val())) {
-		BeauEdu.Contracts[$row_id.val()]['changed'] = true
+	if (true == myself.isDataChanged($row_id.val())) {
+		myself.Contracts[$row_id.val()]['changed'] = true
 		$tr.addClass('changed')
 	} else {
-		BeauEdu.Contracts[$row_id.val()]['changed'] = false
+		myself.Contracts[$row_id.val()]['changed'] = false
 		$tr.removeClass('changed')
 	}
 }
 
-BeauEdu.isDataChanged = function(row_id) {
-	var a = BeauEdu.Contracts[row_id]
-	var b = BeauEdu.OriginContracts[row_id]
+myself.isDataChanged = function(row_id) {
+	var a = myself.Contracts[row_id]
+	var b = myself.OriginContracts[row_id]
 	if (a['teacher_id'] != b['teacher_id'] ||
 		a['teacher_name'] != b['teacher_name'] ||
 		a['status'] != b['status'] ||
@@ -94,12 +96,12 @@ BeauEdu.isDataChanged = function(row_id) {
 	return false
 }
 
-BeauEdu.saveContract = function($target) {
+myself.saveContract = function($target) {
 	var $tr = $target.closest('tr')
 	var row_id = $tr.find('.row_id').val()
 	
-	if (false == BeauEdu.Contracts[row_id]['changed']) {
-		BeauEdu.alert('Nothing is changed.')
+	if (false == myself.Contracts[row_id]['changed']) {
+		utils.alert('Nothing is changed.')
 			.then(res => {
 			})
 			.catch(err => {
@@ -107,14 +109,14 @@ BeauEdu.saveContract = function($target) {
 		return
 	}
 	
-	if (true == BeauEdu.isValidData($tr, BeauEdu.Contracts[row_id])) {
-		BeauEdu.ajaxRequest('POST', 'saveContract', JSON.stringify(BeauEdu.Contracts[row_id]), BeauEdu.onContractChangeSuccess, BeauEdu.onContractChangeFail)
+	if (true == myself.isValidData($tr, myself.Contracts[row_id])) {
+		ajax.ajaxRequest('POST', 'saveContract', JSON.stringify(myself.Contracts[row_id]), myself.onContractChangeSuccess, myself.onContractChangeFail)
 	}
 }
 
-BeauEdu.isValidData = function($tr, data) {
+myself.isValidData = function($tr, data) {
 	if (isNaN(data['class_times']) || 0 <= ('0' + data['class_times']).indexOf('.')) {
-		BeauEdu.alert('This field must be a integer.')
+		utils.alert('This field must be a integer.')
 			.then(res => {
 				$tr.find('.class_times').focus()
 			})
@@ -122,7 +124,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (isNaN(data['pay_times']) || 0 <= ('0' + data['pay_times']).indexOf('.')) {
-		BeauEdu.alert('This field must be a integer.')
+		utils.alert('This field must be a integer.')
 			.then(res => {
 				$tr.find('.pay_times').focus()
 			})
@@ -130,7 +132,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (isNaN(data['pay_amount'])) {
-		BeauEdu.alert('This field must be a number.')
+		utils.alert('This field must be a number.')
 			.then(res => {
 				$tr.find('.pay_amount').focus()
 			})
@@ -139,17 +141,17 @@ BeauEdu.isValidData = function($tr, data) {
 		return false
 	}
 	
-	if (CONTRACT_STATUS_REQUESTED == data['status']) return true
+	if (utils.CONTRACT_STATUS_REQUESTED == data['status']) return true
 	
 	if (null == data['teacher_id'] || '' == data['teacher_id'].trim()) {
-		BeauEdu.alert('Teacher must be selected.')
+		utils.alert('Teacher must be selected.')
 			.then(res => {
 			})
 			.catch(err => {
 			})
 		return false
 	} else if (false == moment(data['start_dt'], 'YYYYMMDD', true).isValid()) {
-		BeauEdu.alert('Date format must be YYYYMMDD.')
+		utils.alert('Date format must be YYYYMMDD.')
 			.then(res => {
 				$tr.find('.start_dt').focus()
 			})
@@ -157,7 +159,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (false == moment(data['end_dt'], 'YYYYMMDD', true).isValid()) {
-		BeauEdu.alert('Date format must be YYYYMMDD.')
+		utils.alert('Date format must be YYYYMMDD.')
 			.then(res => {
 				$tr.find('.end_dt').focus()
 			})
@@ -165,7 +167,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (data['start_dt'] > data['end_dt']) {
-		BeauEdu.alert('Check sart and end date.')
+		utils.alert('Check sart and end date.')
 			.then(res => {
 				$tr.find('.end_dt').focus()
 			})
@@ -173,7 +175,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (null == data['period_unit_class'] || '' == data['period_unit_class']) {
-		BeauEdu.alert('This field must be selected.')
+		utils.alert('This field must be selected.')
 			.then(res => {
 				$tr.find('.period_unit_class').focus()
 			})
@@ -181,7 +183,7 @@ BeauEdu.isValidData = function($tr, data) {
 			})
 		return false
 	} else if (null == data['period_unit_pay'] || '' == data['period_unit_pay']) {
-		BeauEdu.alert('This field must be selected.')
+		utils.alert('This field must be selected.')
 			.then(res => {
 				$tr.find('.period_unit_pay').focus()
 			})
@@ -192,12 +194,12 @@ BeauEdu.isValidData = function($tr, data) {
 	return true
 }
 
-BeauEdu.onContractChangeSuccess = function(responsText) {
+myself.onContractChangeSuccess = function(responsText) {
 	var json = JSON.parse(responsText)
 	var row_id = ''
 	
 	if (json.result != 'success') {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -205,7 +207,7 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 		return
 	}
 	
-	BeauEdu.alert('Saved.', 'SUCCESS', ALERT_SUCCESS)
+	utils.alert('Saved.', 'SUCCESS', utils.ALERT_SUCCESS)
 		.then(res => {
 		})
 		.catch(err => {
@@ -214,36 +216,36 @@ BeauEdu.onContractChangeSuccess = function(responsText) {
 	row_id = json.row_id
 	var $tr = $('#' + row_id)
 	
-	if (BeauEdu.OriginContracts[row_id]['status'] != json.status || 0 == BeauEdu.OriginContracts[row_id]['contract_num']) {
+	if (myself.OriginContracts[row_id]['status'] != json.status || 0 == myself.OriginContracts[row_id]['contract_num']) {
 		$tr.remove()
-		delete BeauEdu.Contracts[row_id]
-		delete BeauEdu.OriginContracts[row_id]
+		delete myself.Contracts[row_id]
+		delete myself.OriginContracts[row_id]
 		
 		return
 	}
 	
-	BeauEdu.Contracts[row_id]['changed'] = false
+	myself.Contracts[row_id]['changed'] = false
 	
-	BeauEdu.OriginContracts[row_id] = BeauEdu.copyObject(BeauEdu.Contracts[row_id])
+	myself.OriginContracts[row_id] = utils.copyObject(myself.Contracts[row_id])
 	
 	$tr.removeClass('changed')
 }
 
-BeauEdu.onContractChangeFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.onContractChangeFail = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {
 		})
 }
 
-BeauEdu.onGetTeacherListSuccess = function(responseText) {
+myself.onGetTeacherListSuccess = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.showTeacherListPopup(json)
+		myself.showTeacherListPopup(json)
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -253,8 +255,8 @@ BeauEdu.onGetTeacherListSuccess = function(responseText) {
 	return true
 }
 
-BeauEdu.onGetTeacherListFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.onGetTeacherListFail = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {
@@ -263,7 +265,7 @@ BeauEdu.onGetTeacherListFail = function() {
 	return true
 }
 
-BeauEdu.showTeacherListPopup = function(obj) {
+myself.showTeacherListPopup = function(obj) {
 	var teacherList = obj['data']
 	
 	var htmlText = ''
@@ -281,23 +283,22 @@ BeauEdu.showTeacherListPopup = function(obj) {
 	$('#teacher_list_popup').css('display', 'block')
 	
 	$('.accept_teacher').on('click', function(event) {
-		debugger
 		var $tr = $(event.target).closest('tr')
 		var $children = $tr.children('td')
 		$targetTeacherID.val($children[0].innerText)
 		$targetTeacherName.val($children[1].innerText)
 		
-		BeauEdu.onChange($targetTeacherID)
-		BeauEdu.onChange($targetTeacherName)
+		myself.onChange($targetTeacherID)
+		myself.onChange($targetTeacherName)
 		
 		$('#teacher_list_popup').css('display', 'none')
 	})
 }
 
-BeauEdu.closeTeacherListPopup = function() {
+myself.closeTeacherListPopup = function() {
 	$('#teacher_list_popup').css('display', 'none')
 }
 
-BeauEdu.onNameKeyPress = function(e) {
+myself.onNameKeyPress = function(e) {
 	if (e.keyCode == 13) document.getElementById('search_form').submit()
 }

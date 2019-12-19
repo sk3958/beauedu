@@ -19,16 +19,16 @@
 <%
 if (null === session.user_id || undefined === session.user_id) {
 %>
-	location.href = "./login.ejs";
+	location.href = "login";
 <%
 } else {
 %>
-BeauEdu.bodyOnLoad = function()
+myself.bodyOnLoad = function()
 {
-	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "teacherProfile.ejs");
-	BeauEdu.arrangeLeftMenu("<%= session.user_kind %>", "teacherProfile.ejs");
+	utils.arrangeTopMenu("<%= session.user_kind %>", "teacherProfile.ejs")
+	utils.arrangeLeftMenu("<%= session.user_kind %>", "teacherProfile.ejs")
 	return true;
-};
+}
 <%
 }
 %>
@@ -36,7 +36,7 @@ BeauEdu.bodyOnLoad = function()
 
 </head>
 
-<body onload="BeauEdu.bodyOnLoad()">
+<body onload="myself.bodyOnLoad()">
 <section class="container">
 	<header id="top" class="top">
 		<%- include('./top.ejs') %>
@@ -147,7 +147,7 @@ for (i in inetConnections) {
 					</td>
 				</tr>
 				<tr class="space"><td colspan="4">hidden</td></tr>
-					<tr><td colspan="4"><button type="button" onclick="javascript:BeauEdu.registerTeacherProfile('teacher_profile')" style="width:150px;">Submit</button></td></tr>
+					<tr><td colspan="4"><button type="button" onclick="javascript:myself.registerTeacherProfile('teacher_profile')" style="width:150px;">Submit</button></td></tr>
 			</table>
 		</form>
 	</div>

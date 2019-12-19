@@ -1,4 +1,6 @@
-BeauEdu.registerTeacherProfile = function(form_id) {
+var myself = {}
+
+myself.registerTeacherProfile = function(form_id) {
 	debugger
   var form = document.getElementById(form_id)
 	
@@ -10,22 +12,22 @@ BeauEdu.registerTeacherProfile = function(form_id) {
 		try {
 			form.reportValidity()
 		} catch (e) {
-			BeauEdu.checkRequiredField(form_id)
+			utils.checkRequiredField(form_id)
 		}
 		
 		return false
 	}
 	
-	if (false == BeauEdu.checkRequiredCheckbox('teacher_specialities')) {
-		BeauEdu.alert('Teacher Specialties are requird.')
+	if (false == utils.checkRequiredCheckbox('teacher_specialities')) {
+		utils.alert('Teacher Specialties are requird.')
 			.then(res => {
 			})
 			.catch(err => {
 			})
 		return false
 	}
-	if (false == BeauEdu.checkRequiredCheckbox('inet_connection')) {
-		BeauEdu.alert('Internet Connection is requird.')
+	if (false == utils.checkRequiredCheckbox('inet_connection')) {
+		utils.alert('Internet Connection is requird.')
 			.then(res => {
 			})
 			.catch(err => {
@@ -33,23 +35,23 @@ BeauEdu.registerTeacherProfile = function(form_id) {
 		return false
 	}
 	
-	BeauEdu.ajaxRequest('POST', 'registerTeacherProfile', BeauEdu.getJsonStringByFormData(form_id), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'registerTeacherProfile', utils.getJsonStringByFormData(form_id), myself.success, myself.error)
 	
 	return true
 }
 
-BeauEdu.success = function(responseText) {
+myself.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.alert('Teacher Profile is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+		utils.alert('Teacher Profile is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
 			.then(res => {
 				location.href = 'selectTeacherProfile'
 			})
 			.catch(err => {
 			})
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -59,11 +61,11 @@ BeauEdu.success = function(responseText) {
 	return true
 }
 
-BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.error = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
-		catch(err => {
+		.catch(err => {
 		})
 	
 	return true

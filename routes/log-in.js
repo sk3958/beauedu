@@ -2,6 +2,7 @@ var BeauEduRouter = require('./beauedu-router')
 var UserDAO = require('../db/user-dao')
 var StudentProfileDAO = require('../db/student-profile-dao')
 var TeacherProfileDAO = require('../db/teacher-profile-dao')
+var AuthKeyHstDAO = require('../db/auth-key-hst-dao')
 var consts = require('../core/const')
 
 class LoginRouter extends BeauEduRouter {
@@ -12,7 +13,6 @@ class LoginRouter extends BeauEduRouter {
 
     try {
       var userDAO = new UserDAO(this.conn, this.sqlMapper, this.inputParam)
-      //var promise = userDAO.selectUser()
       var user = await userDAO.selectUser()
 
       if (0 == user.rows.length) {
@@ -22,7 +22,19 @@ class LoginRouter extends BeauEduRouter {
       }
       
       user = user.rows[0]
-      var threeHours = 3 * 3600 * 1000
+
+			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, this.inputParam)
+			var actions = await authKeyHstDAO.selectFollowUp()
+			if (0 < actions.rows.length) {
+				var action = actions.rows[0]
+				this.req.session.logined = false
+				this.req.session.hst_num = action.hst_num
+				data['result'] = 'success'
+				data['url'] = this.getUrlByAction(action.follow_up)
+				this.json(data)
+				return true
+			}
+
       this.req.session.logined = true
       this.req.session.user_id = user.user_id
       this.req.session.user_kind = user.user_kind
@@ -52,63 +64,25 @@ class LoginRouter extends BeauEduRouter {
       this.json(data)
 
       return true
-
-      /*promise
-        .then(res => {
-          if (null === res || 0 === res.rows.length) {
-            data['result'] = 'fail'
-            this.json(data)
-            return true
-          }
-
-          data['result'] = 'success'
-          
-          var user = res.rows[0]
-          var profilePromise = null
-          if (consts.USER_KIND_STUDENT == user.user_kind) {
-            data['url'] = 'selectStudentProfile'
-            var studentProfileDAO = new StudentProfileDAO(this.conn, this.sqlMapper, this.inputParam)
-            profilePromise = studentProfileDAO.selectStudentProfile(user.user_id)
-          } else if (consts.USER_KIND_TEACHER == user.user_kind) {
-            data['url'] = 'selectTeacherProfile'
-            var teacherProfileDAO = new StudentProfileDAO(this.conn, this.sqlMapper, this.inputParam)
-            profilePromise = teacherProfileDAO.selectTeacherProfile(user.user_id)
-          } else if (consts.USER_KIND_ADMINISTRATOR == user.user_kind) {
-            data['url'] = 'selectContract'
-          } else {
-            data['url'] = ''
-          }
-
-          if (null !== profilePromise) {
-            profilePromise
-              .then(res => {
-                if (0 < res.rows.length) {
-                  var profile = res.rows[0]
-                  this.req.session.email = profile.email
-                  this.req.session.first_name = profile.first_name
-                  this.req.session.last_name = profile.last_name
-this.log(this.req.session)
-                }
-              })
-              .catch(err => {
-                data["result"] = "fail"
-              })
-          }
-
-          this.json(data)
-          return true
-        })
-        .catch(err => {
-          data["result"] = "fail"
-          this.json(data)
-          return false
-        })*/
     } catch (e) {
+console.log(e)
       this.error(e.stack)
+			return false
     } finally {
       if (null !== this.conn) this.conn.release()
     }
-  }  
+  } 
+
+	getUrlByAction (followUp) {
+		switch(followUp) {
+			case consts.AUTH_KEY_ACTION_VERIFY_KEY:
+				return 'verifyAuthKey'
+			case consts.AUTH_KEY_ACTION_CHANGE_PASSWD:
+				return 'setNewPasswd'
+			default:
+				return ''
+		}
+	}
 }
 
 module.exports = LoginRouter

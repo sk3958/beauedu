@@ -28,9 +28,9 @@ if (undefined === session || null === session) {
 <%
 } else {
 %>
-BeauEdu.bodyOnLoad = function()
+myself.bodyOnLoad = function()
 {
-	BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "contratc.ejs");
+	utils.arrangeTopMenu("<%= session.user_kind %>", "contratc.ejs");
 
 	$.datepicker.setDefaults({
           dateFormat: 'yymmdd',
@@ -43,7 +43,7 @@ BeauEdu.bodyOnLoad = function()
 	
 	$(".start_dt, .end_dt").datepicker();
 	
-	BeauEdu.setEvent();
+	myself.setEvent();
 	
 <%
   var contractBean
@@ -53,7 +53,7 @@ BeauEdu.bodyOnLoad = function()
 		contractBean = contractBeanList[i]
 %>
 
-		BeauEdu.Contracts["<%= contractBean.getContract_num() %>"] = {
+		myself.Contracts["<%= contractBean.getContract_num() %>"] = {
 			changed: false,
 			row_id:"<%= contractBean.getContract_num() %>",
 			contract_num:"<%= contractBean.getContract_num() %>",
@@ -72,7 +72,7 @@ BeauEdu.bodyOnLoad = function()
 			pay_amount:"<%= contractBean.getPay_amount() %>"
 		};
 	
-		BeauEdu.OriginContracts["<%= contractBean.getContract_num() %>"] = {
+		myself.OriginContracts["<%= contractBean.getContract_num() %>"] = {
 			changed: false,
 			row_id:"<%= contractBean.getContract_num() %>",
 			contract_num:"<%= contractBean.getContract_num() %>",
@@ -104,7 +104,7 @@ BeauEdu.bodyOnLoad = function()
 
 </head>
 
-<body  onload="javascript:BeauEdu.bodyOnLoad();">
+<body  onload="javascript:myself.bodyOnLoad();">
 	<header id="top" class="top">
 	  <%- include('./top.ejs') %>
 	</header>
@@ -131,7 +131,7 @@ for (i in statusList) {
 %>
 		</select>
 		<span class="title">Search Name</span>
-		<input type="text" id="search_name" name="name" value="<%= searchedName %>" onkeypress="javascript:BeauEdu.onNameKeyPreaa(event);" />
+		<input type="text" id="search_name" name="name" value="<%= searchedName %>" onkeypress="javascript:myself.onNameKeyPreaa(event);" />
 		<button type="submit" id="run_search">Search</button>
 		</form>
 	</div>
@@ -243,13 +243,13 @@ for (i in contractBeanList) {
 	<div id="teacher_list_popup" class="list-popup">
 		<div id="popup_header" class="list-popup-header">
 			<div>
-			<button type="button" onclick="javascript:BeauEdu.closeTeacherListPopup();">X</button>
+			<button type="button" onclick="javascript:myself.closeTeacherListPopup();">X</button>
 			</div>
 		</div>
 		<table id="teacher_list_table" class="popup-list-table">
 		</table>
 		<div id="popup_footer" class="list-popup-footer">
-			<button type="button" id="cancel_popup" onclick="javascript:BeauEdu.closeTeacherListPopup();">Close</button>
+			<button type="button" id="cancel_popup" onclick="javascript:myself.closeTeacherListPopup();">Close</button>
 		</div>
 	</div>
 </article>

@@ -195,6 +195,7 @@
 
 		insert into public."UserRequestMst" (request_num, request_type, user_id, request_status, create_time, audit_time)
 		values (DEFAULT, #{request_type}, #{user_id}, #{request_status}, now(), now())
+		returning request_num
 		
 	</insert>
 	
@@ -381,6 +382,7 @@ and    cntrct.status = #{status}
 
 		insert into public."Report" (report_num, user_id, report_type, report_title, report_text, create_time, audit_time, audit_id)
 		values(DEFAULT, #{user_id}, #{report_type}, #{report_title}, #{report_text}, now(), now(), #{audit_id})
+		returning report_num
 		
 	</insert>
 	
@@ -437,6 +439,23 @@ and    cntrct.status = #{status}
 		where  COALESCE(#{user_nm}, '') != ''
 		and    report.user_id = tprofile.user_id
 		and    report.create_time between to_date(#{start_dt}, 'YYYYMMDD') and to_date(#{end_dt}, 'YYYYMMDD')
+	</select>
+
+	<insert id="insertAuthKeyHst" parameterType="">
+		insert into public."AuthKeyHst" (
+						hst_num, user_id, auth_type, auth_key,
+						create_time, audit_time, email,
+						follow_up, is_follow_up_ended)
+		values (DEFAULT, #{user_id}, #{auth_type}, #{auth_key},
+		now(), now(), #{email}, #{follow_up}, false)
+		returning hst_num, auth_key
+	</insert>
+
+	<select id="selectFollowUp" resultType="">
+		select hst_num, auth_type, follow_up
+		from   public."AuthKeyHst"
+		where  user_id = #{user_id}
+		and    is_active = true
 	</select>
 </mapper>
 	

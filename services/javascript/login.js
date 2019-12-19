@@ -1,6 +1,7 @@
-BeauEdu.login = function(form_id)
+var myself = {}
+
+myself.login = function(form_id)
 {
-	debugger
   var form = document.getElementById(form_id)
 	
 	if (null == form || undefined == form) return false
@@ -11,28 +12,27 @@ BeauEdu.login = function(form_id)
 		try {
 			form.reportValidity()
 		} catch (e) {
-			BeauEdu.checkRequiredField(form_id)
+			utils.checkRequiredField(form_id)
 		}
 		
 		return false
 	}
-	
-	BeauEdu.ajaxRequest('POST', 'login', BeauEdu.getJsonStringByFormData(form_id), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'login', utils.getJsonStringByFormData(form_id), myself.success, myself.error)
 	
 	return true
 }
 
-BeauEdu.onUserPasswdKeyPress = function(e) {
+myself.onUserPasswdKeyPress = function(e) {
 	if (e.keyCode == 13 && e.target.value.length > 0) {
-		BeauEdu.login('login_form')
+		myself.login('login_form')
 	}
 }
 
-BeauEdu.onUserIdKeyPress = function(e) {
+myself.onUserIdKeyPress = function(e) {
 	if (e.keyCode == 13 && e.target.value.length > 0) {
 		var user_passwd = document.getElementById('user_passwd')
 		if (user_passwd.value.length > 0) {
-			BeauEdu.login('login_form')
+			myself.login('login_form')
 		} else {
 			user_passwd.focus()
 			user_passwd.select()
@@ -40,7 +40,7 @@ BeauEdu.onUserIdKeyPress = function(e) {
 	}
 }
 
-BeauEdu.bodyOnLoad = function() {
+myself.bodyOnLoad = function() {
 	var storage = window.localStorage
 	var user_id = document.getElementById('user_id')
 	var remember_me = document.getElementById('remember_me')
@@ -51,7 +51,7 @@ BeauEdu.bodyOnLoad = function() {
 	document.getElementById('user_id').focus()
 }
 
-BeauEdu.rememberMe = function() {
+myself.rememberMe = function() {
 	var remember_me = document.getElementById('remember_me')
 	var storage = window.localStorage
 	var user_id = document.getElementById('user_id')
@@ -62,15 +62,14 @@ BeauEdu.rememberMe = function() {
 	}
 }
 
-BeauEdu.success = function(responseText) {
-	debugger
+myself.success = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.rememberMe()
+		myself.rememberMe()
 		location.href = json.url
 	} else {
-		BeauEdu.alert('Invalid ID or password.', 'ERROR', ALERT_ERROR)
+		utils.alert('Invalid ID or password.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {
@@ -80,8 +79,8 @@ BeauEdu.success = function(responseText) {
 	return true
 }
 
-BeauEdu.error = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.error = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {

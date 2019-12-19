@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Verify Authentication Key</title>
+
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/verifyAuthKey.js?after"></script>
+
+<link rel="stylesheet" href="./css/register-form.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/alert.css?after" type="text/css" />
+
+<script>
+	myself.hst_num = <%= hst_num %>
+</script>
+</head>
+<body>
+	<div class="container">
+		<form class="register-form animate" id="verify_form">
+			<div class="image-container">
+			</div>
+	
+			<div class="contents">
+				<label for="key"><b>Authentication key</b></label>
+				<input type="text" id="auth_key" name="key" placeholder="Enter key you received" required />
+				<button type="button" onclick="javascript:myself.verifyKey('auth_key')">Confirm</button>
+				<button type="button" onclick="javascript:myself.requestKey()">Send me the key again</button>
+			</div>
+		</form>
+	</div>
+<%- include('./alert.ejs') %>
+</body>
+</html>

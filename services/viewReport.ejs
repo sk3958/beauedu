@@ -29,8 +29,8 @@ if (undefined === session || null === session) {
 <%
 } else {
 %>
-BeauEdu.bodyOnLoad = function() {
-		BeauEdu.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
+myself.bodyOnLoad = function() {
+		utils.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
 	
 	$.datepicker.setDefaults({
           dateFormat: 'yymmdd',
@@ -45,7 +45,7 @@ BeauEdu.bodyOnLoad = function() {
 	
 	$(".start_dt, .end_dt").datepicker();
 	
-	BeauEdu.setEvent();
+	myself.setEvent();
 };
 <%
 }
@@ -55,7 +55,7 @@ BeauEdu.bodyOnLoad = function() {
 
 </head>
 
-<body  onload="javascript:BeauEdu.bodyOnLoad();">
+<body  onload="javascript:myself.bodyOnLoad();">
 	<header id="top" class="top">
 		<%- include('./top.ejs') %>
 	</header>
@@ -67,7 +67,7 @@ BeauEdu.bodyOnLoad = function() {
 		<span class="title">Search End</span>
 		<input type="text" class="end_dt" name = "searched_end_dt" format="yyyymmdd" value="<%= searchedEndDt %>" />
 		<span class="title">Search Name</span>
-		<input type="text" id="search_name" name="searched_name" value="<%= searchedName %>" onkeypress="javascript:BeauEdu.onNameKeyPreaa(event);" />
+		<input type="text" id="search_name" name="searched_name" value="<%= searchedName %>" onkeypress="javascript:myself.onNameKeyPreaa(event);" />
 		<button type="submit" id="run_search">Search</button>
 		</form>
 	</div>
@@ -108,7 +108,7 @@ for (i in reportBeanList) {
 <%
   if ('' != reportBean.getFile_name()) {
 %>
-            <a class="a_file_name" href="javascript:BeauEdu.downloadFile('<%= reportBean.getReport_num() %>', '<%= reportBean.getFile_num() %>', '<%= reportBean.getFile_name() %>')">
+            <a class="a_file_name" href="javascript:myself.downloadFile('<%= reportBean.getReport_num() %>', '<%= reportBean.getFile_num() %>', '<%= reportBean.getFile_name() %>')">
 							<%= reportBean.getFile_name() %>
 						</a>
 <%
@@ -126,7 +126,7 @@ for (i in reportBeanList) {
 	<div id="report_text_popup" class="">
 		<div id="popup_header" class="popup-header">
 			<div>
-			<button type="button" onclick="javascript:BeauEdu.closeReportTextPopup();">X</button>
+			<button type="button" onclick="javascript:myself.closeReportTextPopup();">X</button>
 			</div>
 		</div>
 		<div id="div_report_text" class="div-report-text">

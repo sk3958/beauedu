@@ -1,25 +1,27 @@
-BeauEdu.onFileSelect = function() {
+var myself = {}
+
+myself.onFileSelect = function() {
 	document.querySelector('#file_name').value = document.querySelector('#upfile').value
 }
 
 
-BeauEdu.cancelFileSelect = function () {
+myself.cancelFileSelect = function () {
 	document.querySelector('#upfile').value = ''
 	document.querySelector('#file_name').value = document.querySelector('#upfile').value
 }
 
-BeauEdu.clearReportFrom = function () {
-	BeauEdu.cancelFileSelect()
+myself.clearReportFrom = function () {
+	myself.cancelFileSelect()
 	document.querySelector('#report_title').value = ''
 	document.querySelector('#report_title').value = ''
 }
 
 
-BeauEdu.saveReport = function() {
+myself.saveReport = function() {
 	var formData = new FormData(document.querySelector('#report_form'))
 	
 	if ('' == document.querySelector('#report_title').value.trim()) {
-		BeauEdu.alert('Report title must be filled.')
+		utils.alert('Report title must be filled.')
 			.then(res => {
 				document.querySelector('#report_title').focus()
 			})
@@ -27,7 +29,7 @@ BeauEdu.saveReport = function() {
 			})
 		return false
 	} else if ('' == document.querySelector('#report_text').value.trim() && '' == document.querySelector('#file_name').value.trim()) {
-		BeauEdu.alert('Attach file or write report.')
+		utils.alert('Attach file or write report.')
 			.then(res => {
 				document.querySelector('#report_text').focus()
 			})
@@ -36,21 +38,21 @@ BeauEdu.saveReport = function() {
 		return false
 	}
 	
-	BeauEdu.ajaxRequest('POST', 'registerReport', formData, BeauEdu.onReportSaveSuccess, BeauEdu.onReportSaveFail, true)
+	ajax.ajaxRequest('POST', 'registerReport', formData, myself.onReportSaveSuccess, myself.onReportSaveFail, true)
 }
 
-BeauEdu.onReportSaveSuccess = function(responseText) {
+myself.onReportSaveSuccess = function(responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.alert('Your report is successfully registered.')
+		utils.alert('Your report is successfully registered.')
 			.then(res => {
 			})
 			.catch(err => {
 			})
 
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -60,8 +62,8 @@ BeauEdu.onReportSaveSuccess = function(responseText) {
 	return true
 }
 
-BeauEdu.onReportSaveFail = function() {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.onReportSaveFail = function() {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {

@@ -1,37 +1,39 @@
-var BeauEdu = {}
+var utils = {}
 
-const CONTRACT_STATUS_REQUESTED = '00'
-const CONTRACT_STATUS_ON_GOING = '01'
-const CONTRACT_STATUS_CHANGED = '02'
-const CONTRACT_STATUS_ENDED = '03'
-const CONTRACT_STATUS_CANCELED = '99'
-const INET_CONNECTION_YES = '01'
-const INET_CONNECTION_NO = '02'
-const LEVEL_OF_EDUCATION_PRIMARY_SCHOOL = '01'
-const LEVEL_OF_EDUCATION_MIDDLE_SCHOOL = '02'
-const LEVEL_OF_EDUCATION_HIGH_SCHOOL = '03'
-const LEVEL_OF_EDUCATION_COLLEGE = '04'
-const LEVEL_OF_EDUCATION_UNIVERSITY = '05'
-const LEVEL_OF_EDUCATION_GRADUATE_SCHOOL = '06'
-const PERIOD_UNIT_DAY = 'DAY'
-const PERIOD_UNIT_WEEK = 'WEEK'
-const PERIOD_UNIT_MONTH = 'MONTH'
-const PERIOD_UNIT_YEAR = 'YEAR'
-const PERIOD_UNIT_TOTAL = 'TOTAL'
-const REQUEST_STATUS_REQUESTED = '01'
-const REQUEST_STATUS_CONTRACTED = '02'
-const REQUEST_TYPE_FIND_TEACHER = '01'
-const REQUEST_TYPE_FIND_STUDENT = '02'
-const TEACHER_SPECIALITY_PATIENT = '01'
-const TEACHER_SPECIALITY_HANDS_ON = '02'
-const TEACHER_SPECIALITY_HEAVY_WORKLOAD = '03'
-const TEACHER_SPECIALITY_LIGHT_WORKLOAD = '04'
-const USER_KIND_STUDENT = '01'
-const USER_KIND_TEACHER = '02'
-const USER_KIND_PARTNER = '03'
-const USER_KIND_ADMINISTRATOR = '99'
-const REPORT_TYPE_STUDENT = '01'
-const REPORT_TYPE_TEACHER = '02'
+utils.CONTRACT_STATUS_REQUESTED = '00'
+utils.CONTRACT_STATUS_ON_GOING = '01'
+utils.CONTRACT_STATUS_CHANGED = '02'
+utils.CONTRACT_STATUS_ENDED = '03'
+utils.CONTRACT_STATUS_CANCELED = '99'
+utils.INET_CONNECTION_YES = '01'
+utils.INET_CONNECTION_NO = '02'
+utils.LEVEL_OF_EDUCATION_PRIMARY_SCHOOL = '01'
+utils.LEVEL_OF_EDUCATION_MIDDLE_SCHOOL = '02'
+utils.LEVEL_OF_EDUCATION_HIGH_SCHOOL = '03'
+utils.LEVEL_OF_EDUCATION_COLLEGE = '04'
+utils.LEVEL_OF_EDUCATION_UNIVERSITY = '05'
+utils.LEVEL_OF_EDUCATION_GRADUATE_SCHOOL = '06'
+utils.PERIOD_UNIT_DAY = 'DAY'
+utils.PERIOD_UNIT_WEEK = 'WEEK'
+utils.PERIOD_UNIT_MONTH = 'MONTH'
+utils.PERIOD_UNIT_YEAR = 'YEAR'
+utils.PERIOD_UNIT_TOTAL = 'TOTAL'
+utils.REQUEST_STATUS_REQUESTED = '01'
+utils.REQUEST_STATUS_CONTRACTED = '02'
+utils.REQUEST_TYPE_FIND_TEACHER = '01'
+utils.REQUEST_TYPE_FIND_STUDENT = '02'
+utils.TEACHER_SPECIALITY_PATIENT = '01'
+utils.TEACHER_SPECIALITY_HANDS_ON = '02'
+utils.TEACHER_SPECIALITY_HEAVY_WORKLOAD = '03'
+utils.TEACHER_SPECIALITY_LIGHT_WORKLOAD = '04'
+utils.USER_KIND_STUDENT = '01'
+utils.USER_KIND_TEACHER = '02'
+utils.USER_KIND_PARTNER = '03'
+utils.USER_KIND_ADMINISTRATOR = '99'
+utils.REPORT_TYPE_STUDENT = '01'
+utils.REPORT_TYPE_TEACHER = '02'
+
+utils.LEN_AUTH_KEY = 6
 
 const userMenu = {
 	'01':'for_students',
@@ -48,22 +50,22 @@ const pageMenu = {
 	'error.ejs': ''
 }
 
-const ALERT_SUCCESS = 'success'
-const ALERT_ERROR = 'error'
-const ALERT_NOTIFY = 'notify'
+utils.ALERT_SUCCESS = 'success'
+utils.ALERT_ERROR = 'error'
+utils.ALERT_NOTIFY = 'notify'
 const alertClass = {
 	error: 'alert-error',
 	success: 'alert-success',
 	notify: 'alert-notify'
 }
 
-BeauEdu.bodyOnKeyPress = undefined
+utils.bodyOnKeyPress = undefined
 
-BeauEdu.arrangeTopMenu = function(userKind, fileName) {
+utils.arrangeTopMenu = function(userKind, fileName) {
 }
 
-BeauEdu.arrangeLeftMenu = function(userKind, fileName) {
-	if (USER_KIND_ADMINISTRATOR == userKind) {
+utils.arrangeLeftMenu = function(userKind, fileName) {
+	if (utils.USER_KIND_ADMINISTRATOR == userKind) {
 		$('.menu-level-1').css('display', 'block')
 	}
 	
@@ -79,7 +81,7 @@ BeauEdu.arrangeLeftMenu = function(userKind, fileName) {
 	}
 }
 
-BeauEdu.getJsonStringByFormData = function (form_id) {
+utils.getJsonStringByFormData = function (form_id) {
 	var form = document.getElementById(form_id)
 	
 	if (null == form || undefined == form) return '{}'
@@ -116,7 +118,7 @@ BeauEdu.getJsonStringByFormData = function (form_id) {
 	return JSON.stringify(obj)
 }
 
-BeauEdu.checkRequiredField = function(form_id)
+utils.checkRequiredField = function(form_id)
 {
 	var form = document.getElementById(form_id)
 	
@@ -129,7 +131,7 @@ BeauEdu.checkRequiredField = function(form_id)
 			continue
 		}
 		if (true == form[i].required && ('' == form[i].value || null == form[i].value || undefined == form[i].value)) {
-			BeauEdu.alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
+			utils.alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
 				.then(res => {
 					form[i].focus()
 				})
@@ -143,7 +145,7 @@ BeauEdu.checkRequiredField = function(form_id)
 	return true
 }
 
-BeauEdu.checkRequiredCheckbox = function(checkbox_name)
+utils.checkRequiredCheckbox = function(checkbox_name)
 {
 	var checkboxs = document.getElementsByName(checkbox_name)
 	
@@ -156,7 +158,7 @@ BeauEdu.checkRequiredCheckbox = function(checkbox_name)
 	return false
 }
 
-BeauEdu.replaceNullString = function(form_id) {
+utils.replaceNullString = function(form_id) {
 	var form = document.getElementById(form_id)
 	
 	if (null == form || undefined == form) return false
@@ -170,7 +172,7 @@ BeauEdu.replaceNullString = function(form_id) {
 	return true
 }
 
-BeauEdu.checkID = function(user_id) {
+utils.checkID = function(user_id) {
 	if (4 > user_id.trim().length) {
 		return 'User ID must be over 4 characters.'
 	}
@@ -184,7 +186,7 @@ BeauEdu.checkID = function(user_id) {
 	return null
 }
 
-BeauEdu.checkPassword = function(passwd, passwd2) {
+utils.checkPassword = function(passwd, passwd2) {
 	if (passwd != passwd2) {
 		return {
 			message: 'Check password is different.',
@@ -211,7 +213,7 @@ BeauEdu.checkPassword = function(passwd, passwd2) {
 	return null
 }
 
-BeauEdu.readOnlyInputKeyDown = function (e) {
+utils.readOnlyInputKeyDown = function (e) {
 	if (8 === e.keyCode)
 	{
 		e.preventDefault()
@@ -221,7 +223,7 @@ BeauEdu.readOnlyInputKeyDown = function (e) {
 	return true
 }
 
-BeauEdu.copyObject = function(obj) {
+utils.copyObject = function(obj) {
 	if (obj === null || typeof(obj) !== 'object') return null
 	
 	var copy = obj.constructor()
@@ -233,20 +235,20 @@ BeauEdu.copyObject = function(obj) {
 	return copy
 }
 
-BeauEdu.alertOnKeyPress = function(e) {
+utils.alertOnKeyPress = function(e) {
 	var closeElement = document.querySelector('#alert_close')
 	if (13 == e.keyCode) closeElement.click()
 }
 
-BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
+utils.alert = function(message, title = 'Notify', type = 'notify') {
 	var container = document.querySelector('#alert_container')
 	var formElement = document.querySelector('#alert_form')
 	var titleElement = document.querySelector('#alert_title')
 	var messageElement = document.querySelector('#alert_content')
 	var closeElement = document.querySelector('#alert_close')
 
-	BeauEdu.bodyOnKeyPress = document.body.onkeypress
-	document.body.onkeypress = BeauEdu.alertOnKeyPress
+	utils.bodyOnKeyPress = document.body.onkeypress
+	document.body.onkeypress = utils.alertOnKeyPress
 
 	for (var attr in alertClass) {
 		formElement.classList.remove(alertClass[attr])
@@ -263,8 +265,8 @@ BeauEdu.alert = function(message, title = 'Notify', type = 'notify') {
 			try {
 				var container = document.querySelector('#alert_container')
 				container.style.display = 'none'
-				document.body.onkeypress = BeauEdu.bodyOnKeyPress
-				BeauEdu.bodyOnKeyPress = undefined
+				document.body.onkeypress = utils.bodyOnKeyPress
+				utils.bodyOnKeyPress = undefined
 				resolve(true)
 			} catch(e) {
 				reject(false)

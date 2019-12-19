@@ -1,4 +1,6 @@
-BeauEdu.setEvent = function() {
+var myself = {}
+
+myself.setEvent = function() {
 	$('.a_report_text').on('click', function(event) {
 		$('#report_text_popup').css('display', 'none')
 		
@@ -13,27 +15,27 @@ BeauEdu.setEvent = function() {
 	$('#table_reports').colResizable({liveDrag:true, postbackSafe:true})
 }
 
-BeauEdu.downloadFile = function(report_num, file_num, file_name) {
+myself.downloadFile = function(report_num, file_num, file_name) {
 	var obj = {}
 	obj['report_num'] = report_num
 	obj['file_num'] = file_num
 	obj['file_name'] = file_name
 	
-	BeauEdu.ajaxRequest(
+	ajax.ajaxRequest(
 		'POST',
 		'downloadReportFile',
 		JSON.stringify(obj),
-    BeauEdu.onFileDownloadSuccess,
-    BeauEdu.onFileDownloadFail,
+    myself.onFileDownloadSuccess,
+    myself.onFileDownloadFail,
     true,
 		true,
 		file_name)
 }
 
-BeauEdu.onFileDownloadSuccess = function (res) {
+myself.onFileDownloadSuccess = function (res) {
 
 }
 
-BeauEdu.onFileDownloadFail = function () {
+myself.onFileDownloadFail = function () {
 	
 }

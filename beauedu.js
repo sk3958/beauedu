@@ -4,7 +4,8 @@ const session = require('express-session')
 const fs = require('fs')
 const ejs = require('ejs')
 const pg = require('pg')
-const pgSession = require('express-pg-session')(session)
+//const pgSession = require('express-pg-session')(session)
+const pgSession = require('connect-pg-simple')(session)
 
 const config = {
   host: 'localhost',

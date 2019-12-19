@@ -1,0 +1,6 @@
+{
+	"01": {
+		"subject": "Confirm your email address please",
+		"body": "<h2>Dear <%= userId %></h2>,<p>Verify your email and complete the enterance process.<p><br><br>Verify code: <%= verifyCode %>"
+	}
+}

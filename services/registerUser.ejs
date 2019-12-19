@@ -22,7 +22,7 @@
 			<div class="contents">
 				<label for="uid"><b>User ID</b></label>
 				<input type="text" id="user_id" class="new-id" name="uid" placeholder="Enter User ID" required />
-				<button type="button" class="check-id" onclick="javascript:BeauEdu.checkIdDup('user_id')">Check ID</button>
+				<button type="button" class="check-id" onclick="javascript:myself.checkIdDup('user_id')">Check ID</button>
 				<label for="uname"><b>Nick Name</b></label>
 				<input type="text" id="user_name" name="uname" placeholder="Enter Nick Name" required />
 				<label for="ukind"><b>User Type</b></label>
@@ -38,7 +38,7 @@
 				<input id="user_passwd" type="password" name="upasswd" placeholder="Enter Password" required />
 				<label for="upasswd2"><b>Check Password</b></label>
 				<input id="check_passwd" type="password" name="upasswd2" placeholder="Retype Password" required />
-				<button type="button" onclick="javascript:BeauEdu.registerUser('register_form')">Register</button>
+				<button type="button" onclick="javascript:myself.registerUser('register_form')">Register</button>
 			</div>
 		</form>
 	</div>

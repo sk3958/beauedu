@@ -1,4 +1,6 @@
-BeauEdu.registerUserRequest = function (form_id) {
+var myself = {}
+
+myself.registerUserRequest = function (form_id) {
   var form = document.getElementById(form_id)
 	
 	if (null == form || undefined == form) return false
@@ -9,28 +11,28 @@ BeauEdu.registerUserRequest = function (form_id) {
 		try {
 			form.reportValidity()
 		} catch (e) {
-			BeauEdu.checkRequiredField(form_id)
+			utils.checkRequiredField(form_id)
 		}
 		
 		return false
 	}
 	
-	BeauEdu.ajaxRequest('POST', 'registerUserRequest', BeauEdu.getJsonStringByFormData(form_id), BeauEdu.success, BeauEdu.error)
+	ajax.ajaxRequest('POST', 'registerUserRequest', utils.getJsonStringByFormData(form_id), myself.success, myself.error)
 	
 	return true
 }
 
-BeauEdu.success = function (responseText) {
+myself.success = function (responseText) {
 	var json = JSON.parse(responseText)
 	
 	if (json.result == 'success') {
-		BeauEdu.alert('Your request is successfully registered.', 'SUCCESS', ALERT_SUCCESS)
+		utils.alert('Your request is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
 			.then(res => {
 			})
 			.catch(err => {
 			})
 	} else {
-		BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 			.then(res => {
 			})
 			.catch(err => {
@@ -40,8 +42,8 @@ BeauEdu.success = function (responseText) {
 	return true
 }
 
-BeauEdu.error = function () {
-	BeauEdu.alert('Error occured.', 'ERROR', ALERT_ERROR)
+myself.error = function () {
+	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
 		.then(res => {
 		})
 		.catch(err => {
