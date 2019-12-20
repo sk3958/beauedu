@@ -33,7 +33,7 @@
 	<insert id="insertBeauUser" parameterType="com.beauedu.bean.UserBean">
 
 		insert into public."BeauUser" (user_id, user_name, user_kind, user_passwd, create_time, audit_time)
-		values (#{user_id}, #{user_name}, #{user_kind}, #{user_passwd}, now(), now())
+		values (#{user_id}, #{user_name}, #{user_kind}, crypt(#{user_passwd}, gen_salt('bf')), now(), now())
 		
 	</insert>
 	
@@ -60,7 +60,7 @@
 	<update id="updatePassword" parameterType="com.beauedu.bean.UserBean">
 
 		update public."BeauUser"
-		set    user_passwd = crypt(user_passwd, gen_salt('md5'))
+		set    user_passwd = crypt(#{user_passwd}, gen_salt('bf'))
 		where  user_id = #{user_id}
 		
 	</update>
@@ -457,5 +457,42 @@ and    cntrct.status = #{status}
 		where  user_id = #{user_id}
 		and    is_active = true
 	</select>
+	
+	<select id="selectAuthKeyInfoByHstNum" resultType="">
+		select hst_num, auth_type, follow_up, auth_key, email
+		from   public."AuthKeyHst"
+		where  hst_num = #{hst_num}
+	</select>
+
+	<update id="updateFollowUp" parameterType="">
+		update public."AuthKeyHst"
+		set    audit_time = now()
+					,is_active = #{is_active}
+					,is_follow_up_ended = #{is_follow_up_ended}
+					,follow_up = #{follow_up}
+		      ,is_auth_key_verified = true
+		where  hst_num = #{hst_num}
+	</update>
+
+	<update id="cancelFollowUp" parameterType="">
+		update public."AuthKeyHst"
+		set    audit_time = now()
+					,is_active = false
+		where  hst_num = #{hst_num}
+	</update>
+
+	<insert id="reinsertAuthKeyHst" parameterType="">
+		insert into public."AuthKeyHst" (
+						user_id, auth_type, auth_key,
+						create_time, audit_time, email,
+						follow_up, is_follow_up_ended)
+		select user_id, auth_type, #{auth_key},
+						now(), now(), email,
+						follow_up, is_follow_up_ended
+		from   public."AuthKeyHst"
+		where  hst_num = #{hst_num}
+		returning hst_num, auth_key, user_id, email, follow_up
+	</insert>
+
 </mapper>
 	

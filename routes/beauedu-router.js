@@ -89,8 +89,8 @@ class BeauEduRouter {
   warn (message) {
     logger.warn(message) 
   }
-  error (message) {
-    logger.error(message) 
+  error (err) {
+    logger.error(err.stack || err) 
   }
 }
 

@@ -55,11 +55,10 @@ class RegisterUserRouter extends BeauEduRouter {
 
 			// Send verify mail
 			var mailer = new Mailer()
-			mailer.sendMail(
+			mailer.sendAuthKey(
 				this.inputParam.user_id,
 				this.inputParam.email,
-				res.rows[0].auth_key,
-				consts.AUTH_KEY_REGISTER_USER
+				res.rows[0].auth_key
 			)
 
       data.user_id = this.inputParam.user_id

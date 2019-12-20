@@ -5,6 +5,8 @@
 	"/login": "./log-in",
 	"/signup": "./sign-up",
 	"/verifyAuthKey": "./verify-auth-key",
+	"/registerAuthKey": "./register-auth-key",
+	"/resendAuthKey": "./resend-auth-key",
 	"/registerStudentProfile": "./register-student-profile",
 	"/selectStudentProfile": "./select-student-profile",
 	"/registerTeacherProfile": "./register-teacher-profile",

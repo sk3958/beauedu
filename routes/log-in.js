@@ -65,8 +65,7 @@ class LoginRouter extends BeauEduRouter {
 
       return true
     } catch (e) {
-console.log(e)
-      this.error(e.stack)
+      this.error(e)
 			return false
     } finally {
       if (null !== this.conn) this.conn.release()
@@ -75,9 +74,9 @@ console.log(e)
 
 	getUrlByAction (followUp) {
 		switch(followUp) {
-			case consts.AUTH_KEY_ACTION_VERIFY_KEY:
+			case consts.AUTH_KEY_ACTION_VERIFY_CNTC:
 				return 'verifyAuthKey'
-			case consts.AUTH_KEY_ACTION_CHANGE_PASSWD:
+			case consts.AUTH_KEY_ACTION_INIT_PASSWD:
 				return 'setNewPasswd'
 			default:
 				return ''

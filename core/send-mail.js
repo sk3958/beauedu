@@ -2,6 +2,7 @@ let nodemailer = require('nodemailer')
 let logger = require('./logger')
 let ejs = require('ejs')
 let fs = require('fs')
+var consts = require('../core/const')
 
 class Mailer {
 	constructor () {
@@ -9,7 +10,7 @@ class Mailer {
     this.passwd = process.env.EMAIL_PASSWD
 	}
 
-	makeMessage (userId, verifyCode, type) {
+	makeMessage (userId, params, type) {
 		let result = {}
 		let data = fs.readFileSync('./config/mailTemplate.json')
 		data = JSON.parse(data)
@@ -23,7 +24,27 @@ class Mailer {
 		return result
 	}
 
-	sendMail (userId, mailTo, verifyCode, type) {
+	sendAuthKey (userId, mailTo, verifyCode) {
+		let params = {
+			userId: uaerId,
+			verifyCode: verifyCode
+		}
+		let contents = this.makeMessage(userId, params, consts.AUTH_KEY_REGISTER_USER)
+console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
+		return this.sendMail(userId, mailTo, contents)
+	}
+
+	sendTmpPasswd (userId, mailTo, tmpPasswd) {
+		let params = {
+			userId: uaerId,
+			tmpPasswd: tmpPasswd
+		}
+		let contents = this.makeMessage(userId, params, consts.AUTH_KEY_INIT_PASSWD)
+console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
+		return this.sendMail(userId, mailTo, contents)
+	}
+
+	sendMail (userId, mailTo, contents) {
 		var transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
@@ -32,8 +53,6 @@ class Mailer {
 			}
 		});
 
-		let contents = this.makeMessage(userId, verifyCode, type)
-console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
 		let mailOptions = {
 			from: this.email,
 			to: mailTo,

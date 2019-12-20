@@ -2,26 +2,7 @@ var dao = require('./beauedu-dao')
 
 class UserDAO extends dao.BeauEduDAO {
   insertUser (myself = this) {
-    try {
-      return new Promise(function(resolve, reject) {
-        myself.execute('insertBeauUser')
-          .then(res => {
-            myself.execute('updatePassword')
-              .then(res => {
-                resolve(res)
-              })
-              .catch(err => {
-                reject(err)
-              })
-          })
-          .catch(err => {
-            reject(err)
-          })
-      })
-    } catch (e) {
-      this.log(e.stack || e)
-      return 0
-    }
+    return this.execute('insertBeauUser')
   }
 
   selectUser () {
@@ -35,6 +16,14 @@ class UserDAO extends dao.BeauEduDAO {
   selectTeacherList () {
     return this.execute('selectTeacherList', {})
   }
+
+	updatePasswd (userId, passwd) {
+		var param = {
+			user_id: userId,
+			user_passwd: passwd
+		}
+		return this.execute('updatePassword', param)
+	}
 }
 
 module.exports = UserDAO

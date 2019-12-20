@@ -5,7 +5,6 @@ const TIME_FOR_REVOKE_OBJECT = 180 * 1000
 
 ajax.ajaxRequest = function(method, url, data, success, fail, showProgress = false, isFileDownload = false, fileName = '') {
 	var xhr = new XMLHttpRequest()
-	
 	xhr.open(method, url)
 	if ('registerReport' != url) {
 		xhr.setRequestHeader('Content-type', 'application/json')

@@ -17,8 +17,8 @@ myself.verifyKey = function(elementId)
 		hst_num: myself.hst_num
 	}
 
-	ajax.ajaxRequest('POST', 'verifyAuthKey', JSON.stringify(data), myself.success, myself.error)
-	
+	ajax.ajaxRequest('POST', 'registerAuthKey', JSON.stringify(data), myself.success, myself.error)
+
 	myself.actionType = 1
 	return true
 }
@@ -29,7 +29,7 @@ myself.requestKey = function()
 		hst_num: myself.hst_num
 	}
 	
-	ajax.ajaxRequest('POST', 'reSendKey', JSON.stringify(data), myself.success, myself.error)
+	ajax.ajaxRequest('POST', 'resendAuthKey', JSON.stringify(data), myself.success, myself.error)
 	
 	myself.actionType = 2
 	return true
@@ -43,12 +43,12 @@ myself.onAuthKeyKeyPress = function(e) {
 
 myself.success = function(responseText) {
 	var json = JSON.parse(responseText)
-	
+
 	if (1 === myself.actionType) {
 		if (json.result == 'success') {
 			location.href = json.url
 		} else {
-			utils.alert('Invalid key. Check your email.', 'ERROR', utils.ALERT_ERROR)
+			utils.alert(json['message'], 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
 				})
 				.catch(err => {
@@ -63,7 +63,7 @@ myself.success = function(responseText) {
 				.catch(err => {
 				})
 		} else {
-			utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
+			utils.alert(json['message'], 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
 				})
 				.catch(err => {
