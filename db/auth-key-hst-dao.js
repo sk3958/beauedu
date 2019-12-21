@@ -64,7 +64,7 @@ class AuthKeyHstDAO extends dao.BeauEduDAO {
 			auth_key: this.generateKey(),
 			hst_num: hst_num
 		}
-		return this.execute('reinsertAuthKeyHst')
+		return this.execute('reinsertAuthKeyHst', param)
   }
 }
 

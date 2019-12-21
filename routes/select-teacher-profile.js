@@ -9,12 +9,6 @@ var UserMultiAttrBean = require('../beans/user-multi-attr-bean')
 class SelectTeacherProfileRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
-    if (true !== this.req.session.logined) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var data = {}
     data.session = this.req.session
 
@@ -31,7 +25,7 @@ class SelectTeacherProfileRouter extends BeauEduRouter {
       var inetConnections = await commCdDtlDAO.selectCommCdDtlList('inet_connection', 'Y')
 
       var teacherProfileBean = new TeacherProfileBean(teacherProfile.rows[0])
-	    data.teacherProfile = teacherProfileBean
+      data.teacherProfile = teacherProfileBean
 
       data.registered_teacher_specialities = []
       var userMultiAttrBean
@@ -54,16 +48,15 @@ class SelectTeacherProfileRouter extends BeauEduRouter {
       }
 
       this.res.render('teacherProfile.ejs', data)
-      
-      result = true
+      return true
 
     } catch (e) {
-      this.error(e.stack)
+      this.error(e)
       this.res.render('error.ejs')
-      result = false
+      return false
+
     } finally {
       if (null !== this.conn) this.conn.release()
-      return result
     }
   }  
 }

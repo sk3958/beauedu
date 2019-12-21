@@ -8,12 +8,6 @@ var consts = require('../core/const')
 class SelectContractRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
-    if (true !== this.req.session.logined || consts.USER_KIND_ADMINISTRATOR != this.req.session.user_kind) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var data = {}
     data.session = this.req.session
 
@@ -25,12 +19,12 @@ class SelectContractRouter extends BeauEduRouter {
       var status
       var name
 
-      if (undefined === this.inputParam || false == this.inputParam.hasOwnProperty('status')) {
+      if (!this.inputParam || !this.inputParam.status) {
         status = ''
       } else {
         status = this.inputParam.status
       }
-      if (undefined === this.inputParam || false == this.inputParam.hasOwnProperty('name')) {
+      if (!this.inputParam || !this.inputParam.name) {
         name = ''
       } else {
         name = this.inputParam.name
@@ -75,20 +69,18 @@ class SelectContractRouter extends BeauEduRouter {
         data.periodList = periodList
 
         this.render('contract.ejs', data)
-        result = true
+        return true
       })
       .catch(err => {
         throw err
       })
       
     } catch (e) {
-      this.error(e.stack || e)
+      this.error(e)
       this.res.render('error.ejs')
-      result = false
+      return false
     } finally {
       if (null !== this.conn) this.conn.release()
-
-      return result
     }
   }  
 }

@@ -29,8 +29,8 @@ class LoginRouter extends BeauEduRouter {
 				var action = actions.rows[0]
 				this.req.session.logined = false
 				this.req.session.hst_num = action.hst_num
-				data['result'] = 'success'
-				data['url'] = this.getUrlByAction(action.follow_up)
+				data.result = 'success'
+				data.url = this.getUrlByAction(action.follow_up)
 				this.json(data)
 				return true
 			}
@@ -41,17 +41,17 @@ class LoginRouter extends BeauEduRouter {
       
       var profile = null
       if (consts.USER_KIND_STUDENT == user.user_kind) {
-        data['url'] = 'selectStudentProfile'
+        data.url = 'selectStudentProfile'
         var studentProfileDAO = new StudentProfileDAO(this.conn, this.sqlMapper, this.inputParam)
         profile = await studentProfileDAO.selectStudentProfile(user.user_id)
       } else if (consts.USER_KIND_TEACHER == user.user_kind) {
-        data['url'] = 'selectTeacherProfile'
+        data.url = 'selectTeacherProfile'
         var teacherProfileDAO = new TeacherProfileDAO(this.conn, this.sqlMapper, this.inputParam)
         profile = await teacherProfileDAO.selectTeacherProfile(user.user_id)
       } else if (consts.USER_KIND_ADMINISTRATOR == user.user_kind) {
-        data['url'] = 'selectContract'
+        data.url = 'selectContract'
       } else {
-        data['url'] = ''
+        data.url = ''
       }
       
       if (undefined !== profile && null !== profile && 0 < profile.rows.length) {
@@ -60,7 +60,7 @@ class LoginRouter extends BeauEduRouter {
         this.req.session.last_name = profile.rows[0].last_name
       }
 
-      data['result'] = 'success'
+      data.result = 'success'
       this.json(data)
 
       return true
@@ -85,4 +85,3 @@ class LoginRouter extends BeauEduRouter {
 }
 
 module.exports = LoginRouter
-

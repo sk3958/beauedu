@@ -11,17 +11,26 @@ class ResendAuthKeyRouter extends BeauEduRouter {
     try {
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, this.inputParam)
 
-			var hstNum = this.inputaParam.hst_num
+      var hstNum = this.inputParam.hst_num
+      await this.beginTransaction()
 			await authKeyHstDAO.cancelFollowUp(hstNum)
 			var info = await authKeyHstDAO.reinsertAuthKeyHst(hstNum)
 			info = info.rows[0]
 
-			new Mailer.sendAuthKey(info.user_id, info.email, info.auth_key)
+			new Mailer().sendAuthKey(info.user_id, info.email, info.auth_key)
 
+      data.result = 'success'
+      this.json(data)
+      await this.commit()
       return true
+
     } catch (e) {
+      this.rollback()
       this.error(e)
-			return false
+      data.result = 'fail'
+      data.message = 'Internal server error occured.'
+      return false
+
     } finally {
       if (null !== this.conn) this.conn.release()
     }
@@ -29,4 +38,3 @@ class ResendAuthKeyRouter extends BeauEduRouter {
 }
 
 module.exports = ResendAuthKeyRouter
-

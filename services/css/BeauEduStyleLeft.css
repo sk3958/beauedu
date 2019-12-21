@@ -1,53 +1,46 @@
-.left-nav
-{
+.left-nav {
 	width: 200px;
 	height: 100%;
 	float: left;
 	padding-top: 20px;
 }
 
-.menu
-{
+.menu {
 	list-style-type: none;
 }
 
-.menu-level-1
-{
+.menu-level-1 {
 	display: none;
 }
 
-.tree-no-child
-{
+.tree-no-child {
 	text-decoration: none;
 }
-.tree-no-child:link {color: black;}
-.tree-no-child:visited {color: black;}
-.tree-no-child:hover {color: blue;}
-.tree-no-child:active {color: black;}
+.tree-no-child:link { color: black; }
+.tree-no-child:visited { color: black; }
+.tree-no-child:hover { color: blue; }
+.tree-no-child:active { color: black; }
 
-.tree-has-child
-{
+.tree-has-child {
 	text-decoration: none;
 }
-.tree-has-child:link {color: black;}
-.tree-has-child:visited {color: black;}
-.tree-has-child:hover {color: blue;}
-.tree-has-child:active {color: black;}
+.tree-has-child:link { color: black; }
+.tree-has-child:visited { color: black; }
+.tree-has-child:hover { color: blue; }
+.tree-has-child:active { color: black; }
 
-.tree-child
-{
+.tree-child {
 	text-decoration: none;
 }
-.tree-child:link {color: black;}
-.tree-child:visited {color: black;}
-.tree-child:hover {color: blue;}
-.tree-child:active {color: black;}
+.tree-child:link { color: black; }
+.tree-child:visited { color: black; }
+.tree-child:hover { color: blue; }
+.tree-child:active { color: black; }
 
-.tree-child-select
-{
+.tree-child-select {
 	text-decoration: none;
 }
-.tree-child-select:link {color: blue;}
-.tree-child-select:visited {color: blue;}
-.tree-child-select:hover {color: blue;}
-.tree-child-select:active {color: blue;}
+.tree-child-select:link { color: blue; }
+.tree-child-select:visited { color: blue; }
+.tree-child-select:hover { color: blue; }
+.tree-child-select:active { color: blue; }

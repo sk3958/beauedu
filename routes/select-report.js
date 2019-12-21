@@ -6,12 +6,6 @@ var consts = require('../core/const')
 class SelectReportRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
-    if (true !== this.req.session.logined || consts.USER_KIND_ADMINISTRATOR != this.req.session.user_kind) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var data = {}
     data.session = this.req.session
     var searched_status = '', searched_name, searched_start_dt, searched_end_dt
@@ -21,18 +15,18 @@ class SelectReportRouter extends BeauEduRouter {
 
       var reportDAO = new ReportDAO(this.conn, this.sqlMapper, this.inputParam);
 
-      if (undefined === this.inputParam || false == this.inputParam.hasOwnProperty('searched_name')) {
+      if (!this.inputParam || !this.inputParam.searched_name) {
         searched_name = ''
       } else {
         searched_name = this.inputParam.searched_name
       }
-      if (undefined === this.inputParam || false == this.inputParam.hasOwnProperty('searched_start_dt')) {
+      if (!this.inputParam || !this.inputParam.searched_start_dt) {
         searched_start_dt = '20000101'
       } else {
         searched_start_dt = this.inputParam.searched_start_dt
       }
-      if (undefined === this.inputParam || false == this.inputParam.hasOwnProperty('searched_end_dt')) {
-        var today = new Date()
+      if (!this.inputParam || !this.inputParam.searched_end_dt) {
+        //var today = new Date()
         searched_end_dt = '21000101'
       } else {
         searched_end_dt = this.inputParam.searched_end_dt
@@ -54,15 +48,15 @@ class SelectReportRouter extends BeauEduRouter {
       data.reportBeanList = reportBeanList
 
       this.render('viewReport.ejs', data)
-      result = true
+      return true
+
     } catch (e) {
-      this.error(e.stack || e)
+      this.error(e)
       this.res.render('error.ejs')
-      result = false
+      return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
-
-      return result
     }
   }   
 }

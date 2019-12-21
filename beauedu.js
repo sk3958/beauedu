@@ -4,7 +4,6 @@ const session = require('express-session')
 const fs = require('fs')
 const ejs = require('ejs')
 const pg = require('pg')
-//const pgSession = require('express-pg-session')(session)
 const pgSession = require('connect-pg-simple')(session)
 
 const config = {
@@ -36,8 +35,9 @@ beauedu.use(session({
   saveUninitialized: true
 }))
 
-var router = require('./routes/route-main')(beauedu, fs, pool, mybatis, ejs)
+var router = require('./routes/route-main')
+router(beauedu, fs, pool, mybatis)
 
-const server = beauedu.listen(5000, function() {
+beauedu.listen(5000, function() {
   console.log('Express server has started on port 5000')
 })

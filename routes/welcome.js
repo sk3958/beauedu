@@ -7,10 +7,8 @@ class WelcomeRouter extends BeauEduRouter {
       return true
 
     } catch (e) {
-      this.error(e.stack)
+      this.error(e)
 			return false
-    } finally {
-      if (null !== this.conn) this.conn.release()
     }
   }  
 }

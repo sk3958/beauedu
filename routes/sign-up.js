@@ -7,9 +7,8 @@ class SignUpRouter extends BeauEduRouter {
       return true
 
     } catch (e) {
-      this.error(e.stack)
-    } finally {
-      if (null !== this.conn) this.conn.release()
+      this.error(e)
+      return false
     }
   }  
 }

@@ -9,11 +9,6 @@ var consts = require('../core/const')
 class RegisterUserRequestRouter extends BeauEduRouter {
   async processRequest () {
 
-    if (!this.req.session.logined) {
-      this.res.render('login.ejs')
-      return false
-    }
-
     var data = {}
 		var session = this.req.session
     data.session = session

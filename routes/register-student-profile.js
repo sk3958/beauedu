@@ -5,12 +5,6 @@ var UserMultiAttrDAO = require('../db/user-multi-attr-dao')
 class RegisterStudentProfileRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
-    if (true !== this.req.session.logined) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var data = {}
     data.session = this.req.session
     data.user_id = this.req.session.user_id
@@ -32,7 +26,7 @@ class RegisterStudentProfileRouter extends BeauEduRouter {
         returnVal = await studentProfileDAO.updateStudentProfile(1)
       }
 
-      if (0 == returnVal) throw 'Fail to register student profile.'
+      if (0 == returnVal.rowCount) throw 'Fail to register student profile.'
 
       var attrVal
       var teacher_speciality = this.inputParam.teacher_preferences
@@ -40,12 +34,9 @@ class RegisterStudentProfileRouter extends BeauEduRouter {
       returnVal = await userMultiAttrDAO.deleteUserMultiAttr(data.user_id, 'teacher_speciality')
       var key
       for (key in teacher_speciality) {
-
         attrVal = teacher_speciality[key]
-
         returnVal = await userMultiAttrDAO.insertUserMultiAttr(data.user_id, 'teacher_speciality', attrVal)
-
-        if (0 == returnVal) throw 'Fail to register user multi attribution.'
+        if (0 == returnVal.rowCount) throw 'Fail to register user multi attribution.'
       }
 
       data.result = 'success'
@@ -54,7 +45,7 @@ class RegisterStudentProfileRouter extends BeauEduRouter {
       this.req.session.last_name = this.inputParam.last_name
       this.req.session.email = this.inputParam.email
       this.json(data)
-      result = true
+      return true
 
     } catch (e) {
       await this.rollback()
@@ -62,11 +53,10 @@ class RegisterStudentProfileRouter extends BeauEduRouter {
       this.json(data);
       this.error(e.stack || e)
       this.res.render('error.ejs')
-      result = false
+      return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
-
-      return result
     }
   }  
 }

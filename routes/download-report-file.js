@@ -5,13 +5,6 @@ var fs = require('fs')
 
 class DownloadReportFileRouter extends BeauEduRouter {
   async processRequest () {
-
-    var result = false;
-    if (true !== this.req.session.logined || consts.USER_KIND_ADMINISTRATOR != this.req.session.user_kind) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var myself = this
     try {
       this.conn = await this.pool.connect()
@@ -34,17 +27,18 @@ class DownloadReportFileRouter extends BeauEduRouter {
         myself.res.end()
       })
       
-      result = true
+      return true
+
     } catch (e) {
       this.error(e.stack || e)
       this.res.render('error.ejs')
       this.res.statusCode = 503
       this.res.end()
-      result = false
+
+      return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
-
-      return result
     }
   }   
 }

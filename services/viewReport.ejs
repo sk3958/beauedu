@@ -25,7 +25,7 @@ var searchedEndDt = searched_end_dt
 
 if (undefined === session || null === session) {
 %>
-	location.href = "./login.jsp";
+	location.href = "/";
 <%
 } else {
 %>
@@ -33,14 +33,12 @@ myself.bodyOnLoad = function() {
 		utils.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
 	
 	$.datepicker.setDefaults({
-          dateFormat: 'yymmdd',
-					showOtherMonths: true,
-					showMonthAfterYear:true,
-					changeYear: true,
-					changeMonth: true,         
-          //showOn: "both",
-          //buttonImage: "http://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-          buttonImageOnly: true           
+		dateFormat: 'yymmdd',
+		showOtherMonths: true,
+		showMonthAfterYear:true,
+		changeYear: true,
+		changeMonth: true,         
+		buttonImageOnly: true           
 	});
 	
 	$(".start_dt, .end_dt").datepicker();
@@ -72,7 +70,7 @@ myself.bodyOnLoad = function() {
 		</form>
 	</div>
 	<div id="reportList">
-		<table id="table_reports">
+		<table id="table_reports" cellpadding="2">
 			<!-- <caption>View Report</caption> -->
 			<thead>
 				<tr>
@@ -91,14 +89,14 @@ for (i in reportBeanList) {
     reportBean = reportBeanList[i]
 %>
 				<tr class="row">
-				    <td class="reporter_name"><%= reportBean.getUser_name() %></td>
-					<td class="reporter_id"><%= reportBean.getUser_id() %></td>
-					<td class="report_title"><%= reportBean.getReport_title() %></td>
-					<td class="report_text">
+					<td class="reporter_name">&nbsp;<%= reportBean.getUser_name() %></td>
+					<td class="reporter_id">&nbsp;<%= reportBean.getUser_id() %></td>
+					<td class="report_title">&nbsp;<%= reportBean.getReport_title() %></td>
+					<td class="td_report_text">
 <%
   if ('' != reportBean.getReport_text()) {
 %>
-          	<a class="a_report_text" href=""><%= reportBean.getReport_text().substring(0, 30) %></a>
+						<a class="a_report_text" href="#"><%= reportBean.getReport_text().substring(0, 30) %></a>
 <%
   }
 %>
@@ -123,14 +121,14 @@ for (i in reportBeanList) {
 			</tbody>
 		</table>
 	</div>
-	<div id="report_text_popup" class="">
+	<div id="report_text_popup">
 		<div id="popup_header" class="popup-header">
 			<div>
-			<button type="button" onclick="javascript:myself.closeReportTextPopup();">X</button>
+				<button type="button" onclick="javascript:myself.closeReportTextPopup()">X</button>
 			</div>
 		</div>
 		<div id="div_report_text" class="div-report-text">
-        </div>
+    </div>
 	</div>
 </article>
 <%- include('./alert.ejs') %>

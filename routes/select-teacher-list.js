@@ -8,11 +8,6 @@ class SelectTeacherListRouter extends BeauEduRouter {
     var data = {}
     var result = false;
 
-    if (true !== this.req.session.logined || consts.USER_KIND_ADMINISTRATOR != this.req.session.user_kind) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     try {
       this.conn = await this.pool.connect()
 
@@ -23,14 +18,15 @@ class SelectTeacherListRouter extends BeauEduRouter {
       data.result = 'success'
       
       this.json(data)
-      result = true
+      return true
+
     } catch (e) {
-      this.error(e.stack || e)
+      this.error(e)
       this.res.render('error.ejs')
-      result = false
+      return false
+
     } finally {
       if (null !== this.conn) this.conn.release()
-      return result
     }
   }  
 }

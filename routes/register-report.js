@@ -73,9 +73,10 @@ class RegisterReportRouter extends BeauEduRouter {
     } catch (e) {
       await this.rollback()
       this.json({ result: 'fail' });
-      this.error(e.stack || e)
+      this.error(e)
       this.res.render('error.ejs')
       return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
     }

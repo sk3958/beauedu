@@ -275,4 +275,3 @@ utils.alert = function(message, title = 'Notify', type = 'notify') {
 		closeElement.focus()
 	})
 }
-

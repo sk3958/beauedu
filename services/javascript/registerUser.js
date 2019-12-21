@@ -29,7 +29,7 @@ myself.checkIdDup = function(element_id) {
 	
 	return true
 }
-	
+
 myself.registerUser = function(form_id) {
 	request_type = 'registerUser'
 	
@@ -60,7 +60,7 @@ myself.registerUser = function(form_id) {
 	
 	var user_passwd = document.getElementById('user_passwd').value
 	var check_passwd = document.getElementById('check_passwd').value
-	var rtn = myself.checkPassword(user_passwd, check_passwd)
+	var rtn = utils.checkPassword(user_passwd, check_passwd)
 	
 	if (null !== rtn) {
 		var elem

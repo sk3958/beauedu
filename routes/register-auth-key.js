@@ -16,8 +16,8 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 			var action = await authKeyHstDAO.selectAuthKeyInfoByHstNum()
 			action = action.rows[0]
 			if (action.auth_key != this.inputParam.auth_key) {
-				data['result'] = 'fail'
-				data['message'] = 'Key is not matched.'
+				data.result = 'fail'
+				data.message = 'Key is not matched.'
 				this.json(data)
 				return false
 			}
@@ -25,19 +25,20 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 			await this.beginTransaction()
 			await this.followUpAction(action, authKeyHstDAO)
 
-			data['result'] = 'success'
-			data['url'] = this.getUrlByAction(action.follow_up)
+			data.result = 'success'
+			data.url = this.getUrlByAction(action.follow_up)
       this.json(data)
 			this.commit()
       return true
 
     } catch (e) {
       this.error(e)
-			data['result'] = 'fail'
-			data['message'] = 'Internal server error occured.'
+			data.result = 'fail'
+			data.message = 'Internal server error occured.'
 			this.json(data)
 			this.rollback()
 			return false
+
     } finally {
       if (null !== this.conn) this.conn.release()
     }
@@ -98,4 +99,3 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 }
 
 module.exports = RegisterAuthKeyRouter
-

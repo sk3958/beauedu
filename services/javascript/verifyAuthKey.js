@@ -48,7 +48,7 @@ myself.success = function(responseText) {
 		if (json.result == 'success') {
 			location.href = json.url
 		} else {
-			utils.alert(json['message'], 'ERROR', utils.ALERT_ERROR)
+			utils.alert(json.message, 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
 				})
 				.catch(err => {
@@ -63,7 +63,7 @@ myself.success = function(responseText) {
 				.catch(err => {
 				})
 		} else {
-			utils.alert(json['message'], 'ERROR', utils.ALERT_ERROR)
+			utils.alert(json.message, 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
 				})
 				.catch(err => {

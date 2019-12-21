@@ -9,12 +9,6 @@ var UserMultiAttrBean = require('../beans/user-multi-attr-bean')
 class SelectStudentProfileRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
-    if (!this.req.session.user_id) {
-      this.res.render('login.ejs')
-      return result
-    }
-
     var data = {}
     data.session = this.req.session
 
@@ -54,18 +48,16 @@ class SelectStudentProfileRouter extends BeauEduRouter {
       }
       
       this.res.render('studentProfile.ejs', data)
-      
-      result = true
+      return true
     } catch (e) {
-      this.error(e.stack)
+      this.error(e)
       this.res.render('error.ejs')
-      result = false
+      return false
+
     } finally {
       if (null !== this.conn) this.conn.release()
-      return result
     }
   }  
 }
 
 module.exports = SelectStudentProfileRouter
-

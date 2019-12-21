@@ -4,7 +4,6 @@ var UserDAO = require('../db/user-dao')
 class CheckUserIdRouter extends BeauEduRouter {
   async processRequest () {
 
-    var result = false;
     var data = {}
     data.user_id = this.inputParam.user_id
 
@@ -21,14 +20,15 @@ class CheckUserIdRouter extends BeauEduRouter {
       }
 
       this.json(data)
+      return true
+
     } catch (e) {
       this.error(e.stack)
       this.res.render('error.ejs')
-      result = 0
+      return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
-
-      return result
     }
   }  
 }

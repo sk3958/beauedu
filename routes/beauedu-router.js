@@ -32,7 +32,6 @@ class BeauEduRouter {
           })
       } catch(e) {
         myself.log(e.stack || e)
-      } finally {
       }
     })
   }
@@ -49,7 +48,7 @@ class BeauEduRouter {
     this.res.json(data)
   }
 
-  write (write) {
+  write (data) {
     this.res.write(JSON.stringify(data))
   }
 

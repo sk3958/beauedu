@@ -1,9 +1,6 @@
 var myself = {}
-
 myself.Contracts = {}
-
 myself.OriginContracts = {}
-
 var $targetTeacherID = null
 var $targetTeacherName = null
 
@@ -15,8 +12,7 @@ myself.setEvent = function() {
 		$targetTeacherName = $tr.find('.teacher_name')
 		
 		$('#teacher_list_popup').css('display', 'block')
-		/*$('#teacher_list_popup').css('left', event.pageX)
-		$('#teacher_list_popup').css('top', event.pageY)*/
+
 		ajax.ajaxRequest('POST', 'selectTeacherList', '', myself.onGetTeacherListSuccess, myself.onGetTeacherListFail)
 	})
 	

@@ -6,12 +6,6 @@ class SaveContractRouter extends BeauEduRouter {
   async processRequest () {
 
     var data = {}
-    var result = false;
-
-    if (true !== this.req.session.logined || consts.USER_KIND_ADMINISTRATOR != this.req.session.user_kind) {
-      this.res.render('login.ejs')
-      return result
-    }
 
     try {
       this.conn = await this.pool.connect()
@@ -20,6 +14,7 @@ class SaveContractRouter extends BeauEduRouter {
       var contractDAO = new ContractDAO(this.conn, this.sqlMapper, this.inputParam);
       await this.beginTransaction()
       var returnVal = await contractDAO.updateContract()
+      if (0 == returnVal.rowCount) throw 'Update contract failed.'
 
       data.result = 'success'
       data.row_id = this.inputParam.contract_num
@@ -28,18 +23,17 @@ class SaveContractRouter extends BeauEduRouter {
       
       await this.commit()
       this.json(data)
-      result = true
+      return true
 
     } catch (e) {
       data.result = 'fail'
       await this.rollback()
       this.json(data)
-      this.error(e.stack || e)
-      this.res.render('error.ejs')
-      result = false
+      this.error(e)
+      return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
-      return result
     }
   }  
 }

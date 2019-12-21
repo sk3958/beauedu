@@ -10,41 +10,36 @@ class Mailer {
     this.passwd = process.env.EMAIL_PASSWD
 	}
 
-	makeMessage (userId, params, type) {
+	makeMessage (params, type) {
 		let result = {}
 		let data = fs.readFileSync('./config/mailTemplate.json')
 		data = JSON.parse(data)
 		data = data[type]
 		result.subject = data['subject']
 		result.body =
-			ejs.render(data['body'], {
-				userId: userId,
-				verifyCode: verifyCode
-			})
+			ejs.render(data['body'], params)
 		return result
 	}
 
 	sendAuthKey (userId, mailTo, verifyCode) {
 		let params = {
-			userId: uaerId,
+			userId: userId,
 			verifyCode: verifyCode
 		}
-		let contents = this.makeMessage(userId, params, consts.AUTH_KEY_REGISTER_USER)
-console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
-		return this.sendMail(userId, mailTo, contents)
+		let contents = this.makeMessage(params, consts.AUTH_KEY_REGISTER_USER)
+		return this.sendMail(mailTo, contents)
 	}
 
 	sendTmpPasswd (userId, mailTo, tmpPasswd) {
 		let params = {
-			userId: uaerId,
+			userId: userId,
 			tmpPasswd: tmpPasswd
 		}
-		let contents = this.makeMessage(userId, params, consts.AUTH_KEY_INIT_PASSWD)
-console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
-		return this.sendMail(userId, mailTo, contents)
+		let contents = this.makeMessage(params, consts.AUTH_KEY_INIT_PASSWD)
+		return this.sendMail(mailTo, contents)
 	}
 
-	sendMail (userId, mailTo, contents) {
+	sendMail (mailTo, contents) {
 		var transporter = nodemailer.createTransport({
 			service: 'gmail',
 			auth: {
@@ -63,10 +58,10 @@ console.log(this.email + '\n' + contents.subject + '\n' + contents.body)
 		transporter.sendMail(
 			mailOptions, function(error, info) {
 				if (error) {
-					//logger.error(error.stack || error)
+					logger.error(error.stack || error)
 					console.log(error)
 				} else {
-					//logger.info(info)
+					logger.info(info)
 					console.log(info)
 				}
 				transporter.close()

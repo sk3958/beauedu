@@ -1,6 +1,4 @@
 var BeauEduRouter = require('./beauedu-router')
-var AuthKeyHstDAO = require('../db/auth-key-hst-dao')
-var consts = require('../core/const')
 
 class VerifyAuthKeyRouter extends BeauEduRouter {
   async processRequest () {
@@ -10,12 +8,9 @@ class VerifyAuthKeyRouter extends BeauEduRouter {
 
     } catch (e) {
       this.error(e)
-			return false
-    } finally {
-      if (null !== this.conn) this.conn.release()
+      return false
     }
   } 
 }
 
 module.exports = VerifyAuthKeyRouter
-

@@ -47,7 +47,7 @@ class RegisterUserRouter extends BeauEduRouter {
 			authKeyHstBean.setUser_id(this.inputParam.user_id)
 			authKeyHstBean.setAuth_type(consts.AUTH_KEY_REGISTER_USER)
 			authKeyHstBean.setEmail(this.inputParam.email)
-			authKeyHstBean.setFollow_up(consts.AUTH_KEY_ACTION_VERIFY_KEY)
+			authKeyHstBean.setFollow_up(consts.AUTH_KEY_ACTION_VERIFY_CNTC)
 
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, authKeyHstBean.getData())
 
@@ -63,18 +63,20 @@ class RegisterUserRouter extends BeauEduRouter {
 
       data.user_id = this.inputParam.user_id
       data.result = 'success'
-      data.url = 'login'
+      data.url = '/'
       await this.commit()
 
       this.json(data)
 			return true
+
     } catch (e) {
       await this.rollback()
       data.result = 'fail'
       this.json(data);
       this.error(e.stack || e)
       this.res.render('error.ejs')
-      return false
+			return false
+
     } finally {
       if (null !== this.conn) await this.conn.release()
     }
