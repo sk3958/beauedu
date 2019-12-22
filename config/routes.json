@@ -3,7 +3,11 @@
 	"/checkUserId": { "path": "./check-user-id", "auth": "*" },
 	"/registerUser": { "path": "./register-user", "auth": "*" },
 	"/login": { "path": "./log-in", "auth": "*" },
+	"/logout": { "path": "./log-out", "auth": "*" },
 	"/signup": { "path": "./sign-up", "auth": "*" },
+	"/initPassword": { "path": "./init-password", "auth": "*"},
+	"/setNewPasswd": { "path": "./set-new-password", "auth": "*"},
+	"/registerNewPasswd": { "path": "./register-new-password", "auth": "*"},
 	"/verifyAuthKey": { "path": "./verify-auth-key", "auth": "*" },
 	"/registerAuthKey": { "path": "./register-auth-key", "auth": "*" },
 	"/resendAuthKey": { "path": "./resend-auth-key", "auth": "*" },
@@ -20,6 +24,6 @@
 	"/registerReport": { "path": "./register-report", "auth": "02 99" },
 	"/selectReport": { "path": "./select-report", "auth": "99" },
 	"/reportPage": { "path": "./report-page", "auth": "02 99" },
-	"/updateReport": { "path": "./update-report", "auth": "02 99" },
+	"/commentReport": { "path": "./comment-report", "auth": "02 99" },
 	"/downloadReportFile": { "path": "./download-report-file", "auth": "99" }
 }

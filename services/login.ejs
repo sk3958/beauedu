@@ -21,8 +21,8 @@
 			</div>
 	
 			<div class="contents">
-				<label for="uname"><b>User ID</b></label>
-				<input type="text" id="user_id" placeholder="Enter User ID" name="uname" onkeypress="javascript:myself.onUserIdKeyPress(event);" required>
+				<label for="uid"><b>User ID</b></label>
+				<input type="text" id="user_id" placeholder="Enter User ID" name="id" onkeypress="javascript:myself.onUserIdKeyPress(event);" required>
 	
 				<label for="psw"><b>Password</b></label>
 				<input type="password" id="user_passwd" placeholder="Enter Password" name="psw" onkeypress="javascript:myself.onUserPasswdKeyPress(event);" required>
@@ -36,7 +36,10 @@
 			<div class="contents">
 				<button type="button" class="cancel-button">Cancel</button>
 				<span class="link-to"><a href="signup">Sign Up</a></span>
-				<span class="link-to"><a href="#">Forgot password?</a></span>
+				<span class="link-to"><a href="javascript:myself.showInitPasswd()">Forgot password?</a></span>
+			</div>
+			<div id="init-passwd">
+				<button type="button" onclick="javascript:myself.requestInitPasswd()">Init my password</button>
 			</div>
 		</form>
 	</div>

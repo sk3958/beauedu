@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Change password</title>
+
+<script type="text/javascript" src="./javascript/common.js?after"></script>
+<script type="text/javascript" src="./javascript/ajaxRequest.js?after"></script>
+<script type="text/javascript" src="./javascript/changePassword.js?after"></script>
+
+<link rel="stylesheet" href="./css/register-form.css?after" type="text/css" />
+<link rel="stylesheet" href="./css/alert.css?after" type="text/css" />
+</head>
+<body>
+	<div class="container">
+		<form class="register-form animate" id="new_passwd_form">
+			<div class="image-container">
+				<!--  <img src="img_avatar2.png" alt="Avatar" class="avatar"> -->
+			</div>
+	
+			<div class="contents"> 
+				<input type="hidden" id="hst_num" value="<%= sesstion.hst_num %>
+				<label for="uid"><b>User ID</b></label>
+				<input type="text" id="user_id" class="new-id" name="uid" placeholder="Enter User ID" value="<%= session.user_id %>" required />
+				<label for="upasswd"><b>Current Password</b></label>
+				<input id="user_passwd" type="password" name="upasswd" placeholder="Enter Password" required />
+				<label for="newPasswd"><b>New Password</b></label>
+				<input id="new_passwd" type="password" name="newPasswd" placeholder="Enter New Password" required />
+				<label for="newPasswd2"><b>Check New Password</b></label>
+				<input id="new_passwd2" type="password" name="newPasswd2" placeholder="Retype New Password" required />
+				<button type="button" onclick="javascript:myself.registerNewPasswd('new_passwd_form')">Confirm</button>
+			</div>
+		</form>
+	</div>
+<%- include('./alert.ejs') %>
+</body>
+</html>

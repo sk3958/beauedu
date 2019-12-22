@@ -161,14 +161,14 @@ table .save_button, .accept_teacher {
 	max-height: 50%;
 	left: 5%;
 	top: 20%;
-	background-color: #ffffff;
+	background-color: #fff3e9;
 }
 #report_text_popup {
 	left: 50%;
 	top: 20%;
 }
 #div_report_text {
-	padding: 10px;
+	padding: 10px 10px 10px 10px;
 }
 #popup_header {
 	background-color: #373737;

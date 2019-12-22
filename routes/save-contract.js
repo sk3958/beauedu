@@ -6,6 +6,7 @@ class SaveContractRouter extends BeauEduRouter {
   async processRequest () {
 
     var data = {}
+    data.session = this.req.session
 
     try {
       this.conn = await this.pool.connect()

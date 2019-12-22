@@ -24,6 +24,10 @@ class ReportDAO extends dao.BeauEduDAO {
   selectReportList (user_nm, start_dt, end_dt) {
     return this.execute('selectReportList', { user_nm: user_nm, start_dt: start_dt, end_dt: end_dt })
   }  
+
+  commentReport () {
+    return this.execute('commentReport')
+  }
 }
 
 module.exports = ReportDAO

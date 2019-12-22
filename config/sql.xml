@@ -6,16 +6,9 @@
 
 <mapper namespace="BeauEdu">
 
-	<select id="getUserList" resultType="com.beauedu.bean.UserBean">
-
-		select *
-		from   public."BeauUser"
-		
-	</select>
-	
 	<select id="checkUserId" resultType="com.beauedu.bean.UserBean">
 
-		select user_id
+		select user_id, user_kind
 		from   public."BeauUser"
 		where  user_id = #{user_id}
 		
@@ -441,6 +434,16 @@ and    cntrct.status = #{status}
 		and    report.create_time between to_date(#{start_dt}, 'YYYYMMDD') and to_date(#{end_dt}, 'YYYYMMDD')
 	</select>
 
+	<update id="commentReport" parameterType="com.beauedu.bean.ReportBean">
+
+		update  public."Report"
+		set     comment = #{comment},
+						audit_time = now(),
+						audit_id = #{user_id}
+		where   report_num = #{report_num}
+		
+	</update>
+
 	<insert id="insertAuthKeyHst" parameterType="">
 		insert into public."AuthKeyHst" (
 						hst_num, user_id, auth_type, auth_key,
@@ -459,7 +462,7 @@ and    cntrct.status = #{status}
 	</select>
 	
 	<select id="selectAuthKeyInfoByHstNum" resultType="">
-		select hst_num, auth_type, follow_up, auth_key, email
+		select user_id, hst_num, auth_type, follow_up, auth_key, email
 		from   public."AuthKeyHst"
 		where  hst_num = #{hst_num}
 	</select>
@@ -479,6 +482,15 @@ and    cntrct.status = #{status}
 		set    audit_time = now()
 					,is_active = false
 		where  hst_num = #{hst_num}
+	</update>
+
+	<update id="cancelAllFollowUp" parameterType="">
+		update public."AuthKeyHst"
+		set    audit_time = now()
+					,is_active = false
+		where  user_id = #{user_id}
+		and    auth_type = #{auth_type}
+		and    is_active = true
 	</update>
 
 	<insert id="reinsertAuthKeyHst" parameterType="">

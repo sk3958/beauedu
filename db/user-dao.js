@@ -1,7 +1,7 @@
 var dao = require('./beauedu-dao')
 
 class UserDAO extends dao.BeauEduDAO {
-  insertUser (myself = this) {
+  insertUser () {
     return this.execute('insertBeauUser')
   }
 

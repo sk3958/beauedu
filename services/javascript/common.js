@@ -61,7 +61,7 @@ const alertClass = {
 
 utils.bodyOnKeyPress = undefined
 
-utils.arrangeTopMenu = function(userKind, fileName) {
+utils.arrangeTopMenu = function(userKind) {
 }
 
 utils.arrangeLeftMenu = function(userKind, fileName) {

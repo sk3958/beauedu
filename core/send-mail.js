@@ -35,7 +35,7 @@ class Mailer {
 			userId: userId,
 			tmpPasswd: tmpPasswd
 		}
-		let contents = this.makeMessage(params, consts.AUTH_KEY_INIT_PASSWD)
+		let contents = this.makeMessage(params, consts.AUTH_KEY_INIT_PASSWORD)
 		return this.sendMail(mailTo, contents)
 	}
 

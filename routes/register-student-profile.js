@@ -51,8 +51,7 @@ class RegisterStudentProfileRouter extends BeauEduRouter {
       await this.rollback()
       data.result = 'fail'
       this.json(data);
-      this.error(e.stack || e)
-      this.res.render('error.ejs')
+      this.error(e)
       return false
 
     } finally {

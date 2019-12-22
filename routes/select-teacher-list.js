@@ -6,7 +6,7 @@ class SelectTeacherListRouter extends BeauEduRouter {
   async processRequest () {
 
     var data = {}
-    var result = false;
+    data.session = this.req.session
 
     try {
       this.conn = await this.pool.connect()

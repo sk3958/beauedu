@@ -4,8 +4,22 @@ var consts = require('../core/const')
 class AuthKeyHstDAO extends dao.BeauEduDAO {
   insertAuthKeyHst () {
 		this.inputParam.auth_key = this.generateKey()
-		return this.execute('insertAuthKeyHst')
-  }
+		return new Promise(function(resolve, reject) {
+			this.execute('cancelAllFollowUp')
+				.then(res => {
+					this.execute('insertAuthKeyHst')
+						.then(res2 => {
+							resolve([res, res2])
+						})
+						.chtch(err2 => {
+							reject(err2)
+						})
+				})
+				.chtch(err => {
+					reject(err)
+				})
+		})
+	}
 
 	generateKey () {
 		let min = 100000
@@ -20,9 +34,9 @@ class AuthKeyHstDAO extends dao.BeauEduDAO {
 		return this.execute('selectFollowUp', input)
 	}
 	
-	selectAuthKeyInfoByHstNum () {
+	selectAuthKeyInfoByHstNum (hst_num = this.inputParam.hst_num) {
 		var input = {
-			hst_num: this.inputParam.hst_num,
+			hst_num: hst_num
 		}
 		return this.execute('selectAuthKeyInfoByHstNum', input)
 	}
@@ -57,6 +71,14 @@ class AuthKeyHstDAO extends dao.BeauEduDAO {
 	cancelFollowUp (hst_num) {
 		var param = { hst_num: hst_num }
 		return this.execute('cancelFollowUp', param)
+	}
+
+	cancelAllFollowUp(user_id, auth_type) {
+		var param = {
+			user_id: user_id,
+			auth_type: auth_type
+		}
+		return this.execute('cancelAllFollowUp', param)
 	}
 
   reinsertAuthKeyHst (hst_num) {

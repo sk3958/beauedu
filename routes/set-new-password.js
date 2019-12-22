@@ -1,11 +1,12 @@
 var BeauEduRouter = require('./beauedu-router')
 
-class WelcomeRouter extends BeauEduRouter {
+class ChangePasswordRouter extends BeauEduRouter {
   async processRequest () {
     try {
       var data = {}
+      if (!this.req.session.hst_num) this.req.session.hst_num = 0
       data.session = this.req.session
-      this.render('login.ejs', data)
+      this.render('changePasswd.ejs', data)
       return true
 
     } catch (e) {
@@ -15,4 +16,4 @@ class WelcomeRouter extends BeauEduRouter {
   }  
 }
 
-module.exports = WelcomeRouter
+module.exports = ChangePasswordRouter

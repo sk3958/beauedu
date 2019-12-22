@@ -8,6 +8,8 @@ var consts = require('../core/const')
 class LoginRouter extends BeauEduRouter {
   async processRequest () {
     var data = {}
+    data.session = this.req.session
+    this.initSession()
 
     this.conn = await this.pool.connect()
 
@@ -28,7 +30,8 @@ class LoginRouter extends BeauEduRouter {
 			if (0 < actions.rows.length) {
 				var action = actions.rows[0]
 				this.req.session.logined = false
-				this.req.session.hst_num = action.hst_num
+        this.req.session.hst_num = action.hst_num
+        this.req.session.user_id = action.user_id
 				data.result = 'success'
 				data.url = this.getUrlByAction(action.follow_up)
 				this.json(data)
@@ -71,6 +74,17 @@ class LoginRouter extends BeauEduRouter {
       if (null !== this.conn) this.conn.release()
     }
   } 
+
+  initSession () {
+    var session = this.req.session
+    delete session.logined
+    delete session.user_id
+    delete session.user_kind
+    delete session.email
+    delete session.first_name
+    delete session.last_name
+    delete session.hst_num
+  }
 
 	getUrlByAction (followUp) {
 		switch(followUp) {

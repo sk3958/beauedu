@@ -46,7 +46,12 @@ myself.success = function(responseText) {
 
 	if (1 === myself.actionType) {
 		if (json.result == 'success') {
-			location.href = json.url
+			utils.alert(json.message, 'SUCCESS', utils.ALERT_SUCCESS)
+				.then(res => {
+					location.href = json.url
+				})
+				.catch(err => {
+				})
 		} else {
 			utils.alert(json.message, 'ERROR', utils.ALERT_ERROR)
 				.then(res => {
@@ -57,8 +62,9 @@ myself.success = function(responseText) {
 	}
 	else if (2 === myself.actionType) {
 		if (json.result == 'success') {
-			utils.alert('We just sent the key. Check your email.', 'SUCCESS', utils.ALERT_SUCCESS)
+			utils.alert(json.message, 'SUCCESS', utils.ALERT_SUCCESS)
 				.then(res => {
+					location.href = json.url
 				})
 				.catch(err => {
 				})

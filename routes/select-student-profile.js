@@ -25,9 +25,9 @@ class SelectStudentProfileRouter extends BeauEduRouter {
       var registered_teacher_preferences = await userMultiAttrDAO.selectUserMultiAttr(this.req.session.user_id, 'teacher_speciality')
 
       var studentProfileBean = new StudentProfileBean(student_profile.rows[0])
-	    data.student_profile = studentProfileBean
+      data.student_profile = studentProfileBean
 
-	    data.level_of_education = []      
+      data.level_of_education = []      
       var commCdDtlBean
       for (let i = 0; i < level_of_education.rows.length; i++) {
         commCdDtlBean = new CommCdDtlBean(level_of_education.rows[i])

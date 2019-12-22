@@ -2,5 +2,9 @@
 	"01": {
 		"subject": "Confirm your email address please",
 		"body": "<h2>Dear <%= userId %></h2>,<p>Verify your email and complete the enterance process.<p><br><br>Verify code: <%= verifyCode %>"
+	},
+	"02": {
+		"subject": "Here's your temporary password",
+		"body": "<h2>Dear <%= userId %></h2>,<p>Use this password and change your password.<p><br><br>Temporary password: <%= tmpPasswd %>"
 	}
 }

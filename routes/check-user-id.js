@@ -5,6 +5,7 @@ class CheckUserIdRouter extends BeauEduRouter {
   async processRequest () {
 
     var data = {}
+    data.session = this.req.session
     data.user_id = this.inputParam.user_id
 
     try {

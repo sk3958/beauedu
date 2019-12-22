@@ -30,18 +30,7 @@ if (undefined === session || null === session) {
 } else {
 %>
 myself.bodyOnLoad = function() {
-		utils.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
-	
-	$.datepicker.setDefaults({
-		dateFormat: 'yymmdd',
-		showOtherMonths: true,
-		showMonthAfterYear:true,
-		changeYear: true,
-		changeMonth: true,         
-		buttonImageOnly: true           
-	});
-	
-	$(".start_dt, .end_dt").datepicker();
+	utils.arrangeTopMenu("<%= session.user_kind %>", "viewReport.ejs");
 	
 	myself.setEvent();
 };
@@ -80,6 +69,7 @@ myself.bodyOnLoad = function() {
 					<th>report</th>
 					<th>File Name</th>
 					<th>Comment</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -100,7 +90,8 @@ for (i in reportBeanList) {
 <%
   }
 %>
-            <input type="hidden" class="report_text" value="<%= reportBean.getReport_text() %>" />
+						<input type="hidden" class="report_num" value="<%= reportBean.getReport_num() %>" />
+						<input type="hidden" class="report_text" value="<%= reportBean.getReport_text() %>" />
           </td>
           <td class="file_name">
 <%
@@ -113,7 +104,8 @@ for (i in reportBeanList) {
   }
 %>
           </td>
-					<td class="comment"><input type="text" value="<%= reportBean.getComment() %>"></td>
+					<td><input type="text"  class="comment" value="<%= reportBean.getComment() %>"></td>
+					<td><button type="button" class="save_button">Save</button></td>
 				</tr>
 <%
 }

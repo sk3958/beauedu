@@ -8,6 +8,7 @@ var Mailer = require('../core/send-mail')
 class RegisterAuthKeyRouter extends BeauEduRouter {
   async processRequest () {
     var data = {}
+    data.session = this.req.session
 
     this.conn = await this.pool.connect()
 
@@ -23,7 +24,7 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 			}
 
 			await this.beginTransaction()
-			await this.followUpAction(action, authKeyHstDAO)
+			await this.followUpAction(action, data, authKeyHstDAO)
 
 			data.result = 'success'
 			data.url = this.getUrlByAction(action.follow_up)
@@ -55,24 +56,26 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 		}
 	}
 
-	followUpAction (action, authKeyHstDao) {
+	followUpAction (action, data, authKeyHstDao) {
 		switch(action.follow_up) {
 			case consts.AUTH_KEY_ACTION_VERIFY_CNTC:
-				return this.verifyContact(action, authKeyHstDao)
+				return this.verifyContact(action, data, authKeyHstDao)
 			case consts.AUTH_KEY_ACTION_INIT_PASSWD:
-				return this.initPassword(action, authKeyHstDao)
+				return this.initPassword(action, data, authKeyHstDao)
 			default:
 				throw 'No following action founded'
 		}
 	}
 
-	verifyContact (action, authKeyHstDao) {
+	verifyContact (action, data, authKeyHstDao) {
+		data.message = 'Key is correct.'
 		return authKeyHstDao.updateFollowUp(action)
 	}
 
 	initPassword (action, data, authKeyHstDAO, myself = this) {
 		var passwd = utils.makeRandPasswd()
-			var userDAO = new UserDAO(this.conn, this.sqlMapper, this.inputParam)
+console.log(passwd)
+		var userDAO = new UserDAO(this.conn, this.sqlMapper, this.inputParam)
 		
 		return new Promise(function(resolve, reject) {
 			userDAO.updatePasswd(action.user_id, passwd)
@@ -83,10 +86,12 @@ class RegisterAuthKeyRouter extends BeauEduRouter {
 					new Mailer().sendTmpPasswd(action.user_id, action.email, passwd)
 					authKeyHstDAO.updateFollowUp(action)
 						.then(res => {
+							data.message = 'We just sent your temporary password. Check your email.'
 							resolve(res)
 						})
 						.catch(err => {
 							myself.error(err)
+							data.message = 'Internal server error - Init password failed.'
 							reject(err)
 						})
 				})

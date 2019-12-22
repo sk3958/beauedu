@@ -4,7 +4,20 @@
 	"description": "",
 	"main": "",
 	"dependencies": {
-		"stream-to-blob": "^2.0.0"
+		"express": "^4.17.1",
+		"express-session": "^1.17.0",
+		"body-parser": "^1.19.0",
+		"connect-pg-simple": "^6.0.1",
+		"date-utils": "^1.2.21",
+		"ejs": "^3.0.1",
+		"formidable": "^1.2.1",
+		"mybatis-mapper": "^0.6.5",
+		"nodemailer": "^6.4.2",
+		"pg": "^7.15.1",
+		"winston": "^3.2.1",
+		"winston-daily-rotate-file": "^4.4.0",
+		"xoauth2": "^1.2.0",
+		"googleapis": "^46.0.0"
 	},
 	"devDependencies": {
 		"eslint": "^6.7.2"

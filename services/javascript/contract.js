@@ -190,8 +190,8 @@ myself.isValidData = function($tr, data) {
 	return true
 }
 
-myself.onContractChangeSuccess = function(responsText) {
-	var json = JSON.parse(responsText)
+myself.onContractChangeSuccess = function(responseText) {
+	var json = JSON.parse(responseText)
 	var row_id = ''
 	
 	if (json.result != 'success') {

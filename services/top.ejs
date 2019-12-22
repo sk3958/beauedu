@@ -5,5 +5,9 @@
 				<button class="nav-button" onclick="location.href='/selectTeacherProfile'">For Teacher</button>
 				<button class="nav-button" onclick="location.href='selectContract'">Contact</button>
 				<button class="nav-button" onclick="location.href='selectReport'">Report</button>
+<% if (session.logined) { %>
+				<button id="log_on_off" class="nav-button" onclick="location.href='logout'">Logout</button>
+<% } else { %>
 				<button id="log_on_off" class="nav-button" onclick="location.href='/'">Login</button>
+<% } %>
 </nav>

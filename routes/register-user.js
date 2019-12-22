@@ -13,6 +13,7 @@ class RegisterUserRouter extends BeauEduRouter {
   async processRequest () {
 
     var data = {}
+    data.session = this.req.session
     
     try {
       this.conn = await this.pool.connect()
@@ -55,11 +56,7 @@ class RegisterUserRouter extends BeauEduRouter {
 
 			// Send verify mail
 			var mailer = new Mailer()
-			mailer.sendAuthKey(
-				this.inputParam.user_id,
-				this.inputParam.email,
-				res.rows[0].auth_key
-			)
+			mailer.sendAuthKey(this.inputParam.user_id, this.inputParam.email, res.rows[0].auth_key)
 
       data.user_id = this.inputParam.user_id
       data.result = 'success'
@@ -73,8 +70,7 @@ class RegisterUserRouter extends BeauEduRouter {
       await this.rollback()
       data.result = 'fail'
       this.json(data);
-      this.error(e.stack || e)
-      this.res.render('error.ejs')
+      this.error(e)
 			return false
 
     } finally {

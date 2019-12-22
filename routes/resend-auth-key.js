@@ -5,6 +5,7 @@ var Mailer = require('../core/send-mail')
 class ResendAuthKeyRouter extends BeauEduRouter {
   async processRequest () {
     var data = {}
+    data.session = this.req.session
 
     this.conn = await this.pool.connect()
 
