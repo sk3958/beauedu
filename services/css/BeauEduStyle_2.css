@@ -211,6 +211,6 @@ table .save_button, .accept_teacher {
 }
 #progress {
 	height: 100%;
-	width: 1%;
+	width: 50%;
 	background-color: green;
 }
