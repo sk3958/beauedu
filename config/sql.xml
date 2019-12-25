@@ -451,7 +451,7 @@ and    cntrct.status = #{status}
 						follow_up, is_follow_up_ended)
 		values (DEFAULT, #{user_id}, #{auth_type}, #{auth_key},
 		now(), now(), #{email}, #{follow_up}, false)
-		returning hst_num, auth_key
+		returning hst_num, auth_key, user_id, auth_type,email, follow_up
 	</insert>
 
 	<select id="selectFollowUp" resultType="">

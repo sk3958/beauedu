@@ -25,7 +25,11 @@ class LoginRouter extends BeauEduRouter {
       
       user = user.rows[0]
 
+			this.beginTransaction()
+
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, this.inputParam)
+			await authKeyHstDAO.cancelAllFollowUp(user.user_id, consts.AUTH_KEY_INIT_PASSWORD)
+
 			var actions = await authKeyHstDAO.selectFollowUp()
 			if (0 < actions.rows.length) {
 				var action = actions.rows[0]
@@ -90,7 +94,7 @@ class LoginRouter extends BeauEduRouter {
 		switch(followUp) {
 			case consts.AUTH_KEY_ACTION_VERIFY_CNTC:
 				return 'verifyAuthKey'
-			case consts.AUTH_KEY_ACTION_INIT_PASSWD:
+			case consts.AUTH_KEY_ACTION_CHANGE_PASSWD:
 				return 'setNewPasswd'
 			default:
 				return ''

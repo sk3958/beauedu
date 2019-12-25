@@ -2,20 +2,20 @@ var dao = require('./beauedu-dao')
 var consts = require('../core/const')
 
 class AuthKeyHstDAO extends dao.BeauEduDAO {
-  insertAuthKeyHst () {
+  insertAuthKeyHst (myself = this) {
 		this.inputParam.auth_key = this.generateKey()
 		return new Promise(function(resolve, reject) {
-			this.execute('cancelAllFollowUp')
+			myself.execute('cancelAllFollowUp')
 				.then(res => {
-					this.execute('insertAuthKeyHst')
+					myself.execute('insertAuthKeyHst')
 						.then(res2 => {
 							resolve([res, res2])
 						})
-						.chtch(err2 => {
+						.catch(err2 => {
 							reject(err2)
 						})
 				})
-				.chtch(err => {
+				.catch(err => {
 					reject(err)
 				})
 		})

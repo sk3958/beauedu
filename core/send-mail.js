@@ -2,7 +2,7 @@ let nodemailer = require('nodemailer')
 let logger = require('./logger')
 let ejs = require('ejs')
 let fs = require('fs')
-var consts = require('../core/const')
+let consts = require('../core/const')
 
 class Mailer {
 	constructor () {
@@ -52,7 +52,7 @@ class Mailer {
 			from: this.email,
 			to: mailTo,
 			subject: contents.subject,
-			text: contents.body
+			html: contents.body
 		} 
 
 		transporter.sendMail(

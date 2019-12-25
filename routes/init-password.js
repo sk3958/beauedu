@@ -25,6 +25,7 @@ class InitPasswordRouter extends BeauEduRouter {
         return true
       }
 
+			user = user.rows[0]
       await this.beginTransaction()
 
       var profile = null
@@ -50,20 +51,16 @@ class InitPasswordRouter extends BeauEduRouter {
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, authKeyHstBean.getData())
 
       var res = await authKeyHstDAO.insertAuthKeyHst()
-      this.req.session.hst_num = res.rows[0].hst_num
+			res = res[1].rows[0]
+      this.req.session.hst_num = res.hst_num
 
-			// Send verify mail
-			//var mailer = new Mailer()
-			//mailer.sendAuthKey(this.inputParam.user_id, this.inputParam.email, res.rows[0].auth_key)
+			var mailer = new Mailer()
+			mailer.sendAuthKey(res.user_id, res.email, res.auth_key)
 
       data.result = 'success'
       data.url = 'verifyAuthKey'
       this.json(data)
       this.commit()
-			// Send verify mail
-			var mailer = new Mailer()
-			mailer.sendAuthKey(this.inputParam.user_id, this.inputParam.email, res.rows[0].auth_key)
-
       return true
 
     } catch (e) {
