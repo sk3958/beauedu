@@ -1,4 +1,5 @@
-var logger = require('../core/logger.js')
+const logger = require('../core/logger.js')
+const utils = require('../core/utils')
 
 class BeauEduDAOClass {
   constructor (conn, sqlMapper, inputParam) {
@@ -36,6 +37,7 @@ class BeauEduDAOClass {
   execute (id, param = this.inputParam) {
     if (null === this.conn || undefined === this.conn) throw 'DB connection is missing.'
     var query = this.getQuery(id, param)
+    query = utils.makePostgreQuery(query)
     return this.conn.query(query)
   }
 
@@ -56,11 +58,11 @@ class BeauEduDAOClass {
   }
 }
 
-fnCommit = function (conn) {
+const fnCommit = function (conn) {
   return conn.query('COMMIT')
 }
 
-fnRollback = function (conn) {
+const fnRollback = function (conn) {
   return conn.query('ROLLBACK')
 }
 

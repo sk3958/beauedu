@@ -11,11 +11,11 @@ myself.checkIdDup = function(element_id) {
 	var message = utils.checkID(element.value)
 	if (null !== message) {
 		utils.alert(message)
-			.then(res => {
+			.then(() => {
 				element.focus()
 				element.select()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 
 		return false
@@ -51,10 +51,6 @@ myself.registerUser = function(form_id) {
 	
 	if (checked_id != document.getElementById('user_id').value) {
 		utils.alert('Press Check ID button.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return false
 	}
 	
@@ -71,11 +67,11 @@ myself.registerUser = function(form_id) {
 			elem = document.getElementById('user_passwd')
 		}
 		utils.alert(rtn.message)
-			.then(res => {
+			.then(() => {
 				elem.focus()
 				elem.select()
 			})
-			.catch(err => {
+			.catch(() => {
 				elem.focus()
 				elem.select()
 			})
@@ -93,33 +89,21 @@ myself.success = function(responseText) {
 	if ('checkIdDup' == request_type) {
 		if (json.available == 'true') {
 			utils.alert(json.user_id + ' is available.', 'SUCCESS', utils.ALERT_SUCCESS)
-				.then(res => {
-				})
-				.catch(err => {
-				})
 			checked_id = json.user_id
 		} else {
 			utils.alert(json.user_id + ' is not available.')
-				.then(res => {
-				})
-				.catch(err => {
-				})
 		}
 	} else if ('registerUser' == request_type) {
 		if (json.result == 'success') {
 			utils.alert(json.user_id + ' is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
-				.then(res => {
+				.then(() => {
 					location.href = json.url
 				})
-				.catch(err => {
+				.catch(() => {
 				})
 			
 		} else {
 			utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-				.then(res => {
-				})
-				.catch(err => {
-				})
 		}
 	}
 	
@@ -128,10 +112,6 @@ myself.success = function(responseText) {
 
 myself.error = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
 	
 	return true
 }

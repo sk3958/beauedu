@@ -20,18 +20,10 @@ myself.registerTeacherProfile = function(form_id) {
 	
 	if (false == utils.checkRequiredCheckbox('teacher_specialities')) {
 		utils.alert('Teacher Specialties are requird.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return false
 	}
 	if (false == utils.checkRequiredCheckbox('inet_connection')) {
 		utils.alert('Internet Connection is requird.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return false
 	}
 	
@@ -45,17 +37,13 @@ myself.success = function(responseText) {
 	
 	if (json.result == 'success') {
 		utils.alert('Teacher Profile is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
-			.then(res => {
+			.then(() => {
 				location.href = 'selectTeacherProfile'
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 	} else {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	}
 	
 	return true
@@ -63,10 +51,5 @@ myself.success = function(responseText) {
 
 myself.error = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
-	
 	return true
 }

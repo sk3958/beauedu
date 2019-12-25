@@ -10,7 +10,7 @@
 
 		select user_id, user_kind
 		from   public."BeauUser"
-		where  user_id = #{user_id}
+		where  user_id = "E"#{user_id}
 		
 	</select>
 	
@@ -18,15 +18,15 @@
 
 		select user_id, user_name, user_kind
 		from   public."BeauUser"
-		where  user_id = #{user_id}
-		and    user_passwd = crypt(#{user_passwd}, user_passwd)
+		where  user_id = "E"#{user_id}
+		and    user_passwd = crypt("E"#{user_passwd}, user_passwd)
 		
 	</select>
 	
 	<insert id="insertBeauUser" parameterType="com.beauedu.bean.UserBean">
 
 		insert into public."BeauUser" (user_id, user_name, user_kind, user_passwd, create_time, audit_time)
-		values (#{user_id}, #{user_name}, #{user_kind}, crypt(#{user_passwd}, gen_salt('bf')), now(), now())
+		values ("E"#{user_id}, "E"#{user_name}, "E"#{user_kind}, crypt("E"#{user_passwd}, gen_salt('bf')), now(), now())
 		
 	</insert>
 	
@@ -53,8 +53,8 @@
 	<update id="updatePassword" parameterType="com.beauedu.bean.UserBean">
 
 		update public."BeauUser"
-		set    user_passwd = crypt(#{user_passwd}, gen_salt('bf'))
-		where  user_id = #{user_id}
+		set    user_passwd = crypt("E"#{user_passwd}, gen_salt('bf'))
+		where  user_id = "E"#{user_id}
 		
 	</update>
 	
@@ -62,50 +62,50 @@
 
 		insert into public."StudentProfile" (user_id, first_name, middle_name, last_name, location, education_level,
 											 email, goals, audit_time, create_time)
-		values (#{user_id}, #{first_name}, #{middle_name}, #{last_name}, #{location}, #{education_level},
-				#{email}, #{goals}, now(), now())
+		values ("E"#{user_id}, "E"#{first_name}, "E"#{middle_name}, "E"#{last_name}, "E"#{location}, "E"#{education_level},
+				"E"#{email}, "E"#{goals}, now(), now())
 		
 	</insert>
 	
 	<update id="updateStudentProfile" parameterType="com.beauedu.bean.StudentProfileBean">
 
 		update public."StudentProfile"
-		set    first_name = #{first_name}
-		      ,middle_name = #{middle_name}
-		      ,last_name = #{last_name}
-		      ,location = #{location}
-		      ,education_level = #{education_level}
-			  ,email = #{email}
-			  ,goals = #{goals}
+		set    first_name = "E"#{first_name}
+		      ,middle_name = "E"#{middle_name}
+		      ,last_name = "E"#{last_name}
+		      ,location = "E"#{location}
+		      ,education_level = "E"#{education_level}
+			  ,email = "E"#{email}
+			  ,goals = "E"#{goals}
 			  ,audit_time = now()
-	    where  user_id = #{user_id}
+	    where  user_id = "E"#{user_id}
 		
 	</update>
 	
 	<update id="updateStudentProfile_2" parameterType="com.beauedu.bean.StudentProfileBean">
 
 		update public."StudentProfile"
-		set    first_name = #{first_name}
-		      ,middle_name = #{middle_name}
-		      ,last_name = #{last_name}
-			  ,email = #{email}
+		set    first_name = "E"#{first_name}
+		      ,middle_name = "E"#{middle_name}
+		      ,last_name = "E"#{last_name}
+			  ,email = "E"#{email}
 			  ,audit_time = now()
-	    where  user_id = #{user_id}
+	    where  user_id = "E"#{user_id}
 		
 	</update>
 	
 	<insert id="insertUserMultiAttr" parameterType="com.beauedu.bean.UserMultiAttrBean">
 
 		insert into public."UserMultiAttr" (user_id, comm_cd_id, comm_cd_val, create_time)
-		values (#{user_id}, #{comm_cd_id}, #{comm_cd_val}, now())
+		values ("E"#{user_id}, "E"#{comm_cd_id}, "E"#{comm_cd_val}, now())
 		
 	</insert>
 	
 	<delete id="deleteUserMultiAttr" parameterType="com.beauedu.bean.UserMultiAttrBean">
 
 		delete from public."UserMultiAttr"
-		where  user_id = #{user_id}
-		and    comm_cd_id = #{comm_cd_id}
+		where  user_id = "E"#{user_id}
+		and    comm_cd_id = "E"#{comm_cd_id}
 		
 	</delete>
 	
@@ -113,7 +113,7 @@
 
 		select first_name, middle_name, last_name, location, education_level, email, goals
 		from   public."StudentProfile"
-		where  user_id = #{user_id}
+		where  user_id = "E"#{user_id}
 		
 	</select>
 	
@@ -121,38 +121,38 @@
 
 		insert into public."TeacherProfile" (user_id, first_name, middle_name, last_name, email, location, qualifications,
 											 primary_language, secondary_language, bio, inet_connection, audit_time, create_time)
-		values (#{user_id}, #{first_name}, #{middle_name}, #{last_name}, #{email}, #{location}, #{qualifications},
-				#{primary_language}, #{secondary_language}, #{bio}, #{inet_connection}, now(), now())
+		values ("E"#{user_id}, "E"#{first_name}, "E"#{middle_name}, "E"#{last_name}, "E"#{email}, "E"#{location}, "E"#{qualifications},
+				"E"#{primary_language}, "E"#{secondary_language}, "E"#{bio}, "E"#{inet_connection}, now(), now())
 		
 	</insert>
 	
 	<update id="updateTeacherProfile" parameterType="com.beauedu.bean.TeacherProfileBean">
 
 		update public."TeacherProfile"
-		set    first_name = #{first_name}
-		      ,middle_name = #{middle_name}
-		      ,last_name = #{last_name}
-		      ,email = #{email}
-		      ,location = #{location}
-		      ,qualifications = #{qualifications}
-			  ,primary_language = #{primary_language}
-			  ,secondary_language = #{secondary_language}
-			  ,bio = #{bio}
-			  ,inet_connection = #{inet_connection}
+		set    first_name = "E"#{first_name}
+		      ,middle_name = "E"#{middle_name}
+		      ,last_name = "E"#{last_name}
+		      ,email = "E"#{email}
+		      ,location = "E"#{location}
+		      ,qualifications = "E"#{qualifications}
+			  ,primary_language = "E"#{primary_language}
+			  ,secondary_language = "E"#{secondary_language}
+			  ,bio = "E"#{bio}
+			  ,inet_connection = "E"#{inet_connection}
 			  ,audit_time = now()
-	    where  user_id = #{user_id}
+	    where  user_id = "E"#{user_id}
 		
 	</update>
 	
 	<update id="updateTeacherProfile_2" parameterType="com.beauedu.bean.TeacherProfileBean">
 
 		update public."TeacherProfile"
-		set    first_name = #{first_name}
-		      ,middle_name = #{middle_name}
-		      ,last_name = #{last_name}
-		      ,email = #{email}
+		set    first_name = "E"#{first_name}
+		      ,middle_name = "E"#{middle_name}
+		      ,last_name = "E"#{last_name}
+		      ,email = "E"#{email}
 			  ,audit_time = now()
-	    where  user_id = #{user_id}
+	    where  user_id = "E"#{user_id}
 		
 	</update>
 	
@@ -161,7 +161,7 @@
 		select first_name, middle_name, last_name, email, location, qualifications,
 		       primary_language, secondary_language, bio, inet_connection
 		from   public."TeacherProfile"
-		where  user_id = #{user_id}
+		where  user_id = "E"#{user_id}
 		
 	</select>
 	
@@ -169,8 +169,8 @@
 
 		select comm_cd_id, comm_cd_val, comm_cd_val_nm, select_order
 		from   public."CommCdDtl"
-		where  comm_cd_id = #{comm_cd_id}
-		and    is_for_ui = #{is_for_ui}
+		where  comm_cd_id = "E"#{comm_cd_id}
+		and    is_for_ui = "E"#{is_for_ui}
 		order by select_order
 		
 	</select>
@@ -179,15 +179,15 @@
 
 		select comm_cd_id, comm_cd_val
 		from   public."UserMultiAttr"
-		where  user_id = #{user_id}
-		and    comm_cd_id = #{comm_cd_id}
+		where  user_id = "E"#{user_id}
+		and    comm_cd_id = "E"#{comm_cd_id}
 		
 	</select>
 	
 	<insert id="insertUserRequestMst" parameterType="com.beauedu.bean.UserRequestMstBean">
 
 		insert into public."UserRequestMst" (request_num, request_type, user_id, request_status, create_time, audit_time)
-		values (DEFAULT, #{request_type}, #{user_id}, #{request_status}, now(), now())
+		values (DEFAULT, "E"#{request_type}, "E"#{user_id}, "E"#{request_status}, now(), now())
 		returning request_num
 		
 	</insert>
@@ -195,18 +195,18 @@
 	<update id="updateUserRequestMst" parameterType="com.beauedu.bean.UserRequestMstBean">
 
 		update public."UserRequestMst"
-		set    request_status = #{request_status}
+		set    request_status = "E"#{request_status}
 		      ,audit_time = now()
-		      ,audit_id = #{audit_id}
-		where  request_num = #{request_num}
+		      ,audit_id = "E"#{audit_id}
+		where  request_num = "E"#{request_num}
 		
 	</update>
 	
 	<select id="selectUserRequestMstForContract" resultType="com.beauedu.bean.UserRequestMstBean">
 		select request_num, request_type, user_id, request_status
 		from   public."UserRequestMst"
-		where  user_id = #{user_id}
-		and    request_type = #{request_type}
+		where  user_id = "E"#{user_id}
+		and    request_type = "E"#{request_type}
 		order by request_num desc
 		limit 1
 	</select>
@@ -235,8 +235,8 @@ from   public."Contract" cntrct
        left join public."UserRequestMst" request on request.request_num = cntrct.request_num
        left outer join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
        left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
-where  COALESCE(#{requester_name},'') = ''
-and    cntrct.status = #{status}
+where  COALESCE("E"#{requester_name},'') = ''
+and    cntrct.status = "E"#{status}
 union all
 select COALESCE(cntrct.contract_num,0) as contract_num
       ,request.request_num
@@ -257,9 +257,9 @@ from   public."StudentProfile" sprofile
        left join public."UserRequestMst" request on request.user_id = sprofile.user_id
        left join public."Contract" cntrct on cntrct.request_num = request.request_num
        left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
-where  COALESCE(#{requester_name},'') != ''
-and    upper(sprofile.first_name) like upper(#{requester_name}) || '%'
-and    cntrct.status = #{status}
+where  COALESCE("E"#{requester_name},'') != ''
+and    upper(sprofile.first_name) like upper("E"#{requester_name}) || '%'
+and    cntrct.status = "E"#{status}
 union all
 select COALESCE(cntrct.contract_num,0) as contract_num
       ,request.request_num
@@ -280,9 +280,9 @@ from   public."StudentProfile" sprofile
        left join public."UserRequestMst" request on request.user_id = sprofile.user_id
        left join public."Contract" cntrct on cntrct.request_num = request.request_num
        left outer join public."TeacherProfile" tprofile on tprofile.user_id = cntrct.teacher_id
-where  COALESCE(#{requester_name},'') != ''
-and    upper(sprofile.last_name) like upper(#{requester_name}) || '%'
-and    cntrct.status = #{status}
+where  COALESCE("E"#{requester_name},'') != ''
+and    upper(sprofile.last_name) like upper("E"#{requester_name}) || '%'
+and    cntrct.status = "E"#{status}
 union all
 select cntrct.contract_num
       ,request.request_num
@@ -303,9 +303,9 @@ from   public."TeacherProfile" tprofile
        left join public."Contract" cntrct on cntrct.teacher_id = tprofile.user_id
        left join public."UserRequestMst" request on request.request_num = cntrct.request_num
        left join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
-where  COALESCE(#{requester_name},'') != ''
-and    upper(tprofile.first_name) like upper(#{requester_name}) || '%'
-and    cntrct.status = #{status}
+where  COALESCE("E"#{requester_name},'') != ''
+and    upper(tprofile.first_name) like upper("E"#{requester_name}) || '%'
+and    cntrct.status = "E"#{status}
 union all
 select cntrct.contract_num
       ,request.request_num
@@ -326,9 +326,9 @@ from   public."TeacherProfile" tprofile
        left join public."Contract" cntrct on cntrct.teacher_id = tprofile.user_id
        left join public."UserRequestMst" request on request.request_num = cntrct.request_num
        left join public."StudentProfile" sprofile on sprofile.user_id = request.user_id
-where  COALESCE(#{requester_name},'') != ''
-and    upper(tprofile.last_name) like upper(#{requester_name}) || '%'
-and    cntrct.status = #{status}
+where  COALESCE("E"#{requester_name},'') != ''
+and    upper(tprofile.last_name) like upper("E"#{requester_name}) || '%'
+and    cntrct.status = "E"#{status}
 ) v
 
 	</select>
@@ -337,26 +337,26 @@ and    cntrct.status = #{status}
 
 		insert into public."Contract" (contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
 		                               period_unit_pay, pay_times, pay_amount, create_time, audit_time, audit_id)
-		values (DEFAULT, #{request_num}, #{teacher_id}, #{status}, #{start_dt}, #{end_dt}, #{period_unit_class}, #{class_times}, 
-		        #{period_unit_pay}, #{pay_times}, #{pay_amount}, now(), now(), #{audit_id})
+		values (DEFAULT, "E"#{request_num}, "E"#{teacher_id}, "E"#{status}, "E"#{start_dt}, "E"#{end_dt}, "E"#{period_unit_class}, "E"#{class_times}, 
+		        "E"#{period_unit_pay}, "E"#{pay_times}, "E"#{pay_amount}, now(), now(), "E"#{audit_id})
 		
 	</insert>
 	
 	<update id="updateContract" parameterType="com.beauedu.bean.ContractBean">
 
 		update public."Contract"
-		set    status = #{status}
+		set    status = "E"#{status}
 		      ,audit_time = now()
-		      ,audit_id = #{audit_id}
-		      ,teacher_id = #{teacher_id}
-		      ,start_dt = #{start_dt}
-		      ,end_dt = #{end_dt}
-		      ,period_unit_class = #{period_unit_class}
-		      ,class_times = #{class_times}
-		      ,period_unit_pay = #{period_unit_pay}
-		      ,pay_times = #{pay_times}
-		      ,pay_amount = #{pay_amount}
-		where  contract_num = #{contract_num}
+		      ,audit_id = "E"#{audit_id}
+		      ,teacher_id = "E"#{teacher_id}
+		      ,start_dt = "E"#{start_dt}
+		      ,end_dt = "E"#{end_dt}
+		      ,period_unit_class = "E"#{period_unit_class}
+		      ,class_times = "E"#{class_times}
+		      ,period_unit_pay = "E"#{period_unit_pay}
+		      ,pay_times = "E"#{pay_times}
+		      ,pay_amount = "E"#{pay_amount}
+		where  contract_num = "E"#{contract_num}
 		
 	</update>
 	
@@ -365,16 +365,16 @@ and    cntrct.status = #{status}
 		insert into public."ContractHst" (contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
 		                                  period_unit_pay, pay_times, pay_amount, create_time, audit_id)
 		select contract_num, request_num, teacher_id, status, start_dt, end_dt, period_unit_class, class_times, 
-		       period_unit_pay, pay_times, pay_amount, now(), #{audit_id}
+		       period_unit_pay, pay_times, pay_amount, now(), "E"#{audit_id}
 		from   public."Contract"
-		where  contract_num = #{contract_num}
+		where  contract_num = "E"#{contract_num}
 		
 	</insert>
 	
 	<insert id="insertReport" parameterType="com.beauedu.bean.ReportBean">
 
 		insert into public."Report" (report_num, user_id, report_type, report_title, report_text, create_time, audit_time, audit_id)
-		values(DEFAULT, #{user_id}, #{report_type}, #{report_title}, #{report_text}, now(), now(), #{audit_id})
+		values(DEFAULT, "E"#{user_id}, "E"#{report_type}, "E"#{report_title}, "E"#{report_text}, now(), now(), "E"#{audit_id})
 		returning report_num
 		
 	</insert>
@@ -382,26 +382,26 @@ and    cntrct.status = #{status}
 	<insert id="insertReportFile" parameterType="com.beauedu.bean.ReportBean">
 
 		insert into public."ReportFile" (file_num, report_num, file_name, saved_file_name, create_time, audit_time, audit_id, file_size)
-		values(DEFAULT, cast(#{report_num} as integer), #{file_name}, #{saved_file_name}, now(), now(), #{audit_id}, #{file_size})
+		values(DEFAULT, cast("E"#{report_num} as integer), "E"#{file_name}, "E"#{saved_file_name}, now(), now(), "E"#{audit_id}, "E"#{file_size})
 		
 	</insert>
 	
 	<select id="selectReportNum" resultType="com.beauedu.bean.ReportBean">
 		select max(report_num) as report_num
 		from   public."Report"
-		where  user_id = #{user_id}
+		where  user_id = "E"#{user_id}
 	</select>
 
     <select id="selectReportFile" resultType="com.beauedu.bean.ReportFileBean">
 		select file_name, saved_file_name, file_size
 		from   public."ReportFile"
-		where  file_num = cast(#{file_num} as integer)
+		where  file_num = cast("E"#{file_num} as integer)
 	</select>
 	
 	 <select id="selectReportFiles" resultType="com.beauedu.bean.ReportFileBean">
 		select file_name, saved_file_name, file_size
 		from   public."ReportFile"
-		where  report_num = cast(#{report_num} as integer)
+		where  report_num = cast("E"#{report_num} as integer)
 	</select>
 	
 	<select id="selectReportList" resultType="com.beauedu.bean.ReportBean">
@@ -412,8 +412,8 @@ and    cntrct.status = #{status}
 		from   public."Report" report
 					 left outer join public."ReportFile" rfile on rfile.report_num = report.report_num
 		      ,public."TeacherProfile" tprofile
-		where  COALESCE(#{user_nm}, '') = ''
-		and    report.create_time between to_date(#{start_dt}, 'YYYYMMDD') and to_date(#{end_dt}, 'YYYYMMDD')
+		where  COALESCE("E"#{user_nm}, '') = ''
+		and    report.create_time between to_date("E"#{start_dt}, 'YYYYMMDD') and to_date("E"#{end_dt}, 'YYYYMMDD')
 		and    tprofile.user_id = report.user_id
 		union all
 		select report.report_num, report.user_id, tprofile.first_name || ' ' || tprofile.last_name as user_name
@@ -424,23 +424,23 @@ and    cntrct.status = #{status}
 		            left outer join public."ReportFile" rfile on rfile.report_num = report.report_num
 		           ,(select user_id, first_name, last_name
 					from public."TeacherProfile"
-					where  upper(first_name) like upper(#{user_nm}) || '%'
+					where  upper(first_name) like upper("E"#{user_nm}) || '%'
 					union all
 					select user_id, first_name, last_name
 					from public."TeacherProfile"
-					where  upper(last_name) like upper(#{user_nm}) || '%') tprofile
-		where  COALESCE(#{user_nm}, '') != ''
+					where  upper(last_name) like upper("E"#{user_nm}) || '%') tprofile
+		where  COALESCE("E"#{user_nm}, '') != ''
 		and    report.user_id = tprofile.user_id
-		and    report.create_time between to_date(#{start_dt}, 'YYYYMMDD') and to_date(#{end_dt}, 'YYYYMMDD')
+		and    report.create_time between to_date("E"#{start_dt}, 'YYYYMMDD') and to_date("E"#{end_dt}, 'YYYYMMDD')
 	</select>
 
 	<update id="commentReport" parameterType="com.beauedu.bean.ReportBean">
 
 		update  public."Report"
-		set     comment = #{comment},
+		set     comment = "E"#{comment},
 						audit_time = now(),
-						audit_id = #{user_id}
-		where   report_num = #{report_num}
+						audit_id = "E"#{user_id}
+		where   report_num = "E"#{report_num}
 		
 	</update>
 
@@ -449,48 +449,49 @@ and    cntrct.status = #{status}
 						hst_num, user_id, auth_type, auth_key,
 						create_time, audit_time, email,
 						follow_up, is_follow_up_ended)
-		values (DEFAULT, #{user_id}, #{auth_type}, #{auth_key},
-		now(), now(), #{email}, #{follow_up}, false)
+		values (DEFAULT, "E"#{user_id}, "E"#{auth_type}, "E"#{auth_key},
+		now(), now(), "E"#{email}, "E"#{follow_up}, false)
 		returning hst_num, auth_key, user_id, auth_type,email, follow_up
 	</insert>
 
 	<select id="selectFollowUp" resultType="">
-		select hst_num, auth_type, follow_up
+		select hst_num, auth_type, follow_up, user_id
 		from   public."AuthKeyHst"
-		where  user_id = #{user_id}
+		where  user_id = "E"#{user_id}
 		and    is_active = true
 	</select>
 	
 	<select id="selectAuthKeyInfoByHstNum" resultType="">
 		select user_id, hst_num, auth_type, follow_up, auth_key, email
 		from   public."AuthKeyHst"
-		where  hst_num = #{hst_num}
+		where  hst_num = "E"#{hst_num}
 	</select>
 
 	<update id="updateFollowUp" parameterType="">
 		update public."AuthKeyHst"
 		set    audit_time = now()
-					,is_active = #{is_active}
-					,is_follow_up_ended = #{is_follow_up_ended}
-					,follow_up = #{follow_up}
-		      ,is_auth_key_verified = true
-		where  hst_num = #{hst_num}
+					,is_active = "E"#{is_active}
+					,is_follow_up_ended = "E"#{is_follow_up_ended}
+					,follow_up = "E"#{follow_up}
+					,is_auth_key_verified = true
+		where  hst_num = "E"#{hst_num}
 	</update>
 
 	<update id="cancelFollowUp" parameterType="">
 		update public."AuthKeyHst"
 		set    audit_time = now()
 					,is_active = false
-		where  hst_num = #{hst_num}
+		where  hst_num = "E"#{hst_num}
 	</update>
 
 	<update id="cancelAllFollowUp" parameterType="">
 		update public."AuthKeyHst"
 		set    audit_time = now()
 					,is_active = false
-		where  user_id = #{user_id}
-		and    auth_type = #{auth_type}
+		where  user_id = "E"#{user_id}
+		and    auth_type = "E"#{auth_type}
 		and    is_active = true
+		and    follow_up != "E"#{except}
 	</update>
 
 	<insert id="reinsertAuthKeyHst" parameterType="">
@@ -498,11 +499,11 @@ and    cntrct.status = #{status}
 						user_id, auth_type, auth_key,
 						create_time, audit_time, email,
 						follow_up, is_follow_up_ended)
-		select user_id, auth_type, #{auth_key},
+		select user_id, auth_type, "E"#{auth_key},
 						now(), now(), email,
 						follow_up, is_follow_up_ended
 		from   public."AuthKeyHst"
-		where  hst_num = #{hst_num}
+		where  hst_num = "E"#{hst_num}
 		returning hst_num, auth_key, user_id, email, follow_up
 	</insert>
 

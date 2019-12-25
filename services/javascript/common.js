@@ -132,10 +132,10 @@ utils.checkRequiredField = function(form_id)
 		}
 		if (true == form[i].required && ('' == form[i].value || null == form[i].value || undefined == form[i].value)) {
 			utils.alert(form[i].id.replace('\_', ' ').toUpperCase() + ' is required.')
-				.then(res => {
+				.then(() => {
 					form[i].focus()
 				})
-				.catch(err => {
+				.catch(() => {
 				})
 			
 			return false

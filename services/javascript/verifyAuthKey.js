@@ -47,33 +47,25 @@ myself.success = function(responseText) {
 	if (1 === myself.actionType) {
 		if (json.result == 'success') {
 			utils.alert(json.message, 'SUCCESS', utils.ALERT_SUCCESS)
-				.then(res => {
+				.then(() => {
 					location.href = json.url
 				})
-				.catch(err => {
+				.catch(() => {
 				})
 		} else {
 			utils.alert(json.message, 'ERROR', utils.ALERT_ERROR)
-				.then(res => {
-				})
-				.catch(err => {
-				})
 		}
 	}
 	else if (2 === myself.actionType) {
 		if (json.result == 'success') {
 			utils.alert(json.message, 'SUCCESS', utils.ALERT_SUCCESS)
-				.then(res => {
+				.then(() => {
 					location.href = json.url
 				})
-				.catch(err => {
+				.catch(() => {
 				})
 		} else {
 			utils.alert(json.message, 'ERROR', utils.ALERT_ERROR)
-				.then(res => {
-				})
-				.catch(err => {
-				})
 		}
 	}
 	
@@ -82,9 +74,5 @@ myself.success = function(responseText) {
 
 myself.error = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
 	return true
 }

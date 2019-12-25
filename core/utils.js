@@ -14,4 +14,8 @@ utils.makeRandPasswd = function () {
 	return passwd;
 }
 
+utils.makePostgreQuery = function (str) {
+	return str.replace(/"E"\s*'/g, `E'`)
+}
+
 module.exports = utils

@@ -22,18 +22,18 @@ myself.saveReport = function() {
 	
 	if ('' == document.querySelector('#report_title').value.trim()) {
 		utils.alert('Report title must be filled.')
-			.then(res => {
+			.then(() => {
 				document.querySelector('#report_title').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if ('' == document.querySelector('#report_text').value.trim() && '' == document.querySelector('#file_name').value.trim()) {
 		utils.alert('Attach file or write report.')
-			.then(res => {
+			.then(() => {
 				document.querySelector('#report_text').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	}
@@ -46,17 +46,8 @@ myself.onReportSaveSuccess = function(responseText) {
 	
 	if (json.result == 'success') {
 		utils.alert('Your report is successfully registered.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
-
 	} else {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	}
 	
 	return true
@@ -64,10 +55,5 @@ myself.onReportSaveSuccess = function(responseText) {
 
 myself.onReportSaveFail = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
-	
 	return true
 }

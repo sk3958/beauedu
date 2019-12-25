@@ -27,16 +27,8 @@ myself.success = function (responseText) {
 	
 	if (json.result == 'success') {
 		utils.alert('Your request is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	} else {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	}
 	
 	return true
@@ -44,10 +36,5 @@ myself.success = function (responseText) {
 
 myself.error = function () {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
-	
 	return true
 }

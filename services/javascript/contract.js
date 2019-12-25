@@ -5,13 +5,25 @@ var $targetTeacherID = null
 var $targetTeacherName = null
 
 myself.setEvent = function() {
+	utils.arrangeTopMenu("<%= session.user_kind %>", "contratc.ejs");
+
+	$.datepicker.setDefaults({
+          dateFormat: 'yymmdd',
+					showOtherMonths: true,
+          showMonthAfterYear:true,
+          changeYear: true,
+          changeMonth: true,
+          buttonImageOnly: true           
+	});
+	
+	$(".start_dt, .end_dt").datepicker();
+	
 	$('.teacher_lov').on('click', function(event) {
 		$('#teacher_list_popup').css('display', 'none')
 		var $tr = $(event.target).closest('tr')
 		$targetTeacherID = $tr.find('.teacher_id')
 		$targetTeacherName = $tr.find('.teacher_name')
 		
-		$('#teacher_list_popup').css('display', 'block')
 
 		ajax.ajaxRequest('POST', 'selectTeacherList', '', myself.onGetTeacherListSuccess, myself.onGetTeacherListFail)
 	})
@@ -98,10 +110,6 @@ myself.saveContract = function($target) {
 	
 	if (false == myself.Contracts[row_id]['changed']) {
 		utils.alert('Nothing is changed.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return
 	}
 	
@@ -113,26 +121,26 @@ myself.saveContract = function($target) {
 myself.isValidData = function($tr, data) {
 	if (isNaN(data['class_times']) || 0 <= ('0' + data['class_times']).indexOf('.')) {
 		utils.alert('This field must be a integer.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.class_times').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (isNaN(data['pay_times']) || 0 <= ('0' + data['pay_times']).indexOf('.')) {
 		utils.alert('This field must be a integer.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.pay_times').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (isNaN(data['pay_amount'])) {
 		utils.alert('This field must be a number.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.pay_amount').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	}
@@ -141,49 +149,45 @@ myself.isValidData = function($tr, data) {
 	
 	if (null == data['teacher_id'] || '' == data['teacher_id'].trim()) {
 		utils.alert('Teacher must be selected.')
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return false
 	} else if (false == moment(data['start_dt'], 'YYYYMMDD', true).isValid()) {
 		utils.alert('Date format must be YYYYMMDD.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.start_dt').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (false == moment(data['end_dt'], 'YYYYMMDD', true).isValid()) {
 		utils.alert('Date format must be YYYYMMDD.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.end_dt').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (data['start_dt'] > data['end_dt']) {
 		utils.alert('Check sart and end date.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.end_dt').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (null == data['period_unit_class'] || '' == data['period_unit_class']) {
 		utils.alert('This field must be selected.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.period_unit_class').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	} else if (null == data['period_unit_pay'] || '' == data['period_unit_pay']) {
 		utils.alert('This field must be selected.')
-			.then(res => {
+			.then(() => {
 				$tr.find('.period_unit_pay').focus()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 		return false
 	}
@@ -196,18 +200,10 @@ myself.onContractChangeSuccess = function(responseText) {
 	
 	if (json.result != 'success') {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 		return
 	}
 	
 	utils.alert('Saved.', 'SUCCESS', utils.ALERT_SUCCESS)
-		.then(res => {
-		})
-		.catch(err => {
-		})
 	
 	row_id = json.row_id
 	var $tr = $('#' + row_id)
@@ -229,10 +225,6 @@ myself.onContractChangeSuccess = function(responseText) {
 
 myself.onContractChangeFail = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
 }
 
 myself.onGetTeacherListSuccess = function(responseText) {
@@ -242,10 +234,6 @@ myself.onGetTeacherListSuccess = function(responseText) {
 		myself.showTeacherListPopup(json)
 	} else {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	}
 	
 	return true
@@ -253,10 +241,6 @@ myself.onGetTeacherListSuccess = function(responseText) {
 
 myself.onGetTeacherListFail = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
 	
 	return true
 }

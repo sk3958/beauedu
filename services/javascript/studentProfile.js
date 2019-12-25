@@ -37,17 +37,13 @@ myself.success = function(responseText) {
 	
 	if (json.result == 'success') {
 		utils.alert('Student Profile is successfully registered.', 'SUCCESS', utils.ALERT_SUCCESS)
-			.then(res => {
+			.then(() => {
 				location.href = 'selectStudentProfile'
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 	} else {
 		utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-			.then(res => {
-			})
-			.catch(err => {
-			})
 	}
 	
 	return true
@@ -55,10 +51,5 @@ myself.success = function(responseText) {
 
 myself.error = function() {
 	utils.alert('Error occured.', 'ERROR', utils.ALERT_ERROR)
-		.then(res => {
-		})
-		.catch(err => {
-		})
-	
 	return true
 }

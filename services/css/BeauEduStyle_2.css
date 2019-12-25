@@ -62,7 +62,6 @@ article button:hover {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	/*table-layout: auto;*/
 }
 
 thead {
@@ -140,12 +139,16 @@ table .start_dt, .end_dt, .requester_name, .requester_id, .teacher_name, .teache
 }
 table .class_times, .pay_times, .pay_amount {
 	text-align: right;
+	width: 90%;
 }
 table .teacher_name, table .teacher_id {
-	width: 80%;
+	width: 75%;
+	float: left;
 }
 table .teacher_lov, table .clear_teacher {
 	width: 15%;
+	float: right;
+	margin-right: 2px;
 	background-color: #373737;
 	color: #f1f1f1;
 }
@@ -161,7 +164,7 @@ table .save_button, .accept_teacher {
 	max-height: 50%;
 	left: 5%;
 	top: 20%;
-	background-color: #fff3e9;
+	background-color: #f1f1f1;
 }
 #report_text_popup {
 	left: 50%;
@@ -180,6 +183,7 @@ table .save_button, .accept_teacher {
 }
 #teacher_list_table {
 	margin-top: none;
+	width: 100%;
 }
 #popup_footer {
 	display: flex;

@@ -4,6 +4,7 @@ var consts = require('../core/const')
 class AuthKeyHstDAO extends dao.BeauEduDAO {
   insertAuthKeyHst (myself = this) {
 		this.inputParam.auth_key = this.generateKey()
+		this.inputParam.except = ' '
 		return new Promise(function(resolve, reject) {
 			myself.execute('cancelAllFollowUp')
 				.then(res => {
@@ -73,10 +74,11 @@ class AuthKeyHstDAO extends dao.BeauEduDAO {
 		return this.execute('cancelFollowUp', param)
 	}
 
-	cancelAllFollowUp(user_id, auth_type) {
+	cancelAllFollowUp(user_id, auth_type, except = ' ') {
 		var param = {
 			user_id: user_id,
-			auth_type: auth_type
+			auth_type: auth_type,
+			except: except
 		}
 		return this.execute('cancelAllFollowUp', param)
 	}

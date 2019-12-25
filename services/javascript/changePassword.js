@@ -21,11 +21,11 @@ myself.registerNewPasswd = function(form_id) {
   var message = utils.checkID(element.value)
 	if (null !== message) {
 		utils.alert(message)
-			.then(res => {
+			.then(() => {
 				element.focus()
 				element.select()
 			})
-			.catch(err => {
+			.catch(() => {
 			})
 
 		return false
@@ -44,11 +44,11 @@ myself.registerNewPasswd = function(form_id) {
 			elem = document.getElementById('new_passwd')
 		}
 		utils.alert(rtn.message)
-			.then(res => {
+			.then(() => {
 				elem.focus()
 				elem.select()
 			})
-			.catch(err => {
+			.catch(() => {
       })
 
 		return false
@@ -64,10 +64,10 @@ myself.success = function(responseText) {
 	
   if (json.result == 'success') {
     utils.alert(json.message, 'SUCCESS', utils.ALERT_SUCCESS)
-      .then(res => {
+      .then(() => {
         location.href = json.url
       })
-      .catch(err => {
+      .catch(() => {
       })
     
   } else {

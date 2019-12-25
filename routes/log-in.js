@@ -28,7 +28,7 @@ class LoginRouter extends BeauEduRouter {
 			this.beginTransaction()
 
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, this.inputParam)
-			await authKeyHstDAO.cancelAllFollowUp(user.user_id, consts.AUTH_KEY_INIT_PASSWORD)
+			await authKeyHstDAO.cancelAllFollowUp(user.user_id, consts.AUTH_KEY_INIT_PASSWORD, consts.AUTH_KEY_ACTION_CHANGE_PASSWD)
 
 			var actions = await authKeyHstDAO.selectFollowUp()
 			if (0 < actions.rows.length) {

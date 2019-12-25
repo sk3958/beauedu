@@ -25,14 +25,16 @@ body
 	background-image: linear-gradient(to bottom, #c0b283, #f1f1f1);*/
 }
 
-/*button {
-  background-color: #4CAF50;
+button {
   background-color: #373737;
   color: white;
   border-radius: 5px;
-  font-size: 1.05em;
+  font-size: 17px;
   font-weight: 600;
-  padding: 14px 20px;
+  padding-left: 14px;
+  padding-right: 14px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   margin: 8px 0;
   border: none;
   cursor: pointer;
@@ -41,7 +43,7 @@ body
 button:hover
 {
   opacity: 0.8;
-}*/
+}
 
 input[type=text], input[type=email], input[type=password], select, textarea {
   padding: 5px;
@@ -116,24 +118,25 @@ ul li {
 .filebox label {
   display: inline-block;
   padding: .5em .75em;
-  color: #fff;
-  font-size: inherit;
+  color: #c0b283;
+  color: #ffffff;
+	font-size: 17px;
+	/*font-weight: 600;*/
   line-height: normal;
   vertical-align: middle;
-  background-color: #e06670;
+	background-color: #373737;
+	border-radius: 1px;
   cursor: pointer;
-  border: 1px solid #ff8389;
-  border-radius: .25em;
   -webkit-transition: background-color 0.2s;
   transition: background-color 0.2s;
 }
 
 .filebox label:hover {
-  background-color: #ff8389;
+  background-color: #474747;
 }
 
 .filebox label:active {
-  background-color: #e06670;
+	transform: scale(0.95);
 }
 
 .filebox input[type=file] {
