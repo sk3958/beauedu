@@ -10,7 +10,7 @@
 }
 
 .menu-level-1 {
-	display: none;
+	display: block;
 }
 
 .tree-no-child {

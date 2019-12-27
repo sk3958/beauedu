@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Vue test</title>
+	<link rel="stylesheet" href="./css/BeauEduStyle.css?after" type="text/css" />
+	<link rel="stylesheet" href="./css/BeauEduStyleTop.css?after" type="text/css" />
+	<link rel="stylesheet" href="./css/BeauEduStyleLeft.css?after" type="text/css" />
+</head>
+<body>
+<div class="container">
+	<div id="header" class="top">
+		<top-menu
+			:menus="buttons"
+			:logined="signIn"
+			:userkind="userType">
+		</top-menu>
+	</div>
+	<section class="layout">
+		<aside id="left_menu" class="left-nav">
+			<left-menu
+				:menus="trees"
+				:userkind="userType">
+			</left-menu>
+		</aside>
+	</section>
+</div>
+</body>
+	<script src="./javascript/vue.js"></script>
+	<script src="./javascript/top.js?after"></script>
+	<script src="./javascript/left.js?after"></script>
+	<script>
+		runTopMenu('yes', '99')
+		runLeftMenu('99')
+	</script>
+</html>
