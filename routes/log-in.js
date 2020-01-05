@@ -44,6 +44,7 @@ class LoginRouter extends BeauEduRouter {
 
       this.req.session.logined = true
       this.req.session.user_id = user.user_id
+      this.req.session.user_name = user.user_name
       this.req.session.user_kind = user.user_kind
       
       var profile = null
