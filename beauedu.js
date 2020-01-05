@@ -48,3 +48,7 @@ router(beauedu, fs, pool, mybatis)
 beauedu.listen(5000, function() {
   console.log('Express server has started on port 5000')
 })
+
+process.on('uncaughtException', (error) => {
+  console.log(error.stack);
+})

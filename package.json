@@ -17,6 +17,7 @@
 		"winston-daily-rotate-file": "^4.4.0",
 		"xoauth2": "^1.2.0",
 		"googleapis": "^46.0.0",
+		"uuid": "3.3.3",
 		"redis": "2.8.0",
 		"connect-redis": "4.0.3"
 	},
