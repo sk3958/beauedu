@@ -10,18 +10,11 @@
 <body>
 <div class="container">
 	<div id="header" class="top">
-		<top-menu
-			:menus="buttons"
-			:logined="signIn"
-			:userkind="userType">
-		</top-menu>
+		<top-menu :menus="buttons" :logined="signIn" :userkind="userType"></top-menu>
 	</div>
 	<section class="layout">
 		<aside id="left_menu" class="left-nav">
-			<left-menu
-				:menus="trees"
-				:userkind="userType">
-			</left-menu>
+			<left-menu :menus="trees" :userkind="userType"></left-menu>
 		</aside>
 	</section>
 </div>

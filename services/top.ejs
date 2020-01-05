@@ -3,8 +3,9 @@
 				<button class="nav-button">What We Do</button>
 				<button class="nav-button" onclick="location.href='/selectStudentProfile'">For Students</button>
 				<button class="nav-button" onclick="location.href='/selectTeacherProfile'">For Teacher</button>
-				<button class="nav-button" onclick="location.href='selectContract'">Contact</button>
-				<button class="nav-button" onclick="location.href='selectReport'">Report</button>
+				<button class="nav-button" onclick="location.href='/selectContract'">Contact</button>
+				<button class="nav-button" onclick="location.href='/selectReport'">Report</button>
+				<button class="nav-button" onclick="utils.gotoClassroom()">Classroom</button>
 <% if (session.logined) { %>
 				<button id="log_on_off" class="nav-button" onclick="location.href='logout'">Logout</button>
 <% } else { %>

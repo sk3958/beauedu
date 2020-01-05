@@ -25,5 +25,6 @@
 	"/selectReport": { "path": "./select-report", "auth": "99" },
 	"/reportPage": { "path": "./report-page", "auth": "02 99" },
 	"/commentReport": { "path": "./comment-report", "auth": "02 99" },
-	"/downloadReportFile": { "path": "./download-report-file", "auth": "99" }
+	"/downloadReportFile": { "path": "./download-report-file", "auth": "99" },
+	"/classroom": { "path": "./classroom", "auth": "01 02 99" }
 }

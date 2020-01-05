@@ -25,8 +25,8 @@ if (null === session.user_id || undefined === session.user_id) {
 %>
 myself.bodyOnLoad = function()
 {
-	utils.arrangeTopMenu("<%= session.user_kind %>", "teacherProfile.ejs")
-	utils.arrangeLeftMenu("<%= session.user_kind %>", "teacherProfile.ejs")
+	/*utils.arrangeTopMenu("< %= session.user_kind %>", "teacherProfile.ejs")
+	utils.arrangeLeftMenu("< %= session.user_kind %>", "teacherProfile.ejs")*/
 	return true;
 }
 <%
@@ -39,10 +39,12 @@ myself.bodyOnLoad = function()
 <body onload="myself.bodyOnLoad()">
 <section class="container">
 	<header id="top" class="top">
-		<%- include('./top.ejs') %>
+		<top-menu :menus="buttons" :logined="signIn" :userkind="userType"></top-menu>
+		<!-- < %- include('./top.ejs') %> -->
 	</header>
 	<aside id="left_menu" class="left-nav">
-		<%- include('./left.ejs') %>
+		<left-menu :menus="trees" :userkind="userType"></left-menu>
+		<!-- < %- include('./left.ejs') %> -->
 	</aside>
 	<article class="content">
 		<div class="title">
@@ -155,4 +157,11 @@ for (i in inetConnections) {
 </section>
 <%- include('./alert.ejs') %>
 </body>
+	<script src="./javascript/vue.js"></script>
+	<script src="./javascript/top.js?after"></script>
+	<script src="./javascript/left.js?after"></script>
+	<script>
+		runTopMenu('yes', '<%= session.user_kind %>')
+		runLeftMenu('<%= session.user_kind %>')
+	</script>
 </html>

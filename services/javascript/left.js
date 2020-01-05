@@ -1,11 +1,10 @@
-var leftMenu = Vue.component('left-menu', {
+Vue.component('left-menu', {
 	props: {
 		menus: Array,
 		userkind: String
 	},
 	template:
-		`
-		<ul id="menu_tree" class="menu">
+		`<ul id="menu_tree" class="menu">
 			<li v-for="menu in menus"
 				v-if="!menu.userKind || menu.userKind.indexOf(userkind) >= 0"
 				class="menu-level-1">
@@ -18,8 +17,7 @@ var leftMenu = Vue.component('left-menu', {
 					</ul>
 				</div>
 			</li>
-		</ul>
-		`,
+		</ul>`,
 	methods: {
 		go: function (url) {
 			window.location.href = url
@@ -31,6 +29,7 @@ var runLeftMenu = function (userKind) {
 	var app = new Vue({
 		el: '#left_menu',
 		data: {
+			userType: userKind,
 			trees: [
 				{
 					text: 'Home',
@@ -54,18 +53,9 @@ var runLeftMenu = function (userKind) {
 					divID: 'studentMenu',
 					userKind: '01 99',
 					children: [
-						{
-							title: 'Student Application',
-							url: 'selectStudentProfile'
-						},
-						{
-							title: 'Find a Teacher',
-							url: 'findTeacher'
-						},
-						{
-							title: 'Careers with Our Partners',
-							url: '#'
-						}
+						{ title: 'Student Application', url: 'selectStudentProfile' },
+						{ title: 'Find a Teacher', url: 'findTeacher' },
+						{ title: 'Careers with Our Partners', url: '#' }
 					]
 				},
 				{
@@ -76,22 +66,10 @@ var runLeftMenu = function (userKind) {
 					divID: 'teacherMenu',
 					userKind: '02 99',
 					children: [
-						{
-							title: 'Join us',
-							url: 'selectTeacherProfile'
-						},
-						{
-							title: 'Find Students',
-							url: 'findStudent'
-						},
-						{
-							title: 'Class Report',
-							url: 'reportPage'
-						},
-						{
-							title: 'Opportunities with Our Partners',
-							url: '#'
-						}
+						{ title: 'Join us', url: 'selectTeacherProfile' },
+						{ title: 'Find Students', url: 'findStudent' },
+						{ title: 'Class Report', url: 'reportPage' },
+						{ title: 'Opportunities with Our Partners', url: '#' }
 					]
 				},
 				{
@@ -102,19 +80,11 @@ var runLeftMenu = function (userKind) {
 					divID: 'managerMenu',
 					userKind: '99',
 					children: [
-						{
-							title: 'View Contracts',
-							url: 'selectContract'
-						},
-						{
-							title: 'View Reports',
-							url: 'selectReport'
-						}
+						{ title: 'View Contracts', url: 'selectContract' },
+						{ title: 'View Reports', url: 'selectReport' }
 					]
 				}
-			],
-			userType: userKind
+			]
 		}
 	})
 }
-

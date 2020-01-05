@@ -4,7 +4,10 @@ const session = require('express-session')
 const fs = require('fs')
 const ejs = require('ejs')
 const pg = require('pg')
-const pgSession = require('connect-pg-simple')(session)
+const uuid = require('uuid/v4')
+const redis = require('redis')
+const redisStore = require('connect-redis')(session)
+
 
 const config = {
   host: 'localhost',
@@ -23,16 +26,20 @@ beauedu.set('view engine', 'ejs')
 beauedu.engine('html', ejs.renderFile)
 beauedu.use(express.static('./services'))
 
-var pgPool = new pg.Pool(config)
+const redisClient = redis.createClient()
+redisClient.on('error', (err) => {
+  console.log('Redis error : ', err)
+})
+
 beauedu.use(session({
-  store: new pgSession({
-    pool: pgPool,
-    tableName: 'session'
-  }),
-  secret: process.env['SESSION_SECRET'],
-  resave: false,
-  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
-  saveUninitialized: true
+    genid: () => {
+      return uuid()
+    },
+    store: new redisStore({ host: 'localhost', port: process.env.REDIS_PORT || 6379, client: redisClient }),
+    secret: process.env['SESSION_SECRET'],
+    resave: false,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
+    saveUninitialized: true
 }))
 
 var router = require('./routes/route-main')

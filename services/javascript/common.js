@@ -275,3 +275,7 @@ utils.alert = function(message, title = 'Notify', type = 'notify') {
 		closeElement.focus()
 	})
 }
+
+utils.gotoClassroom = function () {
+	window.open('/classroom', '_blank', 'menubar=no,toolbar=no,status=no,titlebar=no')
+}
