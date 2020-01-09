@@ -24,7 +24,7 @@ mybatis.createMapper(['./config/sql.xml'])
 beauedu.set('views', __dirname + '/services')
 beauedu.set('view engine', 'ejs')
 beauedu.engine('html', ejs.renderFile)
-beauedu.use(express.static('./services'))
+beauedu.use(express.static('./services/resources'))
 
 const redisClient = redis.createClient()
 redisClient.on('error', (err) => {

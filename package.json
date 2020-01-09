@@ -4,22 +4,23 @@
 	"description": "",
 	"main": "",
 	"dependencies": {
-		"express": "^4.17.1",
-		"express-session": "^1.17.0",
 		"body-parser": "^1.19.0",
+		"connect-redis": "^4.0.3",
+		"cryptr": "^6.0.1",
 		"date-utils": "^1.2.21",
 		"ejs": "^3.0.1",
+		"express": "^4.17.1",
+		"express-session": "^1.17.0",
 		"formidable": "^1.2.1",
+		"googleapis": "^46.0.0",
 		"mybatis-mapper": "^0.6.5",
 		"nodemailer": "^6.4.2",
 		"pg": "^7.15.1",
+		"redis": "^2.8.0",
+		"uuid": "^3.3.3",
 		"winston": "^3.2.1",
 		"winston-daily-rotate-file": "^4.4.0",
-		"xoauth2": "^1.2.0",
-		"googleapis": "^46.0.0",
-		"uuid": "3.3.3",
-		"redis": "2.8.0",
-		"connect-redis": "4.0.3"
+		"xoauth2": "^1.2.0"
 	},
 	"devDependencies": {
 		"eslint": "^6.7.2"
