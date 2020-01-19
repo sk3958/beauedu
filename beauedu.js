@@ -45,8 +45,8 @@ beauedu.use(session({
 var router = require('./routes/route-main')
 router(beauedu, fs, pool, mybatis)
 
-beauedu.listen(5000, function() {
-  console.log('Express server has started on port 5000')
+beauedu.listen(3001, function() {
+  console.log('Express server has started on port 3001')
 })
 
 process.on('uncaughtException', (error) => {

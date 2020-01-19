@@ -16,7 +16,6 @@ class LoginRouter extends BeauEduRouter {
     try {
       var userDAO = new UserDAO(this.conn, this.sqlMapper, this.inputParam)
       var user = await userDAO.selectUser()
-
       if (0 == user.rows.length) {
         data['result'] = 'fail'
         this.json(data)
@@ -74,7 +73,7 @@ class LoginRouter extends BeauEduRouter {
       return true
     } catch (e) {
       this.error(e)
-			return false
+	  return false
     } finally {
       if (null !== this.conn) this.conn.release()
     }

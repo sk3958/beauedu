@@ -53,10 +53,11 @@ class RegisterUserRouter extends BeauEduRouter {
 			var authKeyHstDAO = new AuthKeyHstDAO(this.conn, this.sqlMapper, authKeyHstBean.getData())
 
 			var res = await authKeyHstDAO.insertAuthKeyHst()
+console.log(res[1].rows[0])
 
 			// Send verify mail
 			var mailer = new Mailer()
-			mailer.sendAuthKey(this.inputParam.user_id, this.inputParam.email, res.rows[0].auth_key)
+			mailer.sendAuthKey(this.inputParam.user_id, this.inputParam.email, res[1].rows[0].auth_key)
 
       data.user_id = this.inputParam.user_id
       data.result = 'success'

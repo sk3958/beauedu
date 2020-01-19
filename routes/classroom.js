@@ -17,7 +17,8 @@ class ClassroomRouter extends BeauEduRouter {
 
       tempKey = cryptr.encrypt(tempKey)
       var userId = cryptr.encrypt(session.user_id)
-      let url = `https://localhost:3002/?param1=${userId}&param2=${tempKey}`
+      // let url = `https://localhost:3002/?param1=${userId}&param2=${tempKey}`
+      let url = `https://115.143.192.140:3002/?param1=${userId}&param2=${tempKey}`
       url = encodeURI(url)
 
       this.res.redirect(url)
