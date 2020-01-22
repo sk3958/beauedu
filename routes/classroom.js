@@ -12,13 +12,13 @@ class ClassroomRouter extends BeauEduRouter {
     var tempKey = utils.makeRandPasswd()
     session.tempKey = tempKey
     try {
-      await redisClient.setex(session.user_id, 120, JSON.stringify(session))
+      redisClient.setex(session.user_id, 120, JSON.stringify(session))
       delete session.tempKey
 
       tempKey = cryptr.encrypt(tempKey)
       var userId = cryptr.encrypt(session.user_id)
-      // let url = `https://localhost:3002/?param1=${userId}&param2=${tempKey}`
-      let url = `https://115.143.192.140:3002/?param1=${userId}&param2=${tempKey}`
+      let url = `https://localhost:3002/?param1=${userId}&param2=${tempKey}`
+      // let url = `https://115.143.192.140:3002/?param1=${userId}&param2=${tempKey}`
       url = encodeURI(url)
 
       this.res.redirect(url)
