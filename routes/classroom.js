@@ -12,7 +12,8 @@ class ClassroomRouter extends BeauEduRouter {
     var tempKey = utils.makeRandPasswd()
     session.tempKey = tempKey
     try {
-      redisClient.setex(session.user_id, 120, JSON.stringify(session))
+			const key = `classroom:login:${session.user_id}`
+      redisClient.setex(key, 30, JSON.stringify(session))
       delete session.tempKey
 
       tempKey = cryptr.encrypt(tempKey)
